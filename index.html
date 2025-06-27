@@ -1,27 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hemanth Guvvala – Portfolio</title>
-  <style>
-  body { font-family: sans-serif; text-align: center; margin: 50px; }
-  a { color: #007bff; text-decoration: none; }
-  h1 { font-size: 2em; margin-bottom: 0; }
-  h2 { margin-top: 40px; }
-</style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
-<body style="font-family: sans-serif; text-align: center; margin-top: 100px;">
-  <h1>Hello, I'm Hemanth Guvvala 👋</h1>
-  <p>Welcome to my personal portfolio site.</p>
-  <p>🚧 Work in progress 🚀</p>
-  <h2>🚀 Projects</h2>
-<ul>
-  <li><a href="https://github.com/hemanthguvvala/zen-gym-tracker">ZenGym Tracker</a> – Offline-first fitness app in Jetpack Compose</li>
-  <li><a href="https://github.com/hemanthguvvala/cricket-highlights">Cricket Highlights App</a> – Firebase-powered video app</li>
-</ul>
-  <h2>📬 Contact Me</h2>
-<p>Email: <a href="mailto:hemanthguvvala.personal@gmail.com">hemanthguvvala.personal@gmail.com</a></p>
-<p>LinkedIn: <a href="https://linkedin.com/in/hemanthguvvala" target="_blank">linkedin.com/in/hemanthguvvala</a></p>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-brand">Hemanth</div>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-glow"></div>
+    <div class="hero-content" data-aos="fade-down">
+      <img src="assets/my_profile_image.png" alt="Hemanth Guvvala" class="avatar" />
+      <h1>Hemanth Guvvala</h1>
+      <p>Solopreneur • Full-Stack Engineer • Discipline First</p>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section projects" id="projects">
+    <h2 data-aos="fade-up">🚀 Projects</h2>
+    <div class="project-grid">
+      <div class="project-card" data-aos="zoom-in-up">
+        <div class="card-content no-img">
+          <h3>ZenGym Tracker</h3>
+          <p>Offline-first fitness app with Jetpack Compose & Room.</p>
+          <a href="https://github.com/hemanthguvvala/zen-gym-tracker" target="_blank">View Code ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card" data-aos="zoom-in-up" data-aos-delay="150">
+        <div class="card-content no-img">
+          <h3>Cricket Highlights</h3>
+          <p>Firebase-powered video app with modern UI & search.</p>
+          <a href="https://github.com/hemanthguvvala/cricket-highlights" target="_blank">View Code ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about" id="about">
+    <h2 data-aos="fade-up">👋 About Me</h2>
+    <p data-aos="fade-up" data-aos-delay="150">
+      Lead Product Engineer by profession. I craft scalable backend systems in Java/Spring Boot, build slick UIs with
+      Jetpack Compose & React, and push my limits in the gym. This portfolio represents a solopreneur on a mission to
+      create, grow, and dominate in silence.
+    </p>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact" id="contact">
+    <h2 data-aos="fade-up">📬 Contact</h2>
+    <ul data-aos="fade-up" data-aos-delay="100">
+      <li><a href="mailto:hemanthguvvala.personal@gmail.com">Email Me</a></li>
+      <li><a href="https://linkedin.com/in/hemanthguvvala" target="_blank">LinkedIn</a></li>
+      <li><a href="https://github.com/hemanthguvvala" target="_blank">GitHub</a></li>
+    </ul>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© <span id="year"></span> Hemanth Guvvala. Crafted with discipline.</p>
+  </footer>
+
+  <!-- AOS + JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
+
 </html>
