@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -63,7 +63,7 @@ function App() {
   }, []);
 
   return (
-    <Router basename="/">
+    <Router>
       <div className="app">
         <div className="animated-grid"></div>
         <div id="particles-js"></div>
