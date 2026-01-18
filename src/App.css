@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  background: #0a0e0d;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  background: #0a0e0d;
+  color: white;
+}
+
+/* Animated Grid Background */
+.animated-grid {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 194, 158, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 194, 158, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Particle Canvas */
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0e0d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00c29e, #00a082);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #00d4ff, #00c29e);
+}
+
+/* Glowing Text Effect */
+.glow-text {
+  text-shadow: 0 0 10px rgba(0, 194, 158, 0.5),
+               0 0 20px rgba(0, 194, 158, 0.3),
+               0 0 30px rgba(0, 194, 158, 0.2);
+}
+
+/* Animation Classes */
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Page Container */
+.page-container {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  padding-top: 80px;
+}
