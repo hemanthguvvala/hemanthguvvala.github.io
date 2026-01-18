@@ -11,6 +11,7 @@ body {
 }
 
 .app {
+  position: relative;
   min-height: 100vh;
   background: #0a0e0d;
   color: white;
@@ -18,8 +19,10 @@ body {
 
 /* Animated Grid Background */
 .animated-grid {
-  position: fixed;
+  position: absolute;
   inset: 0;
+  min-height: 100%;
+  width: 100%;
   background-image: 
     linear-gradient(to right, rgba(0, 194, 158, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 194, 158, 0.03) 1px, transparent 1px);
@@ -30,9 +33,9 @@ body {
 
 /* Particle Canvas */
 #particles-js {
-  position: fixed;
+  position: absolute;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   top: 0;
   left: 0;
   z-index: 1;
