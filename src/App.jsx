@@ -7,6 +7,9 @@ import Skills from './pages/Skills';
 import Products from './pages/Products';
 import FeaturedProduct from './pages/FeaturedProduct';
 import Awards from './pages/Awards';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Timeline from './pages/Timeline';
 import './App.css';
 
 function App() {
@@ -70,10 +73,13 @@ function App() {
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/products" element={<Products />} />
           <Route path="/featured-product" element={<FeaturedProduct />} />
+          <Route path="/timeline" element={<Timeline />} />
           <Route path="/awards" element={<Awards />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
         <Footer />
       </div>
