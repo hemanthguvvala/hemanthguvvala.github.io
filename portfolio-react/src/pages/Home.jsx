@@ -49,11 +49,19 @@ export default function Home() {
                 <span>View Products</span>
                 <span className="material-symbols-outlined text-lg">layers</span>
               </Link>
+              <a
+                href="/Hemanth_Kumar_Guvvala_Resume.pdf"
+                download
+                className="flex items-center justify-center gap-2 h-14 px-8 bg-surface-dark/50 hover:bg-surface-dark border border-white/10 hover:border-primary/50 text-white text-base font-bold rounded-xl backdrop-blur-md transition-all group"
+              >
+                <span>Resume</span>
+                <span className="material-symbols-outlined text-lg text-slate-400 group-hover:text-primary transition-colors">download</span>
+              </a>
               <Link
                 to="/contact"
                 className="flex items-center justify-center gap-2 h-14 px-8 bg-surface-dark/50 hover:bg-surface-dark border border-white/10 hover:border-white/20 text-white text-base font-bold rounded-xl backdrop-blur-md transition-all"
               >
-                <span>Contact Me</span>
+                <span>Contact</span>
                 <span className="material-symbols-outlined text-lg text-slate-400">mail</span>
               </Link>
             </div>

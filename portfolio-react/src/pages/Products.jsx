@@ -3,46 +3,94 @@ import { motion } from 'framer-motion';
 
 const products = [
   {
-    name: 'Velocity Track',
-    desc: 'Real-time biometric analysis engine designed for high-performance athletes to track recovery and strain.',
-    tags: ['React Native', 'Node.js', 'GraphQL'],
+    name: 'Ashta Chamma',
+    desc: 'Traditional Indian strategy board game with multiplayer support and AI opponents.',
+    tags: ['Android', 'Kotlin', 'Game Engine'],
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPlAp35de9QdKwxlgd28LcOZQlYqq882Gno-E3_maeSsy2PEKUxpicahYUbaEPBV4gVdIyqMj6V7Hi99YMWOvOB1hJegKrM3CFKrX9tGVd1PZymmjWYIrx7MOjSifyqk2rBU4BjLjaHxEYYBItTr6jg8UU1Ee24ylKlPJxnVwor9O3UmgA4FBAI9AEyp9Hx7wP3qs-lU2-wlnm2YaH52ph7ZFcdcROzQFjmbKy9SZroyb34wwgbahq3wjVHMtkVOmpr0RvHzWYMhU',
     badge: { text: 'Live', type: 'live' },
+    rating: '4.6',
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
   },
   {
-    name: 'QuickScan Pro',
-    desc: 'Ultra-low latency QR processing system with offline-first capabilities for warehouse logistics.',
-    tags: ['Swift', 'C++', 'Computer Vision'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLRhd-JYDGPPw1Gn4KHlDMIqdpjfMESvK97Ml3njzpLf-fAVE97OatiBU85PrMzIhWJxPWMfE8wrGASwlJ3Ql3ySg5tivAed-VwXgof9elaso894HcbaxFXWNJYdiE3oHfX1B6O3TXJ_Z976I1QeqQx8d7W5UeW4lrs9dlTxJXwyhyBF3NZxnSD3aitGgg-plmKSy-86t46Dlfeen1WTHaQsFfvHRPCOwT5tPCnflbBmvStopfatxXurA8Go9JpQ9SMkSc6WY-_KE',
-    badge: { text: 'Featured', type: 'featured' },
-  },
-  {
-    name: 'MindMaze',
-    desc: 'Procedurally generated logic puzzles engine with global competitive leaderboards and matchmaking.',
-    tags: ['Unity', 'Firebase', 'AWS Lambda'],
+    name: 'BrainBuzz: Riddles & Puzzles',
+    desc: 'Collection of mind-bending riddles, logic puzzles, and brain teasers with progressive difficulty.',
+    tags: ['Android', 'Java', 'SQLite'],
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSDmzYh_p4EM8R0daf3LeAbA5pqWT-VvDqxDuNIhq0d5BXWO-W7hZGmYpjYtE55OQfDMSXxKxbrk_Ed6L6maqm7oWnQuX8JZpi1IWzN9IgEz6ddb1KMPA0YlSqkwRi1h9DDIOs5UYLegTLpsNDRZojkF8p8cR7FtwjzKjaH9sUdp9O5If_unH6lAT2DQzSnDyRyS6aNd_Rb6ezLizmKLNmBOHsGz0dF-ggO4a4eSb_krQqGiNElW25BTckcl0iUJpZjBRA4EGE3gk',
-    badge: null,
+    badge: { text: 'Featured', type: 'featured' },
+    rating: '4.6',
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
   },
   {
-    name: 'DataStream API',
-    desc: 'High-throughput data ingestion pipeline capable of processing millions of events per second.',
-    tags: ['Go', 'Kafka', 'Docker'],
+    name: 'The Dot and The Line',
+    desc: 'Minimalist arcade game with physics-based mechanics and endless gameplay.',
+    tags: ['Android', 'Unity', 'C#'],
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLRhd-JYDGPPw1Gn4KHlDMIqdpjfMESvK97Ml3njzpLf-fAVE97OatiBU85PrMzIhWJxPWMfE8wrGASwlJ3Ql3ySg5tivAed-VwXgof9elaso894HcbaxFXWNJYdiE3oHfX1B6O3TXJ_Z976I1QeqQx8d7W5UeW4lrs9dlTxJXwyhyBF3NZxnSD3aitGgg-plmKSy-86t46Dlfeen1WTHaQsFfvHRPCOwT5tPCnflbBmvStopfatxXurA8Go9JpQ9SMkSc6WY-_KE',
+    badge: null,
+    rating: '4.4',
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
+  },
+  {
+    name: 'Circuit Flow: Logic Puzzle',
+    desc: 'Connect circuits and solve electrical flow puzzles with increasing complexity.',
+    tags: ['Android', 'Kotlin', 'Canvas API'],
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAzWR6qsccuDFgflveUJztpFOjl4LsBbTVHRvQ3JX_KBlZ-QuahYpy1mJ6K56SvoGSeSKphajUlQLM8oOIMrBcVaJrzelloHZf1eRkesjmLZBZJjJjIeBx2J5GjX7N8E8VdsR0UbqTWK4l7hqgfGZ3ECk0AxXTNLbjOsKFmgl1ofQJI4DuMLW0j4uk3NDZIMKYR142WSTiniFb2ZnFwoVUQJpeoWi5BQLK51HEw8qMYFf1zWpcJNaN05ht0YBXIJKh5v0jZrRRsUcc',
     badge: null,
+    rating: '4.0',
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
   },
   {
-    name: 'ShopSync',
-    desc: 'Unified inventory management system synchronizing physical stores with online marketplaces.',
-    tags: ['Python', 'Django', 'PostgreSQL'],
+    name: 'QuickScan: QR & Barcode',
+    desc: 'Fast and reliable QR code and barcode scanner with history tracking and batch scanning.',
+    tags: ['Android', 'ML Kit', 'CameraX'],
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAK1yjIUSMNxLbITNq8fuP5O_RJSL8WEi_XgbZezA5Jl55nLM-idyzBZxXF1M1DRI_4im8VkdnYX6kldGydgtvW7ZT6KnhsK9ITJVdTrPThvugK1ubqjUSoCbTRYFMBf5TUhI7t2dXam4WYn_ltJXoLuhkPFnlgjbtW_OR3vuf8dP-tf-bVv_Z70xz2LtybLYmY51x0bcR7NWPo4lDa-SMgYyy1EX1ejq6ur9b7TXhGuOuuQGyoR8GFOw3h8ZI29aRFh0bWnUwH9Vs',
-    badge: null,
+    badge: { text: 'Live', type: 'live' },
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
   },
   {
-    name: 'Project Stealth',
-    desc: 'Next-generation distributed ledger system for supply chain transparency.',
-    tags: ['Rust', 'WASM'],
+    name: 'PDF Toolkit: Merge & Compress',
+    desc: 'Complete PDF utility with merge, split, compress, and convert features.',
+    tags: ['Android', 'PDF Library', 'Kotlin'],
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBky3UKG5MyyaeFYfNERFbOPDDkk0Q22V-A3u9OP7Q-gBy3F1L2-X35vopcPstq7Y7ccifSm52zgs6gFeVRLxhAzrluCGcU_TTs3sdKdui7uKZARaM62okM4grOoE2SsGqrjoS1md-BxiMkWbubCqjkQorzcVWH3kjxVntyiYtwVwouvTalh8bplUII7wRkox2q4ioo7r9rTEFoGWo9Ln8dEZ7esxU6snlbbG4_5bhsNibFcnTHpHeNPVSIxavL1nhPm4zInm8VFkQ',
-    badge: { text: 'Coming Soon', type: 'coming' },
+    badge: null,
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
+  },
+  {
+    name: 'Stitch Infinite',
+    desc: 'Creative photo editor with filters, stickers, and collage maker for social media.',
+    tags: ['Android', 'Image Processing', 'OpenCV'],
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAzWR6qsccuDFgflveUJztpFOjl4LsBbTVHRvQ3JX_KBlZ-QuahYpy1mJ6K56SvoGSeSKphajUlQLM8oOIMrBcVaJrzelloHZf1eRkesjmLZBZJjJjIeBx2J5GjX7N8E8VdsR0UbqTWK4l7hqgfGZ3ECk0AxXTNLbjOsKFmgl1ofQJI4DuMLW0j4uk3NDZIMKYR142WSTiniFb2ZnFwoVUQJpeoWi5BQLK51HEw8qMYFf1zWpcJNaN05ht0YBXIJKh5v0jZrRRsUcc',
+    badge: null,
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
+  },
+  {
+    name: 'Cricket Highlights',
+    desc: 'Stay updated with latest cricket match highlights, scores, and player statistics.',
+    tags: ['Android', 'REST API', 'Video Player'],
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPlAp35de9QdKwxlgd28LcOZQlYqq882Gno-E3_maeSsy2PEKUxpicahYUbaEPBV4gVdIyqMj6V7Hi99YMWOvOB1hJegKrM3CFKrX9tGVd1PZymmjWYIrx7MOjSifyqk2rBU4BjLjaHxEYYBItTr6jg8UU1Ee24ylKlPJxnVwor9O3UmgA4FBAI9AEyp9Hx7wP3qs-lU2-wlnm2YaH52ph7ZFcdcROzQFjmbKy9SZroyb34wwgbahq3wjVHMtkVOmpr0RvHzWYMhU',
+    badge: null,
+    rating: '3.1',
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
+  },
+  {
+    name: 'Ghost Notes: Secure Notepad',
+    desc: 'Privacy-focused notes app with encryption, password protection, and cloud backup.',
+    tags: ['Android', 'Encryption', 'Room DB'],
+    badge: null,
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
+  },
+  {
+    name: 'ZenLife AI',
+    desc: 'AI-powered mindfulness and meditation assistant with personalized recommendations.',
+    tags: ['Android', 'ML', 'TensorFlow Lite'],
+    badge: null,
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
+  },
+  {
+    name: 'Zodiac Age Calculator',
+    desc: 'Discover your zodiac sign, birth chart, and daily horoscopes with detailed analysis.',
+    tags: ['Android', 'Kotlin', 'API Integration'],
+    badge: null,
+    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
   },
 ];
 
@@ -68,13 +116,13 @@ export default function Products() {
               Selected Work
             </div>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-[-0.033em] text-white">
-              Engineering &{' '}
+              Android Apps &{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-300">
-                Product
+                Projects
               </span>
             </h1>
             <p className="text-text-secondary text-lg font-normal leading-relaxed max-w-lg">
-              A selection of deployed applications, architectural systems, and technical experiments focusing on scalability and performance.
+              Published 11+ Android applications on Google Play Store with 10,000+ downloads and 4.0+ average rating across puzzle games, productivity tools, and utilities.
             </p>
           </div>
         </div>
@@ -91,6 +139,7 @@ export default function Products() {
             <motion.article
               key={index}
               variants={cardItem}
+              onClick={() => product.playStoreUrl && window.open(product.playStoreUrl, '_blank')}
               className={`group relative flex flex-col h-full bg-card-dark border border-border-dark rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(0,194,158,0.1)] hover:-translate-y-1 ${
                 product.badge?.type === 'coming' ? '' : 'cursor-pointer'
               }`}
@@ -102,7 +151,7 @@ export default function Products() {
                   className={`w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-700 group-hover:scale-105 ${
                     product.badge?.type === 'coming' ? 'blur-sm scale-110' : ''
                   }`}
-                  style={{ backgroundImage: `url("${product.image}")` }}
+                  style={{ backgroundImage: product.image ? `url("${product.image}")` : 'none', backgroundColor: product.image ? 'transparent' : '#1c322d' }}
                 ></div>
 
                 {/* Coming soon lock overlay */}
@@ -130,19 +179,32 @@ export default function Products() {
                     </span>
                   </div>
                 )}
+                
+                {/* Rating */}
+                {product.rating && (
+                  <div className="absolute bottom-4 left-4 z-20">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 text-xs font-bold text-white">
+                      <span className="material-symbols-outlined text-[14px] text-amber-400">star</span>
+                      {product.rating}
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Content */}
               <div className={`flex flex-col flex-1 p-6 gap-4 ${product.badge?.type === 'coming' ? 'opacity-75' : ''}`}>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-display text-xl md:text-2xl font-bold text-white group-hover:text-primary transition-colors">
+                <div className="flex justify-between items-start gap-3">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-display text-xl md:text-2xl font-bold text-white group-hover:text-primary transition-colors truncate">
                       {product.name}
                     </h3>
                     <p className="mt-2 text-sm text-text-secondary line-clamp-2">{product.desc}</p>
                   </div>
-                  {product.badge?.type !== 'coming' && (
-                    <button className="text-slate-500 group-hover:text-primary transition-colors transform group-hover:translate-x-1 group-hover:-translate-y-1">
+                  {product.badge?.type !== 'coming' && product.playStoreUrl && (
+                    <button 
+                      aria-label={`View ${product.name} on Play Store`}
+                      className="flex-shrink-0 text-slate-500 group-hover:text-primary transition-colors transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                    >
                       <span className="material-symbols-outlined">arrow_outward</span>
                     </button>
                   )}
@@ -170,14 +232,14 @@ export default function Products() {
 
         {/* Bottom CTA */}
         <div className="flex flex-col items-center justify-center py-10">
-          <p className="text-text-secondary text-sm mb-6 uppercase tracking-widest">More projects on GitHub</p>
+          <p className="text-text-secondary text-sm mb-6 uppercase tracking-widest">More apps on Play Store</p>
           <a
-            href="https://github.com/hemanthguvvala"
+            href="https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-2 text-white font-bold text-lg border-b-2 border-primary/50 hover:border-primary transition-all pb-1"
           >
-            <span>View GitHub Profile</span>
+            <span>View Play Store Profile</span>
             <span className="material-symbols-outlined transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
           </a>
         </div>

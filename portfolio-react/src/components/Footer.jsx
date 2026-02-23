@@ -21,7 +21,7 @@ export default function Footer() {
               <span className="material-symbols-outlined">code</span>
             </a>
             <a
-              href="https://linkedin.com/in/hemanthguvvala"
+              href="https://www.linkedin.com/in/hemanthkumarguvvala/"
               target="_blank"
               rel="noopener noreferrer"
               className="size-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-primary hover:bg-primary/10 transition-all"
@@ -30,7 +30,16 @@ export default function Footer() {
               <span className="material-symbols-outlined">work</span>
             </a>
             <a
-              href="mailto:hemanth@example.com"
+              href="https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="size-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-primary hover:bg-primary/10 transition-all"
+              aria-label="Google Play Store"
+            >
+              <span className="material-symbols-outlined">shop</span>
+            </a>
+            <a
+              href="mailto:guvvalahemanthkumar@gmail.com"
               className="size-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-primary hover:bg-primary/10 transition-all"
               aria-label="Email"
             >
@@ -44,11 +53,16 @@ export default function Footer() {
 
         {/* Bottom section */}
         <div className="flex flex-col md:flex-row justify-between items-center w-full gap-6 text-sm">
-          <p className="text-slate-600">© 2024 Hemanth Kumar Guvvala. All rights reserved.</p>
+          <p className="text-slate-600">© 2026 Hemanth Kumar Guvvala. All rights reserved.</p>
           <div className="flex gap-8">
             <Link to="/contact" className="text-slate-600 hover:text-primary transition-colors">Contact</Link>
-            <a href="#" className="text-slate-600 hover:text-primary transition-colors">Privacy Policy</a>
-            <a href="#" className="text-slate-600 hover:text-primary transition-colors">Terms of Service</a>
+            <a 
+              href="/Hemanth_Kumar_Guvvala_Resume.pdf" 
+              download 
+              className="text-slate-600 hover:text-primary transition-colors"
+            >
+              Download Resume
+            </a>
           </div>
         </div>
       </div>

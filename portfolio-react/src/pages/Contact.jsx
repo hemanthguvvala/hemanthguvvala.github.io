@@ -3,21 +3,27 @@ import { motion } from 'framer-motion';
 const contactCards = [
   {
     title: 'Email',
-    value: 'hemanth@example.com',
+    value: 'guvvalahemanthkumar@gmail.com',
     icon: 'mail',
-    href: 'mailto:hemanth@example.com',
+    href: 'mailto:guvvalahemanthkumar@gmail.com',
   },
   {
     title: 'GitHub',
-    value: 'github.com/hemanth',
+    value: 'github.com/hemanthguvvala',
     icon: 'terminal',
     href: 'https://github.com/hemanthguvvala',
   },
   {
     title: 'LinkedIn',
-    value: 'linkedin.com/in/hemanth',
+    value: 'linkedin.com/in/hemanthkumarguvvala',
     icon: 'contact_page',
-    href: 'https://linkedin.com/in/hemanthguvvala',
+    href: 'https://www.linkedin.com/in/hemanthkumarguvvala/',
+  },
+  {
+    title: 'Play Store',
+    value: 'Hemanth Kumar Guuvvala',
+    icon: 'shop',
+    href: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
   },
 ];
 
@@ -71,7 +77,7 @@ export default function Contact() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full"
         >
           {contactCards.map((card, index) => (
             <motion.a
