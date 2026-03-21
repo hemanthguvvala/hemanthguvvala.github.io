@@ -17,11 +17,18 @@
     <meta property="og:title" content="Hemanth Kumar Guvvala - Lead Product Engineer" />
     <meta property="og:description" content="Lead Product Engineer specializing in distributed systems with Java, Spring Boot & Kafka. Delivered 30+ enterprise features to 10+ global airlines." />
     
+    <!-- Open Graph image (GitHub avatar as og:image for rich social previews) -->
+    <meta property="og:image" content="https://github.com/hemanthguvvala.png" />
+    <meta property="og:image:width" content="460" />
+    <meta property="og:image:height" content="460" />
+    <meta property="og:image:alt" content="Hemanth Kumar Guvvala - Lead Product Engineer" />
+
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://hemanthguvvala.github.io/" />
     <meta property="twitter:title" content="Hemanth Kumar Guvvala - Lead Product Engineer" />
     <meta property="twitter:description" content="Lead Product Engineer specializing in distributed systems with Java, Spring Boot & Kafka. Delivered 30+ enterprise features to 10+ global airlines." />
+    <meta property="twitter:image" content="https://github.com/hemanthguvvala.png" />
     
     <!-- Additional Meta Tags -->
     <meta name="robots" content="index, follow" />
@@ -39,15 +46,37 @@
       "@type": "Person",
       "name": "Hemanth Kumar Guvvala",
       "jobTitle": "Lead Product Engineer",
-      "worksFor": { "@type": "Organization", "name": "IBS Software" },
+      "description": "Lead Product Engineer at IBS Software with 4 years of experience building distributed systems for global airlines. Published 11+ Android apps on Google Play Store.",
+      "worksFor": { "@type": "Organization", "name": "IBS Software", "url": "https://www.ibsgroup.com/" },
+      "alumniOf": { "@type": "EducationalOrganization", "name": "SSITS, Rayachoti, Andhra Pradesh" },
       "url": "https://hemanthguvvala.github.io/",
+      "image": "https://github.com/hemanthguvvala.png",
       "sameAs": [
         "https://www.linkedin.com/in/hemanthkumarguvvala/",
         "https://github.com/hemanthguvvala",
         "https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala"
       ],
-      "knowsAbout": ["Java", "Spring Boot", "Apache Kafka", "AWS", "Android Development", "Microservices"]
+      "knowsAbout": ["Java", "Spring Boot", "Apache Kafka", "AWS", "Android Development", "Microservices", "Distributed Systems"],
+      "award": [
+        "Best New Team Member – IBS Software",
+        "Rising Star – IBS Software",
+        "Xplorer Award – IBS Software",
+        "Special Achievement Award – IBS Software",
+        "Feathers in Cap – IBS Software",
+        "Best Project – SSITS",
+        "Best Student – SSITS"
+      ]
     }
+    </script>
+
+    <!-- SPA redirect for GitHub Pages: restores path after 404 redirect -->
+    <script>
+      (function(l) {
+        if (l.search[1] === 'p' && l.search.indexOf('?p=') === 0) {
+          var path = decodeURIComponent(l.search.slice(3).split('&')[0]);
+          window.history.replaceState(null, null, '/' + path + l.hash);
+        }
+      }(window.location));
     </script>
   </head>
   <body class="dark">

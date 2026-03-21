@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useRef, lazy, Suspense } from 'react';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -25,7 +25,7 @@ function NotFound() {
     <div className="page-container py-32 flex flex-col items-center justify-center text-center min-h-[60vh]">
       <h1 className="text-6xl font-bold text-primary font-display mb-4">404</h1>
       <p className="text-xl text-slate-400 mb-8">Page not found</p>
-      <a href="#/" className="px-6 py-3 bg-primary text-background-dark font-bold rounded-xl hover:bg-white transition-colors">
+      <a href="/" className="px-6 py-3 bg-primary text-background-dark font-bold rounded-xl hover:bg-white transition-colors">
         Go Home
       </a>
     </div>
