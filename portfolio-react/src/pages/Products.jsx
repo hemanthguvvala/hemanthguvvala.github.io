@@ -58,7 +58,7 @@ const products = [
     name: 'Stitch Infinite',
     desc: 'Creative photo editor with filters, stickers, and collage maker for social media.',
     tags: ['Android', 'Image Processing', 'OpenCV'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAzWR6qsccuDFgflveUJztpFOjl4LsBbTVHRvQ3JX_KBlZ-QuahYpy1mJ6K56SvoGSeSKphajUlQLM8oOIMrBcVaJrzelloHZf1eRkesjmLZBZJjJjIeBx2J5GjX7N8E8VdsR0UbqTWK4l7hqgfGZ3ECk0AxXTNLbjOsKFmgl1ofQJI4DuMLW0j4uk3NDZIMKYR142WSTiniFb2ZnFwoVUQJpeoWi5BQLK51HEw8qMYFf1zWpcJNaN05ht0YBXIJKh5v0jZrRRsUcc',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLRhd-JYDGPPw1Gn4KHlDMIqdpjfMESvK97Ml3njzpLf-fAVE97OatiBU85PrMzIhWJxPWMfE8wrGASwlJ3Ql3ySg5tivAed-VwXgof9elaso894HcbaxFXWNJYdiE3oHfX1B6O3TXJ_Z976I1QeqQx8d7W5UeW4lrs9dlTxJXwyhyBF3NZxnSD3aitGgg-plmKSy-86t46Dlfeen1WTHaQsFfvHRPCOwT5tPCnflbBmvStopfatxXurA8Go9JpQ9SMkSc6WY-_KE',
     badge: null,
     playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
   },
@@ -66,7 +66,7 @@ const products = [
     name: 'Cricket Highlights',
     desc: 'Stay updated with latest cricket match highlights, scores, and player statistics.',
     tags: ['Android', 'REST API', 'Video Player'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPlAp35de9QdKwxlgd28LcOZQlYqq882Gno-E3_maeSsy2PEKUxpicahYUbaEPBV4gVdIyqMj6V7Hi99YMWOvOB1hJegKrM3CFKrX9tGVd1PZymmjWYIrx7MOjSifyqk2rBU4BjLjaHxEYYBItTr6jg8UU1Ee24ylKlPJxnVwor9O3UmgA4FBAI9AEyp9Hx7wP3qs-lU2-wlnm2YaH52ph7ZFcdcROzQFjmbKy9SZroyb34wwgbahq3wjVHMtkVOmpr0RvHzWYMhU',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSDmzYh_p4EM8R0daf3LeAbA5pqWT-VvDqxDuNIhq0d5BXWO-W7hZGmYpjYtE55OQfDMSXxKxbrk_Ed6L6maqm7oWnQuX8JZpi1IWzN9IgEz6ddb1KMPA0YlSqkwRi1h9DDIOs5UYLegTLpsNDRZojkF8p8cR7FtwjzKjaH9sUdp9O5If_unH6lAT2DQzSnDyRyS6aNd_Rb6ezLizmKLNmBOHsGz0dF-ggO4a4eSb_krQqGiNElW25BTckcl0iUJpZjBRA4EGE3gk',
     badge: null,
     rating: '3.1',
     playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
@@ -139,20 +139,37 @@ export default function Products() {
             <motion.article
               key={index}
               variants={cardItem}
-              onClick={() => product.playStoreUrl && window.open(product.playStoreUrl, '_blank')}
-              className={`group relative flex flex-col h-full bg-card-dark border border-border-dark rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(0,194,158,0.1)] hover:-translate-y-1 ${
+              tabIndex={product.badge?.type === 'coming' ? -1 : 0}
+              role="link"
+              aria-label={`View ${product.name} on Play Store`}
+              onClick={() => product.playStoreUrl && product.badge?.type !== 'coming' && window.open(product.playStoreUrl, '_blank', 'noopener,noreferrer')}
+              onKeyDown={(e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && product.playStoreUrl && product.badge?.type !== 'coming') {
+                  e.preventDefault();
+                  window.open(product.playStoreUrl, '_blank', 'noopener,noreferrer');
+                }
+              }}
+              className={`group relative flex flex-col h-full bg-card-dark border border-border-dark rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(0,194,158,0.1)] hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 ${
                 product.badge?.type === 'coming' ? '' : 'cursor-pointer'
               }`}
             >
               {/* Image */}
               <div className="aspect-[4/3] w-full overflow-hidden bg-[#1c322d] relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 z-10"></div>
-                <div
-                  className={`w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-700 group-hover:scale-105 ${
-                    product.badge?.type === 'coming' ? 'blur-sm scale-110' : ''
-                  }`}
-                  style={{ backgroundImage: product.image ? `url("${product.image}")` : 'none', backgroundColor: product.image ? 'transparent' : '#1c322d' }}
-                ></div>
+                {product.image ? (
+                  <img
+                    src={product.image}
+                    alt={`${product.name} app screenshot`}
+                    loading="lazy"
+                    className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${
+                      product.badge?.type === 'coming' ? 'blur-sm scale-110' : ''
+                    }`}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#1c322d] flex items-center justify-center">
+                    <span className="material-symbols-outlined text-4xl text-primary/30" aria-hidden="true">android</span>
+                  </div>
+                )}
 
                 {/* Coming soon lock overlay */}
                 {product.badge?.type === 'coming' && (

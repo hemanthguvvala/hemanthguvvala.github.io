@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Career Timeline - Hemanth Kumar Guvvala</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00c29e",
+                        "primary-dark": "#008f73",
+                        "accent-gold": "#B8860B",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#101817",
+                        "card-dark": "#1b2825",
+                        "rail": "#2f403d",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "mono": ["monospace"]
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .text-glow {
+                text-shadow: 0 0 10px rgba(0, 194, 158, 0.5);
+            }
+            .border-gradient {
+                border-image: linear-gradient(to bottom, #00c29e, transparent) 1;
+            }
+        }
+        
+        /* Custom scrollbar for timeline rail effect */
+        .timeline-rail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(0,194,158,0) 0%, 
+                rgba(0,194,158,0.2) 10%, 
+                rgba(0,194,158,0.2) 90%, 
+                rgba(0,194,158,0) 100%
+            );
+            z-index: 0;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .timeline-rail::before {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-body antialiased overflow-x-hidden transition-colors duration-300">
+<div class="relative min-h-screen w-full flex flex-col items-center py-20">
+<!-- Background Decor -->
+<div class="fixed inset-0 pointer-events-none z-0 opacity-20 bg-[size:24px_24px] bg-grid-pattern"></div>
+<div class="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-background-dark to-transparent z-10 pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background-dark to-transparent z-10 pointer-events-none"></div>
+<!-- Section Header -->
+<div class="relative z-20 w-full max-w-5xl px-6 mb-20 text-center md:text-left">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono uppercase tracking-wider mb-4">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                04. Timeline
+            </div>
+<h2 class="text-4xl md:text-5xl font-display font-bold text-white tracking-tight mb-4">
+                Engineering <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-200">Journey</span>
+</h2>
+<p class="text-slate-400 max-w-xl text-lg font-light">
+                A chronological archive of technical leadership, architectural decisions, and system optimizations.
+            </p>
+</div>
+<!-- Timeline Container -->
+<div class="relative z-20 w-full max-w-5xl px-4 md:px-6">
+<div class="timeline-rail relative flex flex-col gap-12 md:gap-24 py-10">
+<!-- Timeline Item 1: Current Role -->
+<div class="group relative grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 md:gap-8 items-center">
+<!-- Left Content (Mobile: Top) -->
+<div class="order-2 md:order-1 flex flex-col items-start md:items-end text-left md:text-right">
+<div class="bg-card-dark border border-slate-800 p-6 rounded-xl shadow-lg transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(0,194,158,0.1)] w-full relative overflow-hidden group-hover:translate-x-1">
+<div class="absolute top-0 right-0 p-3 opacity-10">
+<span class="material-symbols-outlined text-4xl">crown</span>
+</div>
+<span class="inline-block px-2 py-1 mb-3 text-xs font-mono text-primary bg-primary/10 rounded border border-primary/20">2023 - Present</span>
+<h3 class="text-xl font-display font-bold text-white mb-1">VP of Engineering</h3>
+<p class="text-slate-400 text-sm mb-4">TechFlow Systems</p>
+<div class="flex items-start gap-3 md:justify-end text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg mt-0.5 shrink-0">terminal</span>
+<p class="text-sm leading-relaxed">Architecting scalable microservices for 10M+ daily users. Establishing engineering culture and CI/CD standards.</p>
+</div>
+</div>
+</div>
+<!-- Center Marker -->
+<div class="order-1 md:order-2 flex justify-start md:justify-center relative pl-3 md:pl-0">
+<div class="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-background-dark border-2 border-primary shadow-[0_0_15px_rgba(0,194,158,0.4)] group-hover:scale-110 transition-transform duration-300">
+<div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+</div>
+</div>
+<!-- Right Date/Spacer (Mobile: Hidden or Different) -->
+<div class="order-3 md:order-3 hidden md:block">
+<span class="text-8xl font-display font-bold text-slate-800/50 select-none group-hover:text-slate-800 transition-colors">2024</span>
+</div>
+</div>
+<!-- Timeline Item 2: Senior Backend -->
+<div class="group relative grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 md:gap-8 items-center">
+<!-- Left Spacer -->
+<div class="order-3 md:order-1 hidden md:block text-right">
+<span class="text-8xl font-display font-bold text-slate-800/50 select-none group-hover:text-slate-800 transition-colors">2020</span>
+</div>
+<!-- Center Marker -->
+<div class="order-1 md:order-2 flex justify-start md:justify-center relative pl-3 md:pl-0">
+<div class="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-background-dark border-2 border-slate-600 group-hover:border-primary transition-colors duration-300">
+<div class="w-2 h-2 bg-slate-600 rounded-full group-hover:bg-primary transition-colors"></div>
+</div>
+</div>
+<!-- Right Content -->
+<div class="order-2 md:order-3">
+<div class="bg-card-dark border border-slate-800 p-6 rounded-xl shadow-lg transition-all duration-300 hover:border-primary/30 hover:-translate-y-1 w-full relative overflow-hidden">
+<div class="absolute -right-10 -bottom-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl"></div>
+<span class="inline-block px-2 py-1 mb-3 text-xs font-mono text-slate-400 bg-slate-800/50 rounded border border-slate-700">2020 - 2023</span>
+<h3 class="text-xl font-display font-bold text-white mb-1">Senior Backend Engineer</h3>
+<p class="text-slate-400 text-sm mb-4">DataSphere Inc.</p>
+<div class="flex items-start gap-3 text-slate-300">
+<span class="material-symbols-outlined text-primary/70 text-lg mt-0.5 shrink-0">speed</span>
+<p class="text-sm leading-relaxed">Reduced query latency by 40% through distinct database optimization strategies and caching layers.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 3: Software Engineer II -->
+<div class="group relative grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 md:gap-8 items-center">
+<!-- Left Content -->
+<div class="order-2 md:order-1 flex flex-col items-start md:items-end text-left md:text-right">
+<div class="bg-card-dark border border-slate-800 p-6 rounded-xl shadow-lg transition-all duration-300 hover:border-primary/30 hover:-translate-y-1 w-full relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="inline-block px-2 py-1 mb-3 text-xs font-mono text-slate-400 bg-slate-800/50 rounded border border-slate-700">2018 - 2020</span>
+<h3 class="text-xl font-display font-bold text-white mb-1">Software Engineer II</h3>
+<p class="text-slate-400 text-sm mb-4">CloudScale Corp</p>
+<div class="flex items-start gap-3 md:justify-end text-slate-300">
+<span class="material-symbols-outlined text-primary/70 text-lg mt-0.5 shrink-0">cloud_upload</span>
+<p class="text-sm leading-relaxed">Led the migration of legacy monoliths to cloud-native infrastructure using Kubernetes and Docker.</p>
+</div>
+</div>
+</div>
+<!-- Center Marker -->
+<div class="order-1 md:order-2 flex justify-start md:justify-center relative pl-3 md:pl-0">
+<div class="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-background-dark border-2 border-slate-600 group-hover:border-primary transition-colors duration-300">
+<div class="w-2 h-2 bg-slate-600 rounded-full group-hover:bg-primary transition-colors"></div>
+</div>
+</div>
+<!-- Right Spacer -->
+<div class="order-3 md:order-3 hidden md:block">
+<span class="text-8xl font-display font-bold text-slate-800/50 select-none group-hover:text-slate-800 transition-colors">2018</span>
+</div>
+</div>
+<!-- Timeline Item 4: Junior Developer -->
+<div class="group relative grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 md:gap-8 items-center">
+<!-- Left Spacer -->
+<div class="order-3 md:order-1 hidden md:block text-right">
+<span class="text-8xl font-display font-bold text-slate-800/50 select-none group-hover:text-slate-800 transition-colors">2016</span>
+</div>
+<!-- Center Marker -->
+<div class="order-1 md:order-2 flex justify-start md:justify-center relative pl-3 md:pl-0">
+<div class="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-background-dark border-2 border-slate-600 group-hover:border-primary transition-colors duration-300">
+<div class="w-2 h-2 bg-slate-600 rounded-full group-hover:bg-primary transition-colors"></div>
+</div>
+</div>
+<!-- Right Content -->
+<div class="order-2 md:order-3">
+<div class="bg-card-dark border border-slate-800 p-6 rounded-xl shadow-lg transition-all duration-300 hover:border-primary/30 hover:-translate-y-1 w-full relative overflow-hidden">
+<span class="inline-block px-2 py-1 mb-3 text-xs font-mono text-slate-400 bg-slate-800/50 rounded border border-slate-700">2016 - 2018</span>
+<h3 class="text-xl font-display font-bold text-white mb-1">Junior Developer</h3>
+<p class="text-slate-400 text-sm mb-4">StartUp Node</p>
+<div class="flex items-start gap-3 text-slate-300">
+<span class="material-symbols-outlined text-primary/70 text-lg mt-0.5 shrink-0">code</span>
+<p class="text-sm leading-relaxed">Developed core APIs for the initial product launch and implemented unit testing coverage.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 5: Education -->
+<div class="group relative grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 md:gap-8 items-center opacity-80 hover:opacity-100 transition-opacity">
+<!-- Left Content -->
+<div class="order-2 md:order-1 flex flex-col items-start md:items-end text-left md:text-right">
+<div class="bg-card-dark border border-slate-800/50 p-5 rounded-xl shadow-lg transition-all duration-300 w-full relative overflow-hidden">
+<div class="flex items-center gap-2 md:flex-row-reverse mb-3">
+<span class="material-symbols-outlined text-accent-gold text-2xl">school</span>
+<span class="inline-block px-2 py-1 text-xs font-mono text-accent-gold bg-accent-gold/10 rounded border border-accent-gold/20">2012 - 2016</span>
+</div>
+<h3 class="text-lg font-display font-bold text-white mb-1">B.Tech Computer Science</h3>
+<p class="text-slate-500 text-sm">University of Technology</p>
+<p class="text-slate-400 text-xs mt-2 italic">Specialized in Distributed Systems and Algorithms.</p>
+</div>
+</div>
+<!-- Center Marker -->
+<div class="order-1 md:order-2 flex justify-start md:justify-center relative pl-3 md:pl-0">
+<div class="relative z-10 flex items-center justify-center w-6 h-6 rounded-full bg-background-dark border-2 border-accent-gold/50 shadow-[0_0_10px_rgba(184,134,11,0.2)]">
+<div class="w-1.5 h-1.5 bg-accent-gold rounded-full"></div>
+</div>
+</div>
+<!-- Right Spacer -->
+<div class="order-3 md:order-3 hidden md:block">
+<!-- Empty for layout balance -->
+</div>
+</div>
+<!-- End Cap -->
+<div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 md:gap-8 items-start">
+<div class="order-1 md:order-2 flex justify-start md:justify-center relative pl-3 md:pl-0">
+<div class="w-2 h-2 bg-slate-800 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Decor -->
+<div class="mt-20 flex flex-col items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-slate-500 animate-bounce">keyboard_double_arrow_down</span>
+<p class="text-xs font-mono text-slate-500 mt-2">SCROLL TO PROJECTS</p>
+</div>
+</div>
+</body></html>

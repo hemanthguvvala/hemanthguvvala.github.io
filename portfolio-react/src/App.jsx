@@ -1,20 +1,52 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Skills from './pages/Skills';
-import Products from './pages/Products';
-import FeaturedProduct from './pages/FeaturedProduct';
-import Awards from './pages/Awards';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Timeline from './pages/Timeline';
 import './App.css';
 
-function App() {
+const Home = lazy(() => import('./pages/Home'));
+const Skills = lazy(() => import('./pages/Skills'));
+const Products = lazy(() => import('./pages/Products'));
+const Awards = lazy(() => import('./pages/Awards'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Timeline = lazy(() => import('./pages/Timeline'));
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
   useEffect(() => {
-    // Add particles.js script
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function NotFound() {
+  return (
+    <div className="page-container py-32 flex flex-col items-center justify-center text-center min-h-[60vh]">
+      <h1 className="text-6xl font-bold text-primary font-display mb-4">404</h1>
+      <p className="text-xl text-slate-400 mb-8">Page not found</p>
+      <a href="#/" className="px-6 py-3 bg-primary text-background-dark font-bold rounded-xl hover:bg-white transition-colors">
+        Go Home
+      </a>
+    </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+}
+
+function App() {
+  const particlesInitialized = useRef(false);
+
+  useEffect(() => {
+    if (particlesInitialized.current) return;
+    particlesInitialized.current = true;
+
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js';
     script.async = true;
@@ -22,7 +54,7 @@ function App() {
       if (window.particlesJS) {
         window.particlesJS('particles-js', {
           particles: {
-            number: { value: 80, density: { enable: true, value_area: 800 } },
+            number: { value: 50, density: { enable: true, value_area: 800 } },
             color: { value: '#00c29e' },
             shape: { type: 'circle' },
             opacity: { value: 0.3, random: true },
@@ -36,7 +68,7 @@ function App() {
             },
             move: {
               enable: true,
-              speed: 2,
+              speed: 1.5,
               direction: 'none',
               random: false,
               straight: false,
@@ -47,8 +79,8 @@ function App() {
           interactivity: {
             detect_on: 'canvas',
             events: {
-              onhover: { enable: true, mode: 'repulse' },
-              onclick: { enable: true, mode: 'push' },
+              onhover: { enable: false },
+              onclick: { enable: false },
               resize: true
             },
           },
@@ -57,30 +89,32 @@ function App() {
       }
     };
     document.body.appendChild(script);
-
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
   }, []);
 
   return (
     <Router>
       <div className="app">
-        <div className="animated-grid"></div>
-        <div id="particles-js"></div>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-background-dark focus:rounded-lg focus:font-bold">
+          Skip to main content
+        </a>
+        <div className="animated-grid" aria-hidden="true"></div>
+        <div id="particles-js" aria-hidden="true"></div>
         <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/featured-product" element={<FeaturedProduct />} />
-          <Route path="/timeline" element={<Timeline />} />
-          <Route path="/awards" element={<Awards />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+        <main id="main-content">
+          <Suspense fallback={<LoadingFallback />}>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/skills" element={<Skills />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/timeline" element={<Timeline />} />
+              <Route path="/awards" element={<Awards />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </main>
         <Footer />
       </div>
     </Router>

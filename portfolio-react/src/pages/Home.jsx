@@ -70,10 +70,10 @@ export default function Home() {
             <div className="mt-16 pt-8 border-t border-white/5 w-full max-w-lg flex justify-between items-center text-slate-500 opacity-60 hover:opacity-100 transition-opacity">
               <span className="text-xs uppercase tracking-wider">Core Stack</span>
               <div className="flex gap-6">
-                <span className="material-symbols-outlined" title="Java & Spring Boot">dns</span>
-                <span className="material-symbols-outlined" title="AWS & Docker">cloud</span>
-                <span className="material-symbols-outlined" title="Kafka & Microservices">hub</span>
-                <span className="material-symbols-outlined" title="GitHub Copilot">smart_toy</span>
+                <span className="material-symbols-outlined" title="Java & Spring Boot" aria-hidden="true">dns</span>
+                <span className="material-symbols-outlined" title="AWS & Docker" aria-hidden="true">cloud</span>
+                <span className="material-symbols-outlined" title="Kafka & Microservices" aria-hidden="true">hub</span>
+                <span className="material-symbols-outlined" title="GitHub Copilot" aria-hidden="true">smart_toy</span>
               </div>
             </div>
           </motion.div>
@@ -98,7 +98,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="space-y-6"
             >
-              <h3 className="text-3xl font-bold text-white font-display">Engineering Philosophy</h3>
+              <h2 className="text-3xl font-bold text-white font-display">Engineering Philosophy</h2>
               <p className="text-slate-400 leading-relaxed">
                 I translate complex business needs into robust technical solutions. With 980+ production issues resolved at 100% SLA adherence, I believe the best systems are the ones that run silently.
               </p>

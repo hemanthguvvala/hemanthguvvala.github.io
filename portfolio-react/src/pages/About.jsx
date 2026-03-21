@@ -40,15 +40,6 @@ export default function About() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="group flex items-center gap-2 text-white font-bold text-base hover:text-primary transition-colors">
-                <span>Read Engineering Philosophy</span>
-                <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">
-                  arrow_forward
-                </span>
-              </button>
-            </div>
-
             {/* Signature / Quote Block */}
             <div className="mt-8 border-l-2 border-primary/30 pl-6 py-2">
               <p className="text-slate-500 italic font-medium">
