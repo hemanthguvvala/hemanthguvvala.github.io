@@ -9,6 +9,8 @@
  * name is chosen, change it in this one place and it propagates site-wide.
  */
 
+import { PLAY_DEVELOPER_URL } from './products';
+
 export const SITE_URL = 'https://hemanthguvvala.github.io';
 
 export const person = {
@@ -59,8 +61,9 @@ export const socials = [
   {
     id: 'playstore',
     label: 'Google Play',
+    // Registered Play developer name, double-u and all — do not "correct" it.
     handle: 'Hemanth Kumar Guuvvala',
-    url: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
+    url: PLAY_DEVELOPER_URL,
     icon: 'shop',
   },
   {

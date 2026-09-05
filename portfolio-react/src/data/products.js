@@ -79,8 +79,9 @@ export const MONETIZATION = {
 
 const PLAY = 'https://play.google.com/store/apps/details?id=';
 
-export const PLAY_DEVELOPER_URL =
-  'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala';
+// Canonical numeric developer URL. The older `developer?id=<name>` form
+// depends on the display name staying byte-identical; this one does not.
+export const PLAY_DEVELOPER_URL = 'https://play.google.com/store/apps/dev?id=7088499213183081717';
 
 export const products = [
   // ───────────────────────── WEB PRODUCTS ─────────────────────────
@@ -498,7 +499,41 @@ export const products = [
     monetizationType: null,
     launchYear: null,
     keywords: ['horoscope app', 'zodiac', 'moon phase', 'astrology compatibility'],
-    related: ['daily-panchang'],
+    related: ['daily-panchang', 'zenlife-ai'],
+    hasDetailPage: true,
+  },
+  {
+    name: 'ZenLife AI',
+    slug: 'zenlife-ai',
+    tagline: 'Health tracking that keeps your data on your phone.',
+    shortDescription:
+      'An AI health companion that tracks steps, nutrition, workouts and weight, with everything stored encrypted on the device.',
+    longDescription:
+      'ZenLife AI brings step count, nutrition, workouts and weight into one place, and adapts its daily targets to your own history rather than a generic formula. It is built offline-first: the database is encrypted on the device, so the tracking data stays on your phone instead of syncing to a server.',
+    features: [
+      'Personalised daily goals that adapt to your own history',
+      'Tracks steps, nutrition, workouts and weight together',
+      'Encrypted on-device database — data stays on your phone',
+      'Works offline',
+      'Milestone and achievement tracking',
+    ],
+    category: 'lifestyle',
+    platform: 'android',
+    status: 'live',
+    icon: '/assets/products/zenlife-ai.png',
+    monogram: 'ZL',
+    accent: '#2dd4bf',
+    screenshots: [],
+    websiteUrl: null,
+    playStoreUrl: `${PLAY}com.hkgroups.zenfit.zengymtracker`,
+    packageId: 'com.hkgroups.zenfit.zengymtracker',
+    githubUrl: null,
+    privacyUrl: null,
+    featured: false,
+    monetizationType: null,
+    launchYear: null,
+    keywords: ['health tracker', 'fitness app', 'step counter', 'nutrition tracker', 'offline health app'],
+    related: ['zodiac-daily-cosmic-age', 'ghost-notes'],
     hasDetailPage: true,
   },
 
@@ -549,35 +584,6 @@ export const products = [
     websiteUrl: null,
     playStoreUrl: null,
     packageId: 'com.hkggroups.fate',
-    githubUrl: null,
-    privacyUrl: null,
-    featured: false,
-    monetizationType: null,
-    launchYear: null,
-    keywords: [],
-    related: [],
-    hasDetailPage: false,
-  },
-  {
-    name: 'ZenLife AI',
-    slug: 'zenlife-ai',
-    // TODO: no verifiable source or listing was found for this product, so the
-    // description is a placeholder rather than invented marketing copy.
-    // Replace it with the real thing before setting hasDetailPage.
-    tagline: null,
-    shortDescription: 'Details coming soon.',
-    longDescription: null,
-    features: [],
-    category: 'lifestyle',
-    platform: 'android',
-    status: 'in-development',
-    icon: null,
-    monogram: 'ZL',
-    accent: '#2dd4bf',
-    screenshots: [],
-    websiteUrl: null,
-    playStoreUrl: null,
-    packageId: null,
     githubUrl: null,
     privacyUrl: null,
     featured: false,
