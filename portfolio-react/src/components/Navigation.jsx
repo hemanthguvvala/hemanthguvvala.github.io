@@ -5,6 +5,7 @@ import { person } from '../data/profile';
 const links = [
   { to: '/products', label: 'Products' },
   { to: '/web-products', label: 'Web Products' },
+  { to: '/services', label: 'Services' },
   { to: '/engineering', label: 'Engineering' },
   { to: '/about', label: 'About' },
   { to: '/timeline', label: 'Journey' },

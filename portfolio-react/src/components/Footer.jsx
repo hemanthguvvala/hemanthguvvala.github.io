@@ -15,6 +15,13 @@ const columns = [
     ],
   },
   {
+    heading: 'Work with me',
+    links: [
+      { to: '/services', label: 'Services' },
+      { to: '/contact', label: 'Discuss a project' },
+    ],
+  },
+  {
     heading: 'Profile',
     links: [
       { to: '/about', label: 'About' },
@@ -31,7 +38,8 @@ export default function Footer() {
   return (
     <footer className="relative z-10 border-t border-white/5 bg-background-dark pb-8 pt-16">
       <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
+        {/* Brand block spans 2, then one column per link group (3). */}
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
           <div className="col-span-2 flex flex-col gap-4 md:col-span-2">
             <p className="font-display text-xl font-bold text-white">
               Let&rsquo;s build something durable.

@@ -277,6 +277,32 @@ export default function ProductDetail() {
 
         {/* ── Cross-product discovery ── */}
         <div className="mt-20 flex flex-col gap-12">
+          {/* Products → services. Gated on `servicesCta` in products.js so this
+              only appears where the product actually demonstrates the kind of
+              work someone would commission. */}
+          {product.servicesCta && (
+            <aside className="flex flex-col gap-4 rounded-2xl border border-border-dark bg-surface/30 p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-7">
+              <div>
+                <h2 className="font-display text-lg font-bold text-white">
+                  Need something similar built?
+                </h2>
+                <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-text-secondary">
+                  {product.name.split(':')[0]} is an example of the kind of software I build. I
+                  take on the same work for clients.
+                </p>
+              </div>
+              <Link
+                to="/services"
+                className="inline-flex min-h-[48px] shrink-0 items-center justify-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-5 text-sm font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                Explore services
+                <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                  arrow_forward
+                </span>
+              </Link>
+            </aside>
+          )}
+
           <RelatedProducts product={product} />
 
           <p className="text-sm text-text-muted">

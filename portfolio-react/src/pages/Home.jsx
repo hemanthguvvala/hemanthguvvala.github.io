@@ -219,6 +219,55 @@ export default function Home() {
         </div>
       </section>
 
+      {/*
+        ───────────────────── SERVICES TEASER ─────────────────────
+        Deliberately compact and placed after the studio introduction: the
+        products are the identity, and this is the second thing a visitor
+        learns, not the first. Full detail lives on /services.
+      */}
+      <section aria-labelledby="services-teaser-heading" className="border-t border-white/5 py-section">
+        <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-8 rounded-3xl border border-border-dark bg-surface/30 p-7 sm:p-10 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+            <div className="max-w-2xl">
+              <p className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-primary">
+                <span className="h-px w-8 bg-primary" aria-hidden="true" />
+                Work with me
+              </p>
+              <h2
+                id="services-teaser-heading"
+                className="mt-4 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl"
+              >
+                Need something built?
+              </h2>
+              <p className="mt-3 leading-relaxed text-text-secondary">
+                Alongside my own products, I help turn software ideas and product requirements into
+                practical, production-ready solutions — web applications, Android apps, backends and
+                MVPs.
+              </p>
+            </div>
+
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              <Link
+                to="/services"
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-background-dark transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                Explore services
+                <span className="material-symbols-outlined text-lg" aria-hidden="true">
+                  arrow_forward
+                </span>
+              </Link>
+              <Link
+                to="/contact"
+                onClick={() => track(EVENTS.contactClick, { from: 'home-services-teaser' })}
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl border border-white/10 px-5 text-sm font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                Discuss a project
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ───────────────────── ECOSYSTEM ───────────────────── */}
       <section aria-labelledby="ecosystem-heading" className="border-t border-white/5 py-section">
         <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">

@@ -17,6 +17,7 @@ export const routes = [
   { path: '/products', load: () => import('./pages/Products') },
   { path: '/products/:slug', load: () => import('./pages/ProductDetail') },
   { path: '/web-products', load: () => import('./pages/WebProducts') },
+  { path: '/services', load: () => import('./pages/Services') },
   { path: '/engineering', load: () => import('./pages/Engineering') },
   { path: '/about', load: () => import('./pages/About') },
   { path: '/timeline', load: () => import('./pages/Timeline') },

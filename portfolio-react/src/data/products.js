@@ -17,6 +17,10 @@
  * 4. A product only gets an indexable detail page when `hasDetailPage` is true,
  *    which requires a real `longDescription` and `features`. Thin pages hurt
  *    SEO more than they help.
+ * 5. `servicesCta: true` shows a "need something similar built?" prompt on the
+ *    detail page. Set it only where the product genuinely demonstrates work
+ *    someone would commission — tools and platforms, not games. Adding it to
+ *    everything turns the directory into an advert.
  *
  * ── HOW TO ADD A PRODUCT ───────────────────────────────────────────────────
  * - Add an entry below with at minimum: name, slug, shortDescription,
@@ -124,6 +128,7 @@ export const products = [
     ],
     related: ['pdf-toolkit', 'quickscan'],
     hasDetailPage: true,
+    servicesCta: true,
     independentBrand: true,
     brandNote: 'An independent web product by Hemanth Kumar Guvvala',
   },
@@ -164,6 +169,7 @@ export const products = [
     ],
     related: ['quick-resume'],
     hasDetailPage: true,
+    servicesCta: true,
     independentBrand: true,
     brandNote: 'An independent learning platform by Hemanth Kumar Guvvala',
   },
@@ -202,6 +208,7 @@ export const products = [
     keywords: ['QR code scanner', 'barcode reader', 'document scanner', 'offline scanner'],
     related: ['pdf-toolkit', 'ghost-notes', 'swapformat'],
     hasDetailPage: true,
+    servicesCta: true,
   },
   {
     name: 'PDF Reader, Editor & Scanner',
@@ -237,6 +244,7 @@ export const products = [
     keywords: ['PDF reader', 'PDF editor', 'PDF scanner', 'sign PDF', 'convert PDF'],
     related: ['quickscan', 'swapformat', 'ghost-notes'],
     hasDetailPage: true,
+    servicesCta: true,
   },
   {
     name: 'Ghost Notes: Secure Notepad',
@@ -273,6 +281,7 @@ export const products = [
     keywords: ['encrypted notes', 'secure notepad', 'offline notes', 'private notes app'],
     related: ['quickscan', 'pdf-toolkit'],
     hasDetailPage: true,
+    servicesCta: true,
   },
   {
     name: 'Daily Panchang: Hindu Calendar',

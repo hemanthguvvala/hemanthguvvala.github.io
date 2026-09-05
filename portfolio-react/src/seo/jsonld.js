@@ -130,6 +130,36 @@ export function productListSchema(list, { path = '/products', name } = {}) {
   };
 }
 
+/**
+ * ItemList of Service entries for the services page.
+ *
+ * Deliberately omits `offers`, `priceRange`, `aggregateRating` and any client
+ * or project count — there is no pricing to quote and no review data to cite.
+ * The provider is the existing Person node rather than an invented
+ * Organization, because one person does this work.
+ */
+export function servicesSchema(list, { path = '/services' } = {}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `Software and product development services by ${person.name}`,
+    url: canonicalUrl(path),
+    numberOfItems: list.length,
+    itemListElement: list.map((service, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Service',
+        name: service.title,
+        description: service.summary,
+        serviceType: service.title,
+        provider: { '@id': `${SITE_URL}/#person` },
+        areaServed: 'Worldwide',
+      },
+    })),
+  };
+}
+
 export function breadcrumbSchema(trail) {
   return {
     '@context': 'https://schema.org',

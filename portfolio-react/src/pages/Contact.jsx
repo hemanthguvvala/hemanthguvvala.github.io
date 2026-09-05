@@ -16,13 +16,14 @@ export default function Contact() {
   return (
     <div className="pb-section-lg pt-32">
       <SEO
-        title={`Contact ${person.name} | Lead Product Engineer`}
-        description="Get in touch with Hemanth Kumar Guvvala, Lead Product Engineer and independent product builder — by email, LinkedIn, GitHub or the Google Play developer profile."
+        title={`Contact ${person.name} | Discuss a Project`}
+        description="Get in touch with Hemanth Kumar Guvvala about software development, product work, consulting or collaboration — by email, LinkedIn or GitHub."
         path="/contact"
         jsonLd={[
           webPageSchema({
             title: `Contact ${person.name}`,
-            description: 'Email, LinkedIn, GitHub and Google Play developer profile.',
+            description:
+              'Contact Hemanth Kumar Guvvala about software development, product work, consulting or collaboration.',
             path: '/contact',
           }),
           personSchema(),
@@ -43,12 +44,41 @@ export default function Contact() {
             as="h1"
             align="center"
             eyebrow="Contact"
-            title="Let's talk"
-            description="Open to conversations about backend engineering, product work, and the things I've shipped. Email is the most reliable way to reach me."
+            title="Have an idea, product or engineering problem?"
+            description="Tell me what you're trying to build or improve. I take on product and MVP work, web and Android development, backend systems and technical consulting — and I'm equally happy to talk about something I've already shipped."
           />
         </motion.div>
 
-        <div className="mt-12">
+        {/* What people actually get in touch about. Text labels, not icons —
+            these carry the meaning. */}
+        <ul className="mt-10 flex list-none flex-wrap justify-center gap-2.5">
+          {[
+            'Software development',
+            'Product & MVP work',
+            'Technical consulting',
+            'Collaboration',
+          ].map((topic) => (
+            <li
+              key={topic}
+              className="rounded-lg border border-border-dark bg-card-dark/60 px-3.5 py-2 text-sm text-text-secondary"
+            >
+              {topic}
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-4 text-center text-sm text-text-muted">
+          Looking for detail on what I take on?{' '}
+          <Link
+            to="/services"
+            className="font-medium text-primary underline underline-offset-4 hover:text-primary-light"
+          >
+            See services
+          </Link>
+          .
+        </p>
+
+        <div className="mt-10">
           <a
             href={`mailto:${person.email}`}
             onClick={() => track(EVENTS.contactClick, { from: 'contact-primary' })}
