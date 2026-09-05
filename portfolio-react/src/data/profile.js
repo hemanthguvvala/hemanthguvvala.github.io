@@ -20,7 +20,7 @@ export const person = {
   company: 'IBS Software',
   companyUrl: 'https://www.ibsgroup.com/',
   location: 'India',
-  email: 'guvvalahemanthkumar@gmail.com',
+  email: 'hemanthkumarguvvala@gmail.com',
   resumeUrl: '/Hemanth_Kumar_Guvvala_Resume.pdf',
   avatar: 'https://github.com/hemanthguvvala.png',
   tagline: 'I build useful digital products and software systems.',
