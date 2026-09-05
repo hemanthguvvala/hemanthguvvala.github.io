@@ -1,69 +1,108 @@
 import { Link } from 'react-router-dom';
+import SocialLinks from './SocialLinks';
+import { person, studio } from '../data/profile';
+import { PLAY_DEVELOPER_URL } from '../data/products';
+import { EVENTS, track } from '../utils/analytics';
+
+const columns = [
+  {
+    heading: 'Products',
+    links: [
+      { to: '/products', label: 'All products' },
+      { to: '/web-products', label: 'Web products' },
+      { to: '/products/swapformat', label: 'SwapFormat' },
+      { to: '/products/codedepth', label: 'CodeDepth' },
+    ],
+  },
+  {
+    heading: 'Profile',
+    links: [
+      { to: '/about', label: 'About' },
+      { to: '/engineering', label: 'Engineering' },
+      { to: '/timeline', label: 'Journey' },
+      { to: '/awards', label: 'Awards' },
+    ],
+  },
+];
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="relative border-t border-white/5 bg-background-dark z-10 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col items-center">
-        {/* Top section */}
-        <div className="flex flex-col md:flex-row w-full justify-between items-center gap-8 mb-12">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <h3 className="text-white text-xl font-bold font-display">Let's build something durable.</h3>
-            <p className="text-slate-500 text-sm">Open for consulting and architectural reviews.</p>
+    <footer className="relative z-10 border-t border-white/5 bg-background-dark pb-8 pt-16">
+      <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
+          <div className="col-span-2 flex flex-col gap-4 md:col-span-2">
+            <p className="font-display text-xl font-bold text-white">
+              Let&rsquo;s build something durable.
+            </p>
+            <p className="max-w-sm text-sm leading-relaxed text-text-secondary">
+              {studio.positioning}
+            </p>
+            <SocialLinks className="mt-2" />
           </div>
-          <div className="flex gap-4">
-            <a
-              href="https://github.com/hemanthguvvala"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="size-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-primary hover:bg-primary/10 transition-all"
-              aria-label="GitHub"
-            >
-              <span className="material-symbols-outlined">code</span>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/hemanthkumarguvvala/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="size-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-primary hover:bg-primary/10 transition-all"
-              aria-label="LinkedIn"
-            >
-              <span className="material-symbols-outlined">work</span>
-            </a>
-            <a
-              href="https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="size-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-primary hover:bg-primary/10 transition-all"
-              aria-label="Google Play Store"
-            >
-              <span className="material-symbols-outlined">shop</span>
-            </a>
-            <a
-              href="mailto:guvvalahemanthkumar@gmail.com"
-              className="size-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-primary hover:bg-primary/10 transition-all"
-              aria-label="Email"
-            >
-              <span className="material-symbols-outlined">alternate_email</span>
-            </a>
-          </div>
+
+          {columns.map((col) => (
+            <nav key={col.heading} aria-labelledby={`footer-${col.heading}`}>
+              <h2
+                id={`footer-${col.heading}`}
+                className="font-mono text-xs uppercase tracking-[0.18em] text-text-muted"
+              >
+                {col.heading}
+              </h2>
+              <ul className="mt-4 flex list-none flex-col gap-2.5">
+                {col.links.map((l) => (
+                  <li key={l.to}>
+                    <Link
+                      to={l.to}
+                      className="text-sm text-text-secondary transition-colors hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        {/* Divider */}
-        <div className="w-full h-px bg-white/5 mb-8"></div>
+        <div className="my-10 h-px w-full bg-white/5" />
 
-        {/* Bottom section */}
-        <div className="flex flex-col md:flex-row justify-between items-center w-full gap-6 text-sm">
-          <p className="text-slate-600">© 2026 Hemanth Kumar Guvvala. All rights reserved.</p>
-          <div className="flex gap-8">
-            <Link to="/contact" className="text-slate-600 hover:text-primary transition-colors">Contact</Link>
-            <a 
-              href="/Hemanth_Kumar_Guvvala_Resume.pdf" 
-              download 
-              className="text-slate-600 hover:text-primary transition-colors"
-            >
-              Download Resume
-            </a>
-          </div>
+        <div className="flex flex-col items-center justify-between gap-5 text-sm md:flex-row">
+          <p className="text-text-muted">
+            © {year} {person.name}. {studio.attribution}.
+          </p>
+          <ul className="flex list-none flex-wrap items-center justify-center gap-6">
+            <li>
+              <Link
+                to="/contact"
+                onClick={() => track(EVENTS.contactClick, { from: 'footer' })}
+                className="text-text-muted transition-colors hover:text-primary"
+              >
+                Contact
+              </Link>
+            </li>
+            <li>
+              <a
+                href={PLAY_DEVELOPER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted transition-colors hover:text-primary"
+              >
+                View all apps
+              </a>
+            </li>
+            <li>
+              <a
+                href={person.resumeUrl}
+                download
+                onClick={() => track(EVENTS.resumeDownload, { from: 'footer' })}
+                className="text-text-muted transition-colors hover:text-primary"
+              >
+                Download resume
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>

@@ -1,264 +1,200 @@
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import SEO from '../components/SEO';
+import SectionHeader from '../components/SectionHeader';
+import ProductGrid, { BuildingStrip } from '../components/ProductGrid';
+import CTASection from '../components/CTASection';
+import {
+  CATEGORIES,
+  PLAY_DEVELOPER_URL,
+  isRenderableCard,
+  products,
+} from '../data/products';
+import { person } from '../data/profile';
+import { breadcrumbSchema, productListSchema, webPageSchema } from '../seo/jsonld';
+import { EVENTS, track } from '../utils/analytics';
 
-const products = [
-  {
-    name: 'Ashta Chamma',
-    desc: 'Traditional Indian strategy board game with multiplayer support and AI opponents.',
-    tags: ['Android', 'Kotlin', 'Game Engine'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPlAp35de9QdKwxlgd28LcOZQlYqq882Gno-E3_maeSsy2PEKUxpicahYUbaEPBV4gVdIyqMj6V7Hi99YMWOvOB1hJegKrM3CFKrX9tGVd1PZymmjWYIrx7MOjSifyqk2rBU4BjLjaHxEYYBItTr6jg8UU1Ee24ylKlPJxnVwor9O3UmgA4FBAI9AEyp9Hx7wP3qs-lU2-wlnm2YaH52ph7ZFcdcROzQFjmbKy9SZroyb34wwgbahq3wjVHMtkVOmpr0RvHzWYMhU',
-    badge: { text: 'Live', type: 'live' },
-    rating: '4.6',
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'BrainBuzz: Riddles & Puzzles',
-    desc: 'Collection of mind-bending riddles, logic puzzles, and brain teasers with progressive difficulty.',
-    tags: ['Android', 'Java', 'SQLite'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSDmzYh_p4EM8R0daf3LeAbA5pqWT-VvDqxDuNIhq0d5BXWO-W7hZGmYpjYtE55OQfDMSXxKxbrk_Ed6L6maqm7oWnQuX8JZpi1IWzN9IgEz6ddb1KMPA0YlSqkwRi1h9DDIOs5UYLegTLpsNDRZojkF8p8cR7FtwjzKjaH9sUdp9O5If_unH6lAT2DQzSnDyRyS6aNd_Rb6ezLizmKLNmBOHsGz0dF-ggO4a4eSb_krQqGiNElW25BTckcl0iUJpZjBRA4EGE3gk',
-    badge: { text: 'Featured', type: 'featured' },
-    rating: '4.6',
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'The Dot and The Line',
-    desc: 'Minimalist arcade game with physics-based mechanics and endless gameplay.',
-    tags: ['Android', 'Unity', 'C#'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLRhd-JYDGPPw1Gn4KHlDMIqdpjfMESvK97Ml3njzpLf-fAVE97OatiBU85PrMzIhWJxPWMfE8wrGASwlJ3Ql3ySg5tivAed-VwXgof9elaso894HcbaxFXWNJYdiE3oHfX1B6O3TXJ_Z976I1QeqQx8d7W5UeW4lrs9dlTxJXwyhyBF3NZxnSD3aitGgg-plmKSy-86t46Dlfeen1WTHaQsFfvHRPCOwT5tPCnflbBmvStopfatxXurA8Go9JpQ9SMkSc6WY-_KE',
-    badge: null,
-    rating: '4.4',
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'Circuit Flow: Logic Puzzle',
-    desc: 'Connect circuits and solve electrical flow puzzles with increasing complexity.',
-    tags: ['Android', 'Kotlin', 'Canvas API'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAzWR6qsccuDFgflveUJztpFOjl4LsBbTVHRvQ3JX_KBlZ-QuahYpy1mJ6K56SvoGSeSKphajUlQLM8oOIMrBcVaJrzelloHZf1eRkesjmLZBZJjJjIeBx2J5GjX7N8E8VdsR0UbqTWK4l7hqgfGZ3ECk0AxXTNLbjOsKFmgl1ofQJI4DuMLW0j4uk3NDZIMKYR142WSTiniFb2ZnFwoVUQJpeoWi5BQLK51HEw8qMYFf1zWpcJNaN05ht0YBXIJKh5v0jZrRRsUcc',
-    badge: null,
-    rating: '4.0',
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'QuickScan: QR & Barcode',
-    desc: 'Fast and reliable QR code and barcode scanner with history tracking and batch scanning.',
-    tags: ['Android', 'ML Kit', 'CameraX'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAK1yjIUSMNxLbITNq8fuP5O_RJSL8WEi_XgbZezA5Jl55nLM-idyzBZxXF1M1DRI_4im8VkdnYX6kldGydgtvW7ZT6KnhsK9ITJVdTrPThvugK1ubqjUSoCbTRYFMBf5TUhI7t2dXam4WYn_ltJXoLuhkPFnlgjbtW_OR3vuf8dP-tf-bVv_Z70xz2LtybLYmY51x0bcR7NWPo4lDa-SMgYyy1EX1ejq6ur9b7TXhGuOuuQGyoR8GFOw3h8ZI29aRFh0bWnUwH9Vs',
-    badge: { text: 'Live', type: 'live' },
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'PDF Toolkit: Merge & Compress',
-    desc: 'Complete PDF utility with merge, split, compress, and convert features.',
-    tags: ['Android', 'PDF Library', 'Kotlin'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBky3UKG5MyyaeFYfNERFbOPDDkk0Q22V-A3u9OP7Q-gBy3F1L2-X35vopcPstq7Y7ccifSm52zgs6gFeVRLxhAzrluCGcU_TTs3sdKdui7uKZARaM62okM4grOoE2SsGqrjoS1md-BxiMkWbubCqjkQorzcVWH3kjxVntyiYtwVwouvTalh8bplUII7wRkox2q4ioo7r9rTEFoGWo9Ln8dEZ7esxU6snlbbG4_5bhsNibFcnTHpHeNPVSIxavL1nhPm4zInm8VFkQ',
-    badge: null,
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'Stitch Infinite',
-    desc: 'Creative photo editor with filters, stickers, and collage maker for social media.',
-    tags: ['Android', 'Image Processing', 'OpenCV'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLRhd-JYDGPPw1Gn4KHlDMIqdpjfMESvK97Ml3njzpLf-fAVE97OatiBU85PrMzIhWJxPWMfE8wrGASwlJ3Ql3ySg5tivAed-VwXgof9elaso894HcbaxFXWNJYdiE3oHfX1B6O3TXJ_Z976I1QeqQx8d7W5UeW4lrs9dlTxJXwyhyBF3NZxnSD3aitGgg-plmKSy-86t46Dlfeen1WTHaQsFfvHRPCOwT5tPCnflbBmvStopfatxXurA8Go9JpQ9SMkSc6WY-_KE',
-    badge: null,
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'Cricket Highlights',
-    desc: 'Stay updated with latest cricket match highlights, scores, and player statistics.',
-    tags: ['Android', 'REST API', 'Video Player'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSDmzYh_p4EM8R0daf3LeAbA5pqWT-VvDqxDuNIhq0d5BXWO-W7hZGmYpjYtE55OQfDMSXxKxbrk_Ed6L6maqm7oWnQuX8JZpi1IWzN9IgEz6ddb1KMPA0YlSqkwRi1h9DDIOs5UYLegTLpsNDRZojkF8p8cR7FtwjzKjaH9sUdp9O5If_unH6lAT2DQzSnDyRyS6aNd_Rb6ezLizmKLNmBOHsGz0dF-ggO4a4eSb_krQqGiNElW25BTckcl0iUJpZjBRA4EGE3gk',
-    badge: null,
-    rating: '3.1',
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'Ghost Notes: Secure Notepad',
-    desc: 'Privacy-focused notes app with encryption, password protection, and cloud backup.',
-    tags: ['Android', 'Encryption', 'Room DB'],
-    badge: null,
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'ZenLife AI',
-    desc: 'AI-powered mindfulness and meditation assistant with personalized recommendations.',
-    tags: ['Android', 'ML', 'TensorFlow Lite'],
-    badge: null,
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-  {
-    name: 'Zodiac Age Calculator',
-    desc: 'Discover your zodiac sign, birth chart, and daily horoscopes with detailed analysis.',
-    tags: ['Android', 'Kotlin', 'API Integration'],
-    badge: null,
-    playStoreUrl: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
+/**
+ * Filters are derived from the data, so adding a product in a new category
+ * makes its filter appear automatically. Counts are always real.
+ */
+const FILTERS = [
+  { key: 'all', label: 'All', match: () => true },
+  { key: 'android', label: 'Mobile Apps', match: (p) => p.platform === 'android' },
+  { key: 'web', label: 'Web Products', match: (p) => p.platform === 'web' },
+  ...Object.entries(CATEGORIES).map(([key, label]) => ({
+    key,
+    label,
+    match: (p) => p.category === key,
+  })),
+  { key: 'archived', label: 'Archived', match: (p) => p.status === 'archived' },
 ];
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
+/** Archived products are excluded from every filter except "Archived" itself. */
+const visibleFor = (filter) => {
+  const f = FILTERS.find((x) => x.key === filter) ?? FILTERS[0];
+  return products.filter((p) => {
+    if (f.key !== 'archived' && p.status === 'archived') return false;
+    return f.match(p);
+  });
 };
-const cardItem = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
+
+const counts = Object.fromEntries(
+  FILTERS.map((f) => [f.key, visibleFor(f.key).filter(isRenderableCard).length]),
+);
 
 export default function Products() {
+  const [params, setParams] = useSearchParams();
+  const [query, setQuery] = useState('');
+
+  const active = FILTERS.some((f) => f.key === params.get('category'))
+    ? params.get('category')
+    : 'all';
+
+  const setFilter = (key) => {
+    // Keep the default filter out of the URL so /products stays canonical.
+    setParams(key === 'all' ? {} : { category: key }, { replace: true });
+    track(EVENTS.filterChange, { filter: key });
+  };
+
+  const results = useMemo(() => {
+    const base = visibleFor(active);
+    const q = query.trim().toLowerCase();
+    if (!q) return base;
+    return base.filter((p) =>
+      [p.name, p.shortDescription, p.tagline, CATEGORIES[p.category], ...(p.keywords ?? [])]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+        .includes(q),
+    );
+  }, [active, query]);
+
+  const cards = results.filter(isRenderableCard);
+  const building = results.filter(
+    (p) => !isRenderableCard(p) && p.status === 'in-development',
+  );
+
+  const listed = products.filter(isRenderableCard);
+
   return (
-    <div className="page-container py-12 md:py-20">
-      <div className="max-w-[1280px] mx-auto px-5 md:px-10">
-        {/* Page Heading */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16 relative">
-          <div className="absolute -top-20 -left-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="flex flex-col gap-4 max-w-2xl relative z-10">
-            <div className="flex items-center gap-2 text-primary font-mono text-sm tracking-wider uppercase">
-              <span className="w-8 h-[1px] bg-primary"></span>
-              Selected Work
+    <div className="pb-section-lg pt-32">
+      <SEO
+        title={`Products by ${person.name} | Apps & Web Products`}
+        description="Explore mobile apps, web products, utilities, games, productivity tools and developer-focused products built by Hemanth Kumar Guvvala."
+        path="/products"
+        jsonLd={[
+          webPageSchema({
+            title: `Products by ${person.name}`,
+            description:
+              'Mobile apps, web products and developer tools designed, built and launched by Hemanth Kumar Guvvala.',
+            path: '/products',
+          }),
+          productListSchema(listed),
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Products', path: '/products' },
+          ]),
+        ]}
+      />
+
+      <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
+        <SectionHeader
+          as="h1"
+          eyebrow="Product directory"
+          title="Products I've built"
+          description="A collection of mobile apps, web products and experiments I've designed, built and launched. Each keeps its own identity — what they share is that one person builds and maintains them."
+        />
+
+        {/* ── Filters + search ── */}
+        <div className="mt-10 flex flex-col gap-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div
+              role="group"
+              aria-label="Filter products by type"
+              className="-mx-1 flex flex-wrap gap-2 px-1"
+            >
+              {FILTERS.filter((f) => counts[f.key] > 0).map((f) => {
+                const isActive = active === f.key;
+                return (
+                  <button
+                    key={f.key}
+                    type="button"
+                    onClick={() => setFilter(f.key)}
+                    aria-pressed={isActive}
+                    className={`inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border px-3.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                      isActive
+                        ? 'border-primary bg-primary/15 text-primary'
+                        : 'border-border-dark bg-card-dark/60 text-text-secondary hover:border-primary/40 hover:text-white'
+                    }`}
+                  >
+                    {f.label}
+                    <span className="font-mono text-[11px] opacity-70">{counts[f.key]}</span>
+                  </button>
+                );
+              })}
             </div>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-[-0.033em] text-white">
-              Android Apps &{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-300">
-                Projects
+
+            <div className="relative lg:w-72">
+              <label htmlFor="product-search" className="sr-only">
+                Search products
+              </label>
+              <span
+                className="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[20px] text-text-muted"
+                aria-hidden="true"
+              >
+                search
               </span>
-            </h1>
-            <p className="text-text-secondary text-lg font-normal leading-relaxed max-w-lg">
-              Published 11+ Android applications on Google Play Store with 10,000+ downloads and 4.0+ average rating across puzzle games, productivity tools, and utilities.
-            </p>
+              <input
+                id="product-search"
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search products"
+                className="min-h-[44px] w-full rounded-lg border border-border-dark bg-card-dark/60 pl-10 pr-3 text-sm text-white placeholder:text-text-muted focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
+              />
+            </div>
           </div>
+
+          <p aria-live="polite" className="font-mono text-xs text-text-muted">
+            {cards.length} {cards.length === 1 ? 'product' : 'products'}
+            {query.trim() && ` matching “${query.trim()}”`}
+          </p>
         </div>
 
-        {/* Products Grid */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
-        >
-          {products.map((product, index) => (
-            <motion.article
-              key={index}
-              variants={cardItem}
-              tabIndex={product.badge?.type === 'coming' ? -1 : 0}
-              role="link"
-              aria-label={`View ${product.name} on Play Store`}
-              onClick={() => product.playStoreUrl && product.badge?.type !== 'coming' && window.open(product.playStoreUrl, '_blank', 'noopener,noreferrer')}
-              onKeyDown={(e) => {
-                if ((e.key === 'Enter' || e.key === ' ') && product.playStoreUrl && product.badge?.type !== 'coming') {
-                  e.preventDefault();
-                  window.open(product.playStoreUrl, '_blank', 'noopener,noreferrer');
-                }
-              }}
-              className={`group relative flex flex-col h-full bg-card-dark border border-border-dark rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(0,194,158,0.1)] hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 ${
-                product.badge?.type === 'coming' ? '' : 'cursor-pointer'
-              }`}
-            >
-              {/* Image */}
-              <div className="aspect-[4/3] w-full overflow-hidden bg-[#1c322d] relative">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 z-10"></div>
-                {product.image ? (
-                  <img
-                    src={product.image}
-                    alt={`${product.name} app screenshot`}
-                    loading="lazy"
-                    className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${
-                      product.badge?.type === 'coming' ? 'blur-sm scale-110' : ''
-                    }`}
-                  />
-                ) : (
-                  <div className="w-full h-full bg-[#1c322d] flex items-center justify-center">
-                    <span className="material-symbols-outlined text-4xl text-primary/30" aria-hidden="true">android</span>
-                  </div>
-                )}
+        <div className="mt-8">
+          <ProductGrid
+            products={cards}
+            eagerCount={3}
+            emptyMessage={
+              query.trim()
+                ? `Nothing matches “${query.trim()}”. Try a different search.`
+                : 'No products in this category yet.'
+            }
+          />
+        </div>
 
-                {/* Coming soon lock overlay */}
-                {product.badge?.type === 'coming' && (
-                  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center">
-                    <span className="material-symbols-outlined text-4xl text-white">lock</span>
-                    <span className="text-white font-display font-bold text-lg mt-2">Coming Soon</span>
-                  </div>
-                )}
+        {building.length > 0 && (
+          <div className="mt-10">
+            <BuildingStrip products={building} />
+          </div>
+        )}
 
-                {/* Badge */}
-                {product.badge && product.badge.type === 'live' && (
-                  <div className="absolute top-4 right-4 z-20">
-                    <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-xs font-medium text-white">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2 animate-pulse"></span>
-                      Live
-                    </span>
-                  </div>
-                )}
-                {product.badge && product.badge.type === 'featured' && (
-                  <div className="absolute top-4 right-4 z-20">
-                    <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-amber-500/20 backdrop-blur-md border border-amber-500/30 text-xs font-medium text-amber-500">
-                      <span className="material-symbols-outlined text-[14px] mr-1">trophy</span>
-                      Featured
-                    </span>
-                  </div>
-                )}
-                
-                {/* Rating */}
-                {product.rating && (
-                  <div className="absolute bottom-4 left-4 z-20">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 text-xs font-bold text-white">
-                      <span className="material-symbols-outlined text-[14px] text-amber-400">star</span>
-                      {product.rating}
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* Content */}
-              <div className={`flex flex-col flex-1 p-6 gap-4 ${product.badge?.type === 'coming' ? 'opacity-75' : ''}`}>
-                <div className="flex justify-between items-start gap-3">
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-display text-xl md:text-2xl font-bold text-white group-hover:text-primary transition-colors truncate">
-                      {product.name}
-                    </h3>
-                    <p className="mt-2 text-sm text-text-secondary line-clamp-2">{product.desc}</p>
-                  </div>
-                  {product.badge?.type !== 'coming' && product.playStoreUrl && (
-                    <button 
-                      aria-label={`View ${product.name} on Play Store`}
-                      className="flex-shrink-0 text-slate-500 group-hover:text-primary transition-colors transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                    >
-                      <span className="material-symbols-outlined">arrow_outward</span>
-                    </button>
-                  )}
-                </div>
-                <div className="mt-auto pt-4 border-t border-white/5">
-                  <div className="flex flex-wrap gap-2">
-                    {product.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className={`px-2.5 py-1 rounded text-xs font-medium border ${
-                          product.badge?.type === 'coming'
-                            ? 'bg-slate-800 text-slate-400 border-slate-700'
-                            : 'bg-primary/10 text-primary border-primary/20'
-                        }`}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </motion.div>
-
-        {/* Bottom CTA */}
-        <div className="flex flex-col items-center justify-center py-10">
-          <p className="text-text-secondary text-sm mb-6 uppercase tracking-widest">More apps on Play Store</p>
+        <p className="mt-10 text-sm text-text-muted">
+          Looking for everything on Google Play?{' '}
           <a
-            href="https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala"
+            href={PLAY_DEVELOPER_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2 text-white font-bold text-lg border-b-2 border-primary/50 hover:border-primary transition-all pb-1"
+            className="font-medium text-primary underline underline-offset-4 hover:text-primary-light"
           >
-            <span>View Play Store Profile</span>
-            <span className="material-symbols-outlined transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            View all apps on the developer page
           </a>
+          .
+        </p>
+
+        <div className="mt-16">
+          <CTASection />
         </div>
       </div>
     </div>

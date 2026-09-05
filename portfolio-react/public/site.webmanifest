@@ -1,0 +1,13 @@
+{
+  "name": "Hemanth Kumar Guvvala — Lead Product Engineer & Product Builder",
+  "short_name": "Hemanth KG",
+  "description": "Lead Product Engineer and independent product builder creating mobile apps, web products and developer tools.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0f231f",
+  "theme_color": "#0f231f",
+  "icons": [
+    { "src": "/assets/og/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/og/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

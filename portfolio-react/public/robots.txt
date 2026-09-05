@@ -1,4 +1,8 @@
+# https://hemanthguvvala.github.io/
 User-agent: *
 Allow: /
+
+# CSS, JS and images must stay crawlable for rendering-based indexing.
+Allow: /assets/
 
 Sitemap: https://hemanthguvvala.github.io/sitemap.xml

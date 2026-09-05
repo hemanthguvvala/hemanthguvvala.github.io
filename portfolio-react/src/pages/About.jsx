@@ -1,138 +1,286 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
+import SectionHeader from '../components/SectionHeader';
+import { awards, education, experience } from '../data/career';
+import { androidProducts, liveProducts, webProducts } from '../data/products';
+import { person, studio } from '../data/profile';
+import { breadcrumbSchema, personSchema, webPageSchema } from '../seo/jsonld';
+import profileImage from '../assets/my_profile_image.jpg';
+
+const principles = [
+  {
+    icon: 'target',
+    title: 'Solve one problem properly',
+    body: 'I build tools that solve a specific problem rather than software for its own sake. A product that does one job well beats a product that does six jobs adequately.',
+  },
+  {
+    icon: 'lock',
+    title: 'Default to on-device',
+    body: 'Several of my products deliberately avoid servers. SwapFormat converts images in the browser; QuickScan and Ghost Notes keep everything on the phone. If the data does not need to leave, it should not.',
+  },
+  {
+    icon: 'inventory',
+    title: 'Ship, then be honest',
+    body: 'Launching is the start of the work. Some products get iterated on; some get archived. Pretending an unmaintained app is still alive helps nobody.',
+  },
+];
 
 export default function About() {
+  const liveAndroid = androidProducts.filter((p) => p.status === 'live').length;
+
   return (
-    <div className="page-container py-16 lg:py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Decorative Background */}
-        <div className="absolute top-0 right-0 -z-10 h-[600px] w-[600px] rounded-full bg-primary/5 blur-[120px]"></div>
+    <div className="pb-section-lg pt-32">
+      <SEO
+        title={`About ${person.name} | Product Engineer & Builder`}
+        description="Lead Product Engineer at IBS Software building event-driven systems in Java, Spring Boot and Kafka — and an independent product builder shipping Android apps and web products."
+        path="/about"
+        jsonLd={[
+          webPageSchema({
+            title: `About ${person.name}`,
+            description:
+              'Career, engineering philosophy and independent product building.',
+            path: '/about',
+          }),
+          personSchema(),
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'About', path: '/about' },
+          ]),
+        ]}
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Typography & Philosophy */}
+      <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
+        {/* ── Intro ── */}
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            className="lg:col-span-6 flex flex-col gap-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col gap-7 lg:col-span-7"
           >
-            <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-primary"></span>
-              <span className="text-primary text-xs font-bold tracking-widest uppercase">01. About Me</span>
-            </div>
-            <h1 className="text-white text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight font-display">
-              Translating{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-200">
-                complex needs
-              </span>{' '}
-              into robust solutions.
-            </h1>
-            <div className="space-y-6">
-              <p className="text-slate-400 text-lg leading-relaxed max-w-xl">
-                Born and raised in Rayachoty, I completed my entire education in my hometown — from CS Raju High
-                School through B.Tech ECE at SSITS. In January 2022, I started my career at Marlabs as a Software
-                Engineer, where my work with client IBS Software led to being head-hunted as a permanent employee
-                within 10 months.
-              </p>
-              <p className="text-slate-400 text-lg leading-relaxed max-w-xl">
-                Today as Lead Product Engineer at IBS Software, my expertise spans Java, Spring Boot, and
-                event-driven microservices with Kafka. I've delivered 30+ enterprise features to 10+ global airlines
-                and resolved over 980 production issues maintaining 100% SLA adherence.
-              </p>
-            </div>
+            <SectionHeader
+              as="h1"
+              eyebrow="About"
+              title={
+                <>
+                  Software engineering is my profession.{' '}
+                  <span className="bg-gradient-to-r from-primary to-emerald-200 bg-clip-text text-transparent">
+                    Product building
+                  </span>{' '}
+                  is how I explore ideas outside it.
+                </>
+              }
+            />
 
-            {/* Signature / Quote Block */}
-            <div className="mt-8 border-l-2 border-primary/30 pl-6 py-2">
-              <p className="text-slate-500 italic font-medium">
-                "I pioneered the organization-wide adoption of GitHub Copilot, demonstrably improving developer productivity and code quality."
+            <div className="flex max-w-prose flex-col gap-5 leading-relaxed text-text-secondary">
+              <p>
+                I&rsquo;m {person.name}, a {person.jobTitle} at {person.company}. I work on
+                event-driven backend systems — Java, Spring Boot and Apache Kafka — for platforms
+                used by global airlines. So far that has meant 30+ enterprise features delivered to
+                10+ airlines, 980+ production issues resolved at 100% SLA adherence, and a 30%
+                improvement in transaction throughput.
               </p>
-              <p className="text-primary text-sm font-bold mt-2">— Hemanth K.G., 1st Place — Prompt Engineering Challenge 2025</p>
+              <p>
+                Outside of that, I design and ship my own products. {liveAndroid} Android apps are
+                live on Google Play, alongside {webProducts.length} web products: SwapFormat, an
+                in-browser image converter, and CodeDepth, a Java interview preparation platform.
+              </p>
             </div>
           </motion.div>
 
-          {/* Right Column: Abstract Visual & Metrics */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="lg:col-span-6 relative h-full min-h-[500px] flex items-center justify-center lg:justify-end"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="lg:col-span-5"
           >
-            {/* Main Card */}
-            <div className="relative z-10 w-full max-w-md aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 bg-surface-dark shadow-2xl">
-              {/* Abstract background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-surface-dark to-background-dark opacity-80"></div>
-              {/* Grid overlay */}
-              <div
-                className="absolute inset-0 opacity-30"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-                  backgroundSize: '40px 40px',
-                }}
-              ></div>
-              {/* Gradient overlays */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
-              <div className="absolute inset-0 bg-gradient-to-b from-background-dark/20 to-background-dark/80"></div>
-
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 w-full p-8 flex flex-col gap-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="size-2 rounded-full bg-primary animate-pulse"></div>
-                  <span className="text-primary text-xs font-mono uppercase tracking-widest">System Online</span>
-                </div>
-                <div className="h-px w-full bg-gradient-to-r from-primary/50 to-transparent"></div>
-                {/* Stat 1 */}
-                <div className="flex justify-between items-end">
-                  <div>
-                    <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Issues Resolved</p>
-                    <p className="text-white text-2xl font-bold font-mono">980+</p>
-                  </div>
-                  <span className="material-symbols-outlined text-primary/50">bug_report</span>
-                </div>
-                {/* Stat 2 */}
-                <div className="flex justify-between items-end">
-                  <div>
-                    <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">SLA Adherence</p>
-                    <p className="text-white text-2xl font-bold font-mono">100%</p>
-                  </div>
-                  <span className="material-symbols-outlined text-primary/50">verified</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Floating Card: Experience */}
-            <div className="absolute -left-4 top-20 z-20 hidden md:flex flex-col gap-2 p-4 rounded-xl bg-surface-light/90 backdrop-blur-sm border border-white/10 shadow-xl max-w-[180px]">
-              <div className="size-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary mb-1">
-                <span className="material-symbols-outlined">database</span>
-              </div>
-              <span className="text-white font-bold text-lg leading-none">~4 Years</span>
-              <span className="text-slate-400 text-xs">Product Engineering</span>
-            </div>
-
-            {/* Floating Card: Stack */}
-            <div className="absolute -right-6 bottom-32 z-20 hidden md:flex items-center gap-3 p-4 rounded-xl bg-background-dark border border-primary/30 shadow-xl shadow-primary/5">
-              <div className="flex -space-x-3">
-                <div className="size-8 rounded-full bg-[#395650] flex items-center justify-center border border-background-dark text-white text-[10px] font-bold">
-                  JV
-                </div>
-                <div className="size-8 rounded-full bg-[#2a4540] flex items-center justify-center border border-background-dark text-white text-[10px] font-bold">
-                  SB
-                </div>
-                <div className="size-8 rounded-full bg-[#1b3831] flex items-center justify-center border border-background-dark text-white text-[10px] font-bold">
-                  KF
-                </div>
-              </div>
-              <div>
-                <p className="text-white text-xs font-bold">Core Stack</p>
-                <p className="text-primary text-[10px]">Production Ready</p>
-              </div>
+            <div className="relative mx-auto w-full max-w-sm">
+              <div aria-hidden="true" className="absolute -inset-4 rounded-3xl bg-primary/10 blur-3xl" />
+              <img
+                src={profileImage}
+                alt={`${person.name}, ${person.jobTitle}`}
+                width={384}
+                height={480}
+                loading="eager"
+                decoding="async"
+                className="relative aspect-[4/5] w-full rounded-2xl border border-white/10 object-cover shadow-raised"
+              />
             </div>
           </motion.div>
         </div>
 
-        {/* Divider */}
-        <div className="mt-20">
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-        </div>
+        {/* ── What I build ── */}
+        <section aria-labelledby="build-heading" className="mt-section border-t border-white/5 pt-section">
+          <SectionHeader
+            id="build-heading"
+            eyebrow="What I build"
+            title="Two kinds of work"
+            description="One pays the bills and taught me how large systems actually behave. The other is where I get to own the whole thing."
+          />
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            <div className="flex flex-col gap-4 rounded-2xl border border-border-dark bg-card-dark/70 p-7">
+              <span className="material-symbols-outlined text-primary" aria-hidden="true">
+                dns
+              </span>
+              <h3 className="font-display text-xl font-bold text-white">Enterprise engineering</h3>
+              <p className="leading-relaxed text-text-secondary">
+                Distributed, event-driven systems in the airline domain — the kind where
+                correctness matters more than novelty and an outage has real consequences.
+              </p>
+              <Link
+                to="/engineering"
+                className="mt-auto inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-light"
+              >
+                Engineering &amp; expertise
+                <span className="material-symbols-outlined text-lg" aria-hidden="true">
+                  arrow_forward
+                </span>
+              </Link>
+            </div>
+
+            <div className="flex flex-col gap-4 rounded-2xl border border-border-dark bg-card-dark/70 p-7">
+              <span className="material-symbols-outlined text-primary" aria-hidden="true">
+                deployed_code
+              </span>
+              <h3 className="font-display text-xl font-bold text-white">Independent products</h3>
+              <p className="leading-relaxed text-text-secondary">
+                {liveProducts.length} live products across Android and the web — utilities,
+                productivity tools, games and a developer learning platform. Design, build, launch,
+                support: all of it.
+              </p>
+              <Link
+                to="/products"
+                className="mt-auto inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-light"
+              >
+                Browse the products
+                <span className="material-symbols-outlined text-lg" aria-hidden="true">
+                  arrow_forward
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── How I think about products ── */}
+        <section aria-labelledby="principles-heading" className="mt-section border-t border-white/5 pt-section">
+          <SectionHeader
+            id="principles-heading"
+            eyebrow="How I think about products"
+            title="Three things I keep coming back to"
+          />
+
+          <ul className="mt-10 grid list-none gap-5 lg:grid-cols-3">
+            {principles.map((p) => (
+              <li
+                key={p.title}
+                className="flex flex-col gap-3 rounded-2xl border border-border-dark bg-card-dark/70 p-7"
+              >
+                <span className="material-symbols-outlined text-primary" aria-hidden="true">
+                  {p.icon}
+                </span>
+                <h3 className="font-display text-lg font-bold text-white">{p.title}</h3>
+                <p className="text-sm leading-relaxed text-text-secondary">{p.body}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* ── Career ── */}
+        <section aria-labelledby="career-heading" className="mt-section border-t border-white/5 pt-section">
+          <SectionHeader
+            id="career-heading"
+            eyebrow="Career"
+            title="Where I've worked"
+            description="Born and raised in Rayachoty, where I also completed my entire education."
+          />
+
+          <ol className="mt-10 flex list-none flex-col gap-4">
+            {experience.map((role) => (
+              <li
+                key={role.id}
+                className="flex flex-col gap-2 rounded-2xl border border-border-dark bg-card-dark/70 p-6 sm:flex-row sm:items-start sm:gap-6"
+              >
+                <span className="shrink-0 font-mono text-xs text-primary sm:w-44">
+                  {role.dateRange}
+                </span>
+                <span className="flex-1">
+                  <span className="flex flex-wrap items-center gap-2">
+                    <span className="font-display text-lg font-bold text-white">{role.title}</span>
+                    {role.isCurrent && (
+                      <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary">
+                        Current
+                      </span>
+                    )}
+                  </span>
+                  <span className="mt-0.5 block text-sm text-primary">{role.company}</span>
+                  <span className="mt-2 block text-sm leading-relaxed text-text-secondary">
+                    {role.description}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* ── Education ── */}
+        <section aria-labelledby="education-heading" className="mt-section border-t border-white/5 pt-section">
+          <SectionHeader id="education-heading" eyebrow="Education" title="Studied entirely in Rayachoty" />
+
+          <ol className="mt-10 grid list-none gap-4 lg:grid-cols-3">
+            {education.map((e) => (
+              <li
+                key={e.id}
+                className="flex flex-col gap-2 rounded-2xl border border-border-dark bg-card-dark/70 p-6"
+              >
+                <span className="material-symbols-outlined text-primary" aria-hidden="true">
+                  {e.icon}
+                </span>
+                <span className="font-mono text-xs text-text-muted">{e.dateRange}</span>
+                <h3 className="font-display font-bold leading-snug text-white">{e.title}</h3>
+                <p className="text-sm text-text-secondary">{e.institution}</p>
+                <p className="text-xs text-text-muted">{e.note}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* ── Recognition ── */}
+        <section aria-labelledby="recognition-heading" className="mt-section border-t border-white/5 pt-section">
+          <SectionHeader
+            id="recognition-heading"
+            eyebrow="Recognition"
+            title="Awards and challenges"
+            description={`${awards.filter((a) => a.kind === 'professional').length} professional awards at IBS Software, including 1st place in the organization-wide Prompt Engineering Challenge 2025.`}
+          />
+          <div className="mt-8">
+            <Link
+              to="/awards"
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/10 px-5 text-sm font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              See all recognition
+              <span className="material-symbols-outlined text-lg" aria-hidden="true">
+                arrow_forward
+              </span>
+            </Link>
+          </div>
+        </section>
+
+        {/* ── Closing ── */}
+        <section className="mt-section rounded-3xl border border-border-dark bg-surface/40 p-8 sm:p-10">
+          <p className="max-w-prose leading-relaxed text-text-secondary">
+            {studio.attribution}. If you want to talk about backend systems, product work, or one
+            of the things I&rsquo;ve shipped —{' '}
+            <Link
+              to="/contact"
+              className="font-medium text-primary underline underline-offset-4 hover:text-primary-light"
+            >
+              get in touch
+            </Link>
+            .
+          </p>
+        </section>
       </div>
     </div>
   );

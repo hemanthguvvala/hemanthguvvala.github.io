@@ -1,112 +1,106 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
+import SectionHeader from '../components/SectionHeader';
+import SocialLinks from '../components/SocialLinks';
+import { person } from '../data/profile';
+import { breadcrumbSchema, personSchema, webPageSchema } from '../seo/jsonld';
+import { EVENTS, track } from '../utils/analytics';
 
-const contactCards = [
-  {
-    title: 'Email',
-    value: 'guvvalahemanthkumar@gmail.com',
-    icon: 'mail',
-    href: 'mailto:guvvalahemanthkumar@gmail.com',
-  },
-  {
-    title: 'GitHub',
-    value: 'github.com/hemanthguvvala',
-    icon: 'terminal',
-    href: 'https://github.com/hemanthguvvala',
-  },
-  {
-    title: 'LinkedIn',
-    value: 'linkedin.com/in/hemanthkumarguvvala',
-    icon: 'contact_page',
-    href: 'https://www.linkedin.com/in/hemanthkumarguvvala/',
-  },
-  {
-    title: 'Play Store',
-    value: 'Hemanth Kumar Guuvvala',
-    icon: 'shop',
-    href: 'https://play.google.com/store/apps/developer?id=Hemanth+Kumar+Guuvvala',
-  },
-];
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
-};
-const item = {
-  hidden: { opacity: 0, y: 15 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
-
+/**
+ * No contact form on purpose: a form on a static site needs a third-party
+ * endpoint, which means collecting and storing personal data for no real
+ * benefit over a mailto link.
+ */
 export default function Contact() {
   return (
-    <div className="page-container flex-grow flex flex-col items-center justify-center relative">
-      {/* Technical Background */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none opacity-20"
-        style={{
-          backgroundSize: '40px 40px',
-          backgroundImage:
-            'linear-gradient(to right, #1f3632 1px, transparent 1px), linear-gradient(to bottom, #1f3632 1px, transparent 1px)',
-        }}
-      ></div>
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
+    <div className="pb-section-lg pt-32">
+      <SEO
+        title={`Contact ${person.name} | Lead Product Engineer`}
+        description="Get in touch with Hemanth Kumar Guvvala, Lead Product Engineer and independent product builder — by email, LinkedIn, GitHub or the Google Play developer profile."
+        path="/contact"
+        jsonLd={[
+          webPageSchema({
+            title: `Contact ${person.name}`,
+            description: 'Email, LinkedIn, GitHub and Google Play developer profile.',
+            path: '/contact',
+          }),
+          personSchema(),
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Contact', path: '/contact' },
+          ]),
+        ]}
+      />
 
-      <div className="flex flex-col max-w-[960px] w-full px-4 py-20 z-10">
-        {/* Hero / CTA Section */}
+      <div className="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col gap-8 mb-16 text-center"
+          transition={{ duration: 0.5 }}
         >
-          <div className="flex flex-col gap-6 items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium tracking-wide uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-              Open to Opportunities
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight max-w-[800px] bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 font-display">
-              Let's build something durable.
-            </h1>
-            <p className="text-slate-400 text-lg md:text-xl font-normal leading-relaxed max-w-[600px]">
-              Lead Product Engineer specializing in Java, Spring Boot & Kafka microservices. Currently seeking SDE2/SDE3 or Backend Engineer roles to build resilient systems at scale.
-            </p>
-          </div>
+          <SectionHeader
+            as="h1"
+            align="center"
+            eyebrow="Contact"
+            title="Let's talk"
+            description="Open to conversations about backend engineering, product work, and the things I've shipped. Email is the most reliable way to reach me."
+          />
         </motion.div>
 
-        {/* Contact Grid */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full"
-        >
-          {contactCards.map((card, index) => (
-            <motion.a
-              key={index}
-              variants={item}
-              href={card.href}
-              target={card.href.startsWith('http') ? '_blank' : undefined}
-              rel={card.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="group relative flex flex-col gap-4 p-6 rounded-xl bg-surface-dark/50 hover:bg-surface-dark border border-white/5 hover:border-primary/50 transition-all duration-300 glow-hover"
-            >
-              <div className="flex items-center justify-between">
-                <div className="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-300">
-                  <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
-                    {card.icon}
-                  </span>
-                </div>
-                <span className="material-symbols-outlined text-slate-600 group-hover:text-primary transition-colors transform -rotate-45 group-hover:rotate-0">
-                  arrow_forward
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-white mb-1 font-display">{card.title}</h3>
-                <p className="text-slate-400 text-sm font-mono group-hover:text-primary/80 transition-colors">
-                  {card.value}
-                </p>
-              </div>
-            </motion.a>
-          ))}
-        </motion.div>
+        <div className="mt-12">
+          <a
+            href={`mailto:${person.email}`}
+            onClick={() => track(EVENTS.contactClick, { from: 'contact-primary' })}
+            className="group flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-2xl bg-primary px-6 py-5 text-center transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            <span className="font-mono text-xs uppercase tracking-wider text-background-dark/70">
+              Email me
+            </span>
+            <span className="break-all font-display text-lg font-bold text-background-dark sm:text-xl">
+              {person.email}
+            </span>
+          </a>
+        </div>
+
+        <div className="mt-6">
+          <h2 className="sr-only">Profiles</h2>
+          <SocialLinks variant="list" />
+        </div>
+
+        <div className="mt-12 grid gap-4 sm:grid-cols-2">
+          <a
+            href={person.resumeUrl}
+            download
+            onClick={() => track(EVENTS.resumeDownload, { from: 'contact' })}
+            className="flex min-h-[64px] items-center gap-4 rounded-xl border border-border-dark bg-card-dark/70 px-5 transition-colors hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            <span className="material-symbols-outlined text-primary" aria-hidden="true">
+              download
+            </span>
+            <span>
+              <span className="block text-sm font-bold text-white">Download resume</span>
+              <span className="block text-xs text-text-muted">PDF</span>
+            </span>
+          </a>
+
+          <Link
+            to="/products"
+            className="flex min-h-[64px] items-center gap-4 rounded-xl border border-border-dark bg-card-dark/70 px-5 transition-colors hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            <span className="material-symbols-outlined text-primary" aria-hidden="true">
+              layers
+            </span>
+            <span>
+              <span className="block text-sm font-bold text-white">See the products</span>
+              <span className="block text-xs text-text-muted">Apps and web tools</span>
+            </span>
+          </Link>
+        </div>
+
+        <p className="mt-10 text-center text-xs text-text-muted">
+          This site collects no personal data and has no contact form or tracking.
+        </p>
       </div>
     </div>
   );

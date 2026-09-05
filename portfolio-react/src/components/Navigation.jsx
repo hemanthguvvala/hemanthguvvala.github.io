@@ -1,95 +1,140 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { person } from '../data/profile';
+
+const links = [
+  { to: '/products', label: 'Products' },
+  { to: '/web-products', label: 'Web Products' },
+  { to: '/engineering', label: 'Engineering' },
+  { to: '/about', label: 'About' },
+  { to: '/timeline', label: 'Journey' },
+];
 
 export default function Navigation() {
-  const location = useLocation();
+  const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [menuPath, setMenuPath] = useState(pathname);
+  const toggleRef = useRef(null);
 
-  const links = [
-    { to: '/', label: 'Home' },
-    { to: '/about', label: 'About' },
-    { to: '/skills', label: 'Skills' },
-    { to: '/products', label: 'Products' },
-    { to: '/timeline', label: 'Timeline' },
-    { to: '/awards', label: 'Awards' },
-  ];
+  // Close the mobile menu whenever the route changes, otherwise it stays open
+  // over the new page. Adjusting state during render rather than in an effect
+  // avoids a second render pass that would flash the open menu, and unlike an
+  // onClick handler on each link it also covers browser back/forward.
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
+    setMobileOpen(false);
+  }
+
+  // Escape closes the menu and returns focus to the control that opened it.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setMobileOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [mobileOpen]);
+
+  const linkClass = ({ isActive }) =>
+    `text-sm font-medium transition-colors rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${
+      isActive ? 'text-white border-b-2 border-primary pb-0.5' : 'text-text-secondary hover:text-primary'
+    }`;
 
   return (
-    <nav className="fixed top-0 w-full z-50 backdrop-blur-md border-b border-white/5 bg-background-dark/80 transition-all duration-300" role="navigation" aria-label="Main navigation">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group cursor-pointer" aria-label="Home">
-          <div className="relative size-8 flex items-center justify-center bg-primary/10 rounded-lg border border-primary/20 group-hover:border-primary/50 transition-colors">
-            <span className="material-symbols-outlined text-primary text-xl" aria-hidden="true">terminal</span>
-          </div>
-          <h2 className="text-white text-lg font-bold tracking-tight font-display">HKG</h2>
+    <nav
+      className="fixed top-0 z-50 w-full border-b border-white/5 bg-background-dark/85 backdrop-blur-md"
+      aria-label="Main"
+    >
+      <div className="mx-auto flex h-20 max-w-content items-center justify-between px-5 sm:px-6 lg:px-10">
+        <Link
+          to="/"
+          className="group flex items-center gap-3 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+          aria-label={`${person.name} — home`}
+        >
+          <span className="flex size-9 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 transition-colors group-hover:border-primary/50">
+            <span className="material-symbols-outlined text-xl text-primary" aria-hidden="true">
+              terminal
+            </span>
+          </span>
+          <span className="flex flex-col leading-none">
+            <span className="font-display text-base font-bold tracking-tight text-white">
+              {person.initials}
+            </span>
+            <span className="mt-0.5 hidden font-mono text-[10px] uppercase tracking-wider text-text-muted sm:block">
+              Product Builder
+            </span>
+          </span>
         </Link>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex flex-1 justify-end items-center gap-8">
-          <div className="flex items-center gap-8">
-            {links.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`text-sm font-medium transition-colors ${
-                  location.pathname === link.to
-                    ? 'text-white border-b-2 border-primary pb-0.5'
-                    : 'text-slate-400 hover:text-primary'
-                }`}
-                aria-current={location.pathname === link.to ? 'page' : undefined}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-          <div className="h-6 w-px bg-white/10" aria-hidden="true"></div>
+        <div className="hidden flex-1 items-center justify-end gap-7 lg:flex">
+          {links.map((l) => (
+            <NavLink key={l.to} to={l.to} className={linkClass}>
+              {l.label}
+            </NavLink>
+          ))}
+          <span className="h-6 w-px bg-white/10" aria-hidden="true" />
           <Link
             to="/contact"
-            className="flex items-center justify-center h-10 px-5 rounded-lg border border-white/10 hover:border-primary hover:bg-primary/10 text-white text-sm font-bold transition-all group"
+            className="group inline-flex h-10 items-center justify-center rounded-lg border border-white/10 px-5 text-sm font-bold text-white transition-all hover:border-primary hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
-            <span className="mr-2">Contact</span>
-            <span className="material-symbols-outlined text-base transition-transform group-hover:translate-x-1" aria-hidden="true">arrow_forward</span>
+            Contact
+            <span
+              className="material-symbols-outlined ml-2 text-base transition-transform group-hover:translate-x-1"
+              aria-hidden="true"
+            >
+              arrow_forward
+            </span>
           </Link>
         </div>
 
-        {/* Mobile Menu Icon */}
         <button
-          className="md:hidden text-white cursor-pointer p-2 hover:bg-white/5 rounded-lg transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
+          ref={toggleRef}
+          type="button"
+          className="-mr-2 flex size-11 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:hidden"
+          onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
           aria-controls="mobile-menu"
         >
-          <span className="material-symbols-outlined" aria-hidden="true">{mobileOpen ? 'close' : 'menu'}</span>
+          <span className="material-symbols-outlined" aria-hidden="true">
+            {mobileOpen ? 'close' : 'menu'}
+          </span>
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {mobileOpen && (
-        <div id="mobile-menu" className="md:hidden border-t border-white/5 bg-background-dark/95 backdrop-blur-md">
-          <div className="flex flex-col px-6 py-4 gap-3">
-            {links.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                onClick={() => setMobileOpen(false)}
-                className={`text-sm font-medium py-2 transition-colors ${
-                  location.pathname === link.to ? 'text-primary' : 'text-slate-400 hover:text-white'
-                }`}
-                aria-current={location.pathname === link.to ? 'page' : undefined}
-              >
-                {link.label}
-              </Link>
+        <div
+          id="mobile-menu"
+          className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-white/5 bg-background-dark/98 backdrop-blur-md lg:hidden"
+        >
+          <ul className="flex list-none flex-col gap-1 px-5 py-4">
+            {[{ to: '/', label: 'Home' }, ...links, { to: '/awards', label: 'Awards' }].map((l) => (
+              <li key={l.to}>
+                <NavLink
+                  to={l.to}
+                  end={l.to === '/'}
+                  className={({ isActive }) =>
+                    `flex min-h-[48px] items-center rounded-lg px-3 text-base font-medium transition-colors ${
+                      isActive ? 'bg-primary/10 text-primary' : 'text-text-secondary hover:text-white'
+                    }`
+                  }
+                >
+                  {l.label}
+                </NavLink>
+              </li>
             ))}
-            <Link
-              to="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="mt-2 flex items-center justify-center h-10 px-5 rounded-lg bg-primary/10 border border-primary/20 text-primary text-sm font-bold hover:bg-primary/20 transition-colors"
-            >
-              Contact
-            </Link>
-          </div>
+            <li className="mt-2">
+              <Link
+                to="/contact"
+                className="flex min-h-[48px] items-center justify-center rounded-lg bg-primary px-5 text-base font-bold text-background-dark"
+              >
+                Contact
+              </Link>
+            </li>
+          </ul>
         </div>
       )}
     </nav>
