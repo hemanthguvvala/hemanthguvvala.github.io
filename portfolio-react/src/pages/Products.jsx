@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO';
 import SectionHeader from '../components/SectionHeader';
-import ProductGrid, { BuildingStrip } from '../components/ProductGrid';
+import ProductGrid from '../components/ProductGrid';
 import CTASection from '../components/CTASection';
 import {
   CATEGORIES,
@@ -71,11 +71,11 @@ export default function Products() {
   }, [active, query]);
 
   const cards = results.filter(isRenderableCard);
-  const building = results.filter(
-    (p) => !isRenderableCard(p) && p.status === 'in-development',
-  );
 
-  const listed = products.filter(isRenderableCard);
+  // The ItemList must describe what this page actually shows on load, which is
+  // the default (non-archived) view. Listing archived products in structured
+  // data that a visitor only sees behind a filter is a markup/schema mismatch.
+  const listed = visibleFor('all').filter(isRenderableCard);
 
   return (
     <div className="pb-section-lg pt-32">
@@ -166,6 +166,8 @@ export default function Products() {
           <ProductGrid
             products={cards}
             eagerCount={3}
+            // Cards sit directly under this page's h1, so they are h2 here.
+            headingLevel={2}
             emptyMessage={
               query.trim()
                 ? `Nothing matches “${query.trim()}”. Try a different search.`
@@ -173,12 +175,6 @@ export default function Products() {
             }
           />
         </div>
-
-        {building.length > 0 && (
-          <div className="mt-10">
-            <BuildingStrip products={building} />
-          </div>
-        )}
 
         <p className="mt-10 text-sm text-text-muted">
           Looking for everything on Google Play?{' '}

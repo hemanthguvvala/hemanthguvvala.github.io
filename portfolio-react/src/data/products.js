@@ -57,6 +57,26 @@ export const PLATFORMS = {
   android: 'Android',
 };
 
+/**
+ * How a product makes money, if it does.
+ *
+ * This exists so the site is ready for monetisation without another redesign:
+ * a product can start `free`, become `ads`, then `freemium`, and the UI follows
+ * from the data. It is NOT a place to signal ambition — set a value only when
+ * it describes what is live in the published product today, and leave it `null`
+ * otherwise. The detail page hides the row entirely when it is null, which is
+ * always better than an aspirational label.
+ */
+export const MONETIZATION = {
+  free: { label: 'Free', description: 'Free, with no ads or purchases' },
+  ads: { label: 'Free, ad-supported', description: 'Free to use, funded by ads' },
+  freemium: { label: 'Freemium', description: 'Free tier with paid upgrades' },
+  premium: { label: 'Paid', description: 'One-off purchase' },
+  subscription: { label: 'Subscription', description: 'Recurring subscription' },
+  affiliate: { label: 'Affiliate-supported', description: 'Free, funded by affiliate links' },
+  none: { label: 'Not monetised', description: 'No monetisation' },
+};
+
 const PLAY = 'https://play.google.com/store/apps/details?id=';
 
 export const PLAY_DEVELOPER_URL =
@@ -176,7 +196,7 @@ export const products = [
     githubUrl: null,
     privacyUrl: null,
     featured: true,
-    monetizationType: 'Free, ad-supported',
+    monetizationType: 'ads',
     launchYear: null,
     keywords: ['QR code scanner', 'barcode reader', 'document scanner', 'offline scanner'],
     related: ['pdf-toolkit', 'ghost-notes', 'swapformat'],
@@ -211,7 +231,7 @@ export const products = [
     githubUrl: null,
     privacyUrl: null,
     featured: true,
-    monetizationType: 'Free, ad-supported',
+    monetizationType: 'ads',
     launchYear: null,
     keywords: ['PDF reader', 'PDF editor', 'PDF scanner', 'sign PDF', 'convert PDF'],
     related: ['quickscan', 'swapformat', 'ghost-notes'],
@@ -541,10 +561,11 @@ export const products = [
   {
     name: 'ZenLife AI',
     slug: 'zenlife-ai',
-    // TODO: no verifiable source or listing was found for this product.
-    // Fill in a real description before giving it a detail page.
+    // TODO: no verifiable source or listing was found for this product, so the
+    // description is a placeholder rather than invented marketing copy.
+    // Replace it with the real thing before setting hasDetailPage.
     tagline: null,
-    shortDescription: null,
+    shortDescription: 'Details coming soon.',
     longDescription: null,
     features: [],
     category: 'lifestyle',
@@ -569,9 +590,10 @@ export const products = [
   {
     name: 'Karuyu',
     slug: 'karuyu',
-    // TODO: no verifiable source or listing was found for this product.
+    // TODO: no verifiable source or listing was found for this product, so the
+    // description is a placeholder rather than invented marketing copy.
     tagline: null,
-    shortDescription: null,
+    shortDescription: 'Details coming soon.',
     longDescription: null,
     features: [],
     category: 'utilities',
@@ -668,6 +690,16 @@ export const androidProducts = products.filter((p) => p.platform === 'android');
 export const featuredProducts = products
   .filter((p) => p.featured)
   .sort((a, b) => Number(b.status === 'live') - Number(a.status === 'live'));
+
+/**
+ * What is currently being built. Drives the homepage "Now building" panel.
+ *
+ * Derived from `status`, so it updates itself when a product ships — there is
+ * no separate list to remember to prune. It intentionally carries no progress
+ * bars, percentages or dates: none of that would be verifiable, and a stale
+ * "80% done" is worse than no number at all.
+ */
+export const inDevelopmentProducts = products.filter((p) => p.status === 'in-development');
 
 /** Entries with no description yet — rendered compactly, never as a full card. */
 export const isRenderableCard = (p) => Boolean(p.shortDescription);

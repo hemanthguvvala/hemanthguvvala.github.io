@@ -4,11 +4,13 @@ import SEO from '../components/SEO';
 import SectionHeader from '../components/SectionHeader';
 import ProductGrid from '../components/ProductGrid';
 import CTASection from '../components/CTASection';
+import ProductIcon from '../components/ProductIcon';
 import { buildLoop, credibility, person, studio } from '../data/profile';
 import {
   CATEGORIES,
   androidProducts,
   featuredProducts,
+  inDevelopmentProducts,
   liveProducts,
   products,
   webProducts,
@@ -377,6 +379,43 @@ export default function Home() {
               </li>
             ))}
           </ol>
+
+          {/*
+            Now building. Derived from products.js `status`, so it prunes itself
+            when something ships. Deliberately no progress bars, percentages or
+            launch dates — none of that would be verifiable, and a stale number
+            is worse than no number. Renders nothing when the list is empty.
+          */}
+          {inDevelopmentProducts.length > 0 && (
+            <div className="mt-6 rounded-2xl border border-dashed border-border-dark bg-surface/30 p-6 sm:p-7">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <h3 className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-gold">
+                  <span className="size-1.5 rounded-full bg-gold" aria-hidden="true" />
+                  Now building
+                </h3>
+                <p className="text-xs text-text-muted">
+                  Not yet released — no download links until they are.
+                </p>
+              </div>
+
+              <ul className="mt-5 grid list-none gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {inDevelopmentProducts.map((p) => (
+                  <li
+                    key={p.slug}
+                    className="flex items-center gap-3 rounded-xl border border-border-dark bg-card-dark/70 p-3.5"
+                  >
+                    <ProductIcon product={p} size={36} />
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-bold text-white">{p.name}</span>
+                      <span className="block text-[11px] text-text-muted">
+                        {CATEGORIES[p.category]}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </section>
 

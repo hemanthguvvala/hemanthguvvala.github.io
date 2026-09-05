@@ -13,9 +13,14 @@ import { EVENTS, trackProduct } from '../utils/analytics';
  * nested-interactive violation. The heading is the primary link; each CTA is
  * its own control with its own accessible name.
  */
-export default function ProductCard({ product, eager = false }) {
+export default function ProductCard({ product, eager = false, headingLevel = 3 }) {
   const detailPath = product.hasDetailPage ? `/products/${product.slug}` : null;
   const isArchived = product.status === 'archived';
+
+  // The card sits under an h2 on the homepage but directly under the h1 on the
+  // products directory. Taking the level as a prop keeps the document outline
+  // correct in both places instead of hardcoding one and skipping a level.
+  const Heading = `h${headingLevel}`;
 
   return (
     <article
@@ -27,7 +32,7 @@ export default function ProductCard({ product, eager = false }) {
         <ProductIcon product={product} size={56} eager={eager} />
 
         <div className="min-w-0 flex-1">
-          <h3 className="font-display text-lg font-bold leading-snug text-white">
+          <Heading className="font-display text-lg font-bold leading-snug text-white">
             {detailPath ? (
               <Link
                 to={detailPath}
@@ -39,7 +44,7 @@ export default function ProductCard({ product, eager = false }) {
             ) : (
               product.name
             )}
-          </h3>
+          </Heading>
 
           <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-text-muted">
             <span>{PLATFORMS[product.platform]}</span>

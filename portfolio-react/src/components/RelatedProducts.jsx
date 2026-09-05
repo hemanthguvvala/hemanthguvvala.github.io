@@ -16,13 +16,19 @@ export default function RelatedProducts({ product, limit = 3 }) {
   return (
     <section aria-labelledby="related-heading" className="border-t border-white/5 pt-12">
       <h2 id="related-heading" className="font-display text-2xl font-bold text-white">
-        You might also like
+        You may also like
       </h2>
       <p className="mt-2 text-sm text-text-secondary">
-        Other products from the same collection.
+        Related products I build and maintain. Each one stands on its own.
       </p>
 
-      <ul className="mt-6 grid list-none grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Column count follows the number of items so a short list does not
+          leave an obviously empty third of the row. */}
+      <ul
+        className={`mt-6 grid list-none grid-cols-1 gap-4 sm:grid-cols-2 ${
+          related.length >= 3 ? 'lg:grid-cols-3' : ''
+        }`}
+      >
         {related.map((r) => {
           const to = r.hasDetailPage ? `/products/${r.slug}` : null;
 

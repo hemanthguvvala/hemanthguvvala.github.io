@@ -4,7 +4,7 @@ import ProductIcon from '../components/ProductIcon';
 import StatusBadge from '../components/StatusBadge';
 import RelatedProducts from '../components/RelatedProducts';
 import NotFound from './NotFound';
-import { CATEGORIES, PLATFORMS, getProduct } from '../data/products';
+import { CATEGORIES, MONETIZATION, PLATFORMS, getProduct } from '../data/products';
 import { person } from '../data/profile';
 import { breadcrumbSchema, softwareApplicationSchema, webPageSchema } from '../seo/jsonld';
 import { EVENTS, trackProduct } from '../utils/analytics';
@@ -228,7 +228,9 @@ export default function ProductDetail() {
                   { term: 'Platform', value: PLATFORMS[product.platform] },
                   { term: 'Category', value: CATEGORIES[product.category] },
                   { term: 'Status', value: null, badge: true },
-                  { term: 'Pricing', value: product.monetizationType },
+                  // Hidden entirely when monetisation is unknown — an empty
+                  // row is better than an aspirational label.
+                  { term: 'Pricing', value: MONETIZATION[product.monetizationType]?.label },
                   { term: 'Launched', value: product.launchYear },
                   { term: 'Package', value: product.packageId, mono: true },
                   { term: 'Built by', value: person.name },

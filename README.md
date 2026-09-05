@@ -13,7 +13,7 @@ I've launched, and an engineering portfolio.
 The application lives in **`portfolio-react/`**. That is the only directory the deployment
 workflow builds — nothing at the repository root is compiled or served.
 
-```
+```text
 .
 ├── .github/workflows/deploy.yml   # build + deploy to GitHub Pages on push to master
 ├── portfolio-react/               # ← the application
@@ -34,15 +34,15 @@ workflow builds — nothing at the repository root is compiled or served.
 
 ## Stack
 
-| Concern    | Choice                                                       |
-| ---------- | ------------------------------------------------------------ |
-| Framework  | React 19                                                     |
-| Build      | Vite 7                                                       |
-| Styling    | Tailwind CSS 3 (tokens in `tailwind.config.js`)              |
-| Routing    | react-router-dom 7                                           |
-| Motion     | framer-motion 12                                             |
-| Fonts      | Space Grotesk / Inter / JetBrains Mono + Material Symbols     |
-| Hosting    | GitHub Pages                                                 |
+| Concern   | Choice                                                    |
+| --------- | --------------------------------------------------------- |
+| Framework | React 19                                                  |
+| Build     | Vite 7                                                    |
+| Styling   | Tailwind CSS 3 (tokens in `tailwind.config.js`)           |
+| Routing   | react-router-dom 7                                        |
+| Motion    | framer-motion 12                                          |
+| Fonts     | Space Grotesk / Inter / JetBrains Mono + Material Symbols |
+| Hosting   | GitHub Pages                                              |
 
 There is no analytics provider, no contact-form backend, and no tracking. The only third-party
 runtime script is particles.js, loaded from a CDN on the homepage only.
@@ -68,12 +68,12 @@ npm run preview
 
 `npm run build` runs four steps in order:
 
-| Step             | What it does                                                          |
-| ---------------- | --------------------------------------------------------------------- |
-| `build:client`   | Vite client build → `dist/`                                           |
-| `build:ssr`      | Vite SSR build of `entry-server.jsx` → `dist-ssr/` (temporary)         |
-| `prerender`      | Renders every route to static HTML, then deletes `dist-ssr/`           |
-| `sitemap`        | Writes `dist/sitemap.xml` from the same route list                     |
+| Step           | What it does                                                   |
+| -------------- | -------------------------------------------------------------- |
+| `build:client` | Vite client build → `dist/`                                    |
+| `build:ssr`    | Vite SSR build of `entry-server.jsx` → `dist-ssr/` (temporary) |
+| `prerender`    | Renders every route to static HTML, then deletes `dist-ssr/`   |
+| `sitemap`      | Writes `dist/sitemap.xml` from the same route list             |
 
 Also available: `npm run lint`.
 
@@ -120,6 +120,12 @@ Rules enforced by convention in that file:
   pointed at the generic developer page to look live.
 - **`hasDetailPage: true` requires real content** — a `longDescription` and `features`. Thin pages
   hurt SEO more than they help.
+- **`monetizationType` describes what is live today**, not what is planned. Values come from the
+  `MONETIZATION` map (`free`, `ads`, `freemium`, `premium`, `subscription`, `affiliate`, `none`);
+  leave it `null` when you are not sure and the detail page hides the row. The field exists so
+  monetisation can be switched on per product later without a redesign.
+- A product with nothing publishable written about it yet carries
+  `shortDescription: 'Details coming soon.'` rather than invented marketing copy.
 
 ### Adding a product
 
@@ -157,11 +163,11 @@ tags, exactly one `<h1>`, and appropriate JSON-LD (`Person`, `WebSite`, `WebPage
 
 ## Files that must keep working
 
-| File                            | Why                                            |
-| ------------------------------- | ---------------------------------------------- |
-| `public/app-ads.txt`            | AdMob verification. Publisher ID must stay `pub-9460933302095977`. |
-| `public/google3a15862b0f820187.html` | Google Search Console verification. Must return 200. |
-| `public/robots.txt`             | Must keep `/assets/` crawlable for rendering-based indexing. |
+| File                                 | Why                                                                |
+| ------------------------------------ | ------------------------------------------------------------------ |
+| `public/app-ads.txt`                 | AdMob verification. Publisher ID must stay `pub-9460933302095977`. |
+| `public/google3a15862b0f820187.html` | Google Search Console verification. Must return 200.               |
+| `public/robots.txt`                  | Must keep `/assets/` crawlable for rendering-based indexing.       |
 
 ## Deployment
 
