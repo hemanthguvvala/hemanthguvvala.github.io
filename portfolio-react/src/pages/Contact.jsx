@@ -129,7 +129,8 @@ export default function Contact() {
         </div>
 
         <p className="mt-10 text-center text-xs text-text-muted">
-          This site collects no personal data and has no contact form or tracking.
+          This site has no contact form and sets no cookies. Visitor numbers are measured
+          with Cloudflare Web Analytics, which is cookieless and stores no personal data.
         </p>
       </div>
     </div>

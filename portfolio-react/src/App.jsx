@@ -4,6 +4,7 @@ import { MotionConfig } from 'framer-motion';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ParticleField from './components/ParticleField';
+import Analytics from './components/Analytics';
 import { redirects, routes } from './routes';
 import './App.css';
 
@@ -59,6 +60,7 @@ export function AppShell({ children }) {
           Skip to main content
         </a>
 
+        <Analytics />
         <div className="animated-grid" aria-hidden="true" />
         {pathname === '/' && <ParticleField />}
 

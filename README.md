@@ -44,8 +44,8 @@ workflow builds — nothing at the repository root is compiled or served.
 | Fonts     | Space Grotesk / Inter / JetBrains Mono + Material Symbols |
 | Hosting   | GitHub Pages                                              |
 
-There is no analytics provider, no contact-form backend, and no tracking. The only third-party
-runtime script is particles.js, loaded from a CDN on the homepage only.
+There is no contact-form backend and no cookies. Third-party runtime scripts are limited to
+particles.js (homepage only) and the Cloudflare Web Analytics beacon.
 
 ## Local development
 
@@ -160,6 +160,48 @@ tags, exactly one `<h1>`, and appropriate JSON-LD (`Person`, `WebSite`, `WebPage
 
 `src/seo/jsonld.js` never emits `aggregateRating`, `ratingValue`, `reviewCount` or `offers.price`.
 `SoftwareApplication` is only emitted for products that are actually live.
+
+## Analytics and observability
+
+**Cloudflare Web Analytics** measures page views and Core Web Vitals. It is cookieless, does not
+fingerprint visitors and stores no personal data, so the site needs no consent banner. Its beacon
+hooks the History API, so client-side route changes are counted automatically — do not add manual
+page-view tracking on top of it or you will double count.
+
+### Activating it
+
+Set a repository variable named `CF_BEACON_TOKEN` (Settings → Secrets and variables → Actions →
+Variables) to the token from the Cloudflare Web Analytics dashboard. `deploy.yml` passes it to the
+build as `VITE_CF_BEACON_TOKEN`.
+
+The token is not a secret — beacon tokens are visible in the page source of every site that uses
+one — but keeping it out of the repo means a fork does not report into this site's dashboard.
+**With no token set, the beacon does not load and the build still passes.**
+
+### Custom events are captured but not yet delivered
+
+`src/utils/analytics.js` instruments the conversion events that matter — Play Store clicks, contact
+clicks, resume downloads, outbound product visits — and `src/utils/observability.js` captures
+uncaught errors and unhandled rejections as `client_error`.
+
+Cloudflare's free beacon has **no custom-events API** on a domain it does not proxy, and
+`hemanthguvvala.github.io` cannot be proxied. So those events are shaped and then dropped. This is
+deliberate rather than broken: the call sites are correct, so the day a sink exists everything
+starts reporting with no further changes. Register one at startup:
+
+```js
+import { setSink } from './utils/analytics';
+setSink((name, payload) => myProvider.track(name, payload));
+```
+
+Anything with a custom-event API works — Plausible, Umami, GoatCounter, or a serverless function.
+
+Core Web Vitals are deliberately **not** measured in application code; Cloudflare already collects
+them from the real navigation timeline, and a second PerformanceObserver would only duplicate that
+with worse data.
+
+Both layers honour Do Not Track, and error reports are capped at five per page load and stripped of
+query strings before leaving the browser.
 
 ## Files that must keep working
 

@@ -37,6 +37,14 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: ./portfolio-react
+        env:
+          # Cloudflare Web Analytics beacon token. Set as a repository variable
+          # (Settings → Secrets and variables → Actions → Variables) named
+          # CF_BEACON_TOKEN. It is not a secret — beacon tokens are visible in
+          # the page source of every site that uses them — but keeping it out of
+          # the repo means a fork does not report into this site's dashboard.
+          # If unset, the beacon simply does not load and the build still passes.
+          VITE_CF_BEACON_TOKEN: ${{ vars.CF_BEACON_TOKEN }}
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
