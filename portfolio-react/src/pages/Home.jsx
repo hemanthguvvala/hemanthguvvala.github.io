@@ -55,7 +55,7 @@ export default function Home() {
       {/* ─────────────────────────── HERO ─────────────────────────── */}
       <section className="relative flex min-h-[92vh] w-full flex-col justify-center overflow-hidden px-5 pb-16 pt-28 sm:px-6">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] max-w-[130vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,194,158,.15)_0%,rgba(15,35,31,0)_70%)]" />
+          <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] max-w-[130vw] -translate-x-1/2 -translate-y-1/2 rounded-full hero-glow" />
           <div className="absolute inset-0 bg-gradient-to-b from-background-dark via-transparent to-background-dark" />
         </div>
 

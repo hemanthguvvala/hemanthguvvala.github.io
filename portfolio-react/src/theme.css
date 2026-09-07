@@ -55,6 +55,7 @@
   --c-status-archived: 124 143 139; /* #7c8f8b */
 
   --shadow-strength: 1;
+  --glow-alpha: 0.15;
 }
 
 /* System preference, only while the visitor has not chosen explicitly. */
@@ -86,6 +87,7 @@
     --c-status-archived: 90 108 104;
 
     --shadow-strength: 0.35;
+    --glow-alpha: 0.07;
   }
 }
 
@@ -117,6 +119,7 @@
   --c-status-archived: 90 108 104;
 
   --shadow-strength: 0.35;
+  --glow-alpha: 0.07;
 }
 
 :root[data-theme='dark'] {

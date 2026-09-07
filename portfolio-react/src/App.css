@@ -28,8 +28,44 @@ body {
   background: rgb(var(--c-bg));
   color: rgb(var(--c-strong));
   font-family: theme('fontFamily.body');
-  -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/*
+ * Antialiased smoothing thins glyph strokes. That is exactly what light text on
+ * a dark ground needs, and exactly what dark text on a light ground does not —
+ * there it reads washed out and slightly broken. So it is scoped to dark only,
+ * and light mode keeps the browser's default (subpixel) rendering.
+ */
+:root:not([data-theme='light']) body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) body {
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+/*
+ * Theme changes are eased rather than snapped, on the properties that actually
+ * carry the theme. Transitioning `all` would drag every hover and layout
+ * change with it. Suppressed under reduced-motion by the block further down.
+ */
+body,
+.app,
+header,
+footer,
+nav,
+section,
+article,
+aside {
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease;
 }
 
 h1,
@@ -267,4 +303,19 @@ section {
 .article-prose th {
   background: rgb(var(--c-surface));
   color: rgb(var(--c-strong));
+}
+
+/*
+ * Hero glow. Previously a hardcoded gradient that faded the brand green into
+ * the dark background colour, which left a muddy halo once the ground could be
+ * light. Both the tint and the fade target now come from tokens, and the
+ * intensity drops in light mode where a strong colour wash reads as a stain
+ * rather than as depth.
+ */
+.hero-glow {
+  background: radial-gradient(
+    circle,
+    rgb(var(--c-primary) / var(--glow-alpha)) 0%,
+    rgb(var(--c-bg) / 0) 70%
+  );
 }
