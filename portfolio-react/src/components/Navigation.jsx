@@ -1,14 +1,17 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { person } from '../data/profile';
+import { JOURNEY_LABEL, JOURNEY_PATH, hasArticles } from '../data/journey';
 
 const links = [
   { to: '/products', label: 'Products' },
   { to: '/web-products', label: 'Web Products' },
   { to: '/services', label: 'Services' },
+  // Hidden until the first article ships — an empty section is worse than none.
+  ...(hasArticles ? [{ to: JOURNEY_PATH, label: JOURNEY_LABEL }] : []),
   { to: '/engineering', label: 'Engineering' },
   { to: '/about', label: 'About' },
-  { to: '/timeline', label: 'Journey' },
+  { to: '/timeline', label: 'Career' },
 ];
 
 export default function Navigation() {

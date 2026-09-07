@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import SocialLinks from './SocialLinks';
 import { person, studio } from '../data/profile';
 import { PLAY_DEVELOPER_URL } from '../data/products';
+import { JOURNEY_LABEL, JOURNEY_PATH, hasArticles } from '../data/journey';
 import { EVENTS, track } from '../utils/analytics';
 
 const columns = [
@@ -25,8 +26,9 @@ const columns = [
     heading: 'Profile',
     links: [
       { to: '/about', label: 'About' },
+      ...(hasArticles ? [{ to: JOURNEY_PATH, label: JOURNEY_LABEL }] : []),
       { to: '/engineering', label: 'Engineering' },
-      { to: '/timeline', label: 'Journey' },
+      { to: '/timeline', label: 'Career' },
       { to: '/awards', label: 'Awards' },
     ],
   },

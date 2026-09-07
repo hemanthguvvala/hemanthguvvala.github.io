@@ -30,6 +30,15 @@
 /** Enumerated event names. Keep this list small and stable. */
 export const EVENTS = {
   pageView: 'page_view',
+
+  // Journey
+  articleView: 'article_view',
+  articleCategoryView: 'article_category_view',
+  articleSearch: 'article_search',
+  articleShare: 'article_share',
+  relatedArticleClick: 'related_article_click',
+
+  // Products
   productOpen: 'product_open',
   playStoreClick: 'play_store_click',
   websiteClick: 'product_website_click',
@@ -37,6 +46,11 @@ export const EVENTS = {
   contactClick: 'contact_click',
   socialClick: 'social_click',
   filterChange: 'product_filter_change',
+
+  // Opportunity funnel
+  workWithMeClick: 'work_with_me_click',
+  outboundLinkClick: 'outbound_link_click',
+
   clientError: 'client_error',
 };
 

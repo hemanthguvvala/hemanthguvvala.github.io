@@ -12,12 +12,16 @@
  * entry in scripts/routes.mjs.
  */
 
+import { JOURNEY_PATH } from './data/journey';
+
 export const routes = [
   { path: '/', load: () => import('./pages/Home') },
   { path: '/products', load: () => import('./pages/Products') },
   { path: '/products/:slug', load: () => import('./pages/ProductDetail') },
   { path: '/web-products', load: () => import('./pages/WebProducts') },
   { path: '/services', load: () => import('./pages/Services') },
+  { path: JOURNEY_PATH, load: () => import('./pages/Journey') },
+  { path: `${JOURNEY_PATH}/:slug`, load: () => import('./pages/JourneyArticle') },
   { path: '/engineering', load: () => import('./pages/Engineering') },
   { path: '/about', load: () => import('./pages/About') },
   { path: '/timeline', load: () => import('./pages/Timeline') },

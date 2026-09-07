@@ -4,14 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "npm run build:client && npm run build:ssr && npm run prerender && npm run sitemap",
+    "dev": "npm run journey && vite",
+    "build": "npm run journey && npm run build:client && npm run build:ssr && npm run prerender && npm run sitemap && npm run rss",
     "build:client": "vite build",
     "build:ssr": "vite build --ssr src/entry-server.jsx",
     "prerender": "node scripts/prerender.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "rss": "node scripts/generate-rss.mjs",
+    "journey": "node scripts/build-journey.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.26.2",
@@ -30,6 +32,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "marked": "^18.0.11",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19",
     "vite": "^7.2.4"

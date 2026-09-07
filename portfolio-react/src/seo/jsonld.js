@@ -160,6 +160,29 @@ export function servicesSchema(list, { path = '/services' } = {}) {
   };
 }
 
+/**
+ * Article schema. No `wordCount`, `commentCount` or engagement metrics — none
+ * of that is measured, and inventing it is exactly the kind of fabricated
+ * structured data that earns a manual action.
+ */
+export function articleSchema(article, { path }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.title,
+    description: article.description,
+    url: canonicalUrl(path),
+    datePublished: article.date,
+    // No separate revision history is tracked, so modified equals published.
+    dateModified: article.date,
+    author: { '@id': `${SITE_URL}/#person` },
+    publisher: { '@id': `${SITE_URL}/#person` },
+    mainEntityOfPage: canonicalUrl(path),
+    inLanguage: 'en',
+    ...(article.tags?.length ? { keywords: article.tags.join(', ') } : {}),
+  };
+}
+
 export function breadcrumbSchema(trail) {
   return {
     '@context': 'https://schema.org',

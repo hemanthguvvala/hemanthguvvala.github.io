@@ -5,6 +5,7 @@ import SectionHeader from '../components/SectionHeader';
 import ProductGrid from '../components/ProductGrid';
 import CTASection from '../components/CTASection';
 import ProductIcon from '../components/ProductIcon';
+import ArticleCard from '../components/ArticleCard';
 import { buildLoop, credibility, person, studio } from '../data/profile';
 import {
   CATEGORIES,
@@ -15,6 +16,7 @@ import {
   products,
   webProducts,
 } from '../data/products';
+import { JOURNEY_LABEL, JOURNEY_PATH, hasArticles, recentArticles } from '../data/journey';
 import { personSchema, productListSchema, websiteSchema } from '../seo/jsonld';
 import { EVENTS, track } from '../utils/analytics';
 import profileImage from '../assets/my_profile_image.jpg';
@@ -267,6 +269,43 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/*
+        ───────────────────── LATEST FROM THE JOURNEY ─────────────────────
+        Renders only once something is published. Until then the homepage is
+        exactly as it was — an empty "latest writing" strip signals a dead site.
+      */}
+      {hasArticles && (
+        <section aria-labelledby="journey-heading" className="border-t border-white/5 py-section">
+          <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
+            <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+              <SectionHeader
+                id="journey-heading"
+                eyebrow="What I'm learning"
+                title={`Latest from the ${JOURNEY_LABEL.toLowerCase()}`}
+                description="What shipping these products actually taught me — what I changed, what happened, and what I would do differently."
+              />
+              <Link
+                to={JOURNEY_PATH}
+                className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-primary transition-colors hover:text-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                All entries
+                <span className="material-symbols-outlined text-lg" aria-hidden="true">
+                  arrow_forward
+                </span>
+              </Link>
+            </div>
+
+            <ul className="mt-10 grid list-none gap-5 lg:grid-cols-3">
+              {recentArticles(3).map((article) => (
+                <li key={article.slug} className="flex">
+                  <ArticleCard article={article} headingLevel={3} from="home" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* ───────────────────── ECOSYSTEM ───────────────────── */}
       <section aria-labelledby="ecosystem-heading" className="border-t border-white/5 py-section">

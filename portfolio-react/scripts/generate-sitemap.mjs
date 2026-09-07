@@ -38,7 +38,11 @@ async function main() {
       return [
         '  <url>',
         `    <loc>${loc}</loc>`,
-        lastmod ? `    <lastmod>${lastmod}</lastmod>` : null,
+        // An article carries its own publication date; everything else falls
+        // back to the last commit that touched the repository.
+        (route.lastmod ?? lastmod)
+          ? `    <lastmod>${route.lastmod ?? lastmod}</lastmod>`
+          : null,
         `    <changefreq>${route.changefreq}</changefreq>`,
         `    <priority>${route.priority}</priority>`,
         '  </url>',

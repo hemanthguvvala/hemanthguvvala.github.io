@@ -8,7 +8,8 @@
  */
 
 import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { existsSync } from 'node:fs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -28,6 +29,42 @@ export const STATIC_ROUTES = [
   { path: '/awards', priority: '0.6', changefreq: 'yearly' },
   { path: '/contact', priority: '0.7', changefreq: 'yearly' },
 ];
+
+/**
+ * The articles section path, read from src/data/articles.js so renaming the
+ * section is a single edit there rather than a change in two places.
+ */
+export async function journeyPath() {
+  const source = await readFile(resolve(here, '../src/data/journey.js'), 'utf8');
+  return source.match(/export const JOURNEY_PATH = '([^']+)'/)?.[1] ?? '/journey';
+}
+
+/**
+ * Published articles, from the file scripts/build-articles.mjs generates.
+ *
+ * The index and each article are only prerendered and listed in the sitemap
+ * when at least one article exists — an empty section is thin content, and
+ * advertising it before there is anything to read is worse than not having it.
+ */
+export async function articleRoutes() {
+  const generated = resolve(here, '../src/data/journey.generated.js');
+  if (!existsSync(generated)) return [];
+
+  const { generatedArticles } = await import(pathToFileURL(generated).href);
+  if (!generatedArticles?.length) return [];
+
+  const base = await journeyPath();
+
+  return [
+    { path: base, priority: '0.8', changefreq: 'weekly' },
+    ...generatedArticles.map((a) => ({
+      path: `${base}/${a.slug}`,
+      priority: '0.7',
+      changefreq: 'yearly',
+      lastmod: a.date,
+    })),
+  ];
+}
 
 /**
  * Reads the product slugs that have detail pages straight out of products.js
@@ -75,7 +112,7 @@ export async function redirectRoutes() {
 
 /** Every route to prerender, sitemap entries plus the noindex 404. */
 export async function allRoutes() {
-  const indexable = [...STATIC_ROUTES, ...(await productRoutes())];
+  const indexable = [...STATIC_ROUTES, ...(await productRoutes()), ...(await articleRoutes())];
   return {
     indexable,
     prerender: [...indexable, { path: '/404', priority: null, changefreq: null }],

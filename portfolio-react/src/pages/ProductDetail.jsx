@@ -7,7 +7,8 @@ import NotFound from './NotFound';
 import { CATEGORIES, MONETIZATION, PLATFORMS, getProduct } from '../data/products';
 import { person } from '../data/profile';
 import { breadcrumbSchema, softwareApplicationSchema, webPageSchema } from '../seo/jsonld';
-import { EVENTS, trackProduct } from '../utils/analytics';
+import { articlesForProduct, articlePath, categoryLabel } from '../data/journey';
+import { EVENTS, track, trackProduct } from '../utils/analytics';
 
 const cta =
   'inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl px-6 text-base font-bold transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
@@ -22,6 +23,8 @@ export default function ProductDetail() {
 
   const path = `/products/${product.slug}`;
   const primaryUrl = product.websiteUrl ?? product.playStoreUrl;
+  // Product → story. Closes the loop the journey articles open.
+  const stories = articlesForProduct(product.slug);
 
   const seoTitle = product.tagline
     ? `${product.name} — ${product.tagline} | ${person.name}`
@@ -274,6 +277,35 @@ export default function ProductDetail() {
             </div>
           </aside>
         </div>
+
+        {/* ── Product → journey. Only where something has been written. ── */}
+        {stories.length > 0 && (
+          <section aria-labelledby="product-stories" className="mt-16 border-t border-white/5 pt-10">
+            <h2 id="product-stories" className="font-display text-2xl font-bold text-white">
+              The story behind it
+            </h2>
+            <p className="mt-2 text-sm text-text-secondary">
+              What building {product.name.split(':')[0]} actually involved.
+            </p>
+            <ul className="mt-5 flex list-none flex-col gap-3">
+              {stories.map((a) => (
+                <li key={a.slug}>
+                  <Link
+                    to={articlePath(a.slug)}
+                    onClick={() => track(EVENTS.articleView, { slug: a.slug, from: 'product' })}
+                    className="flex flex-col gap-1 rounded-xl border border-border-dark bg-card-dark/70 p-4 transition-colors hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  >
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-primary">
+                      {categoryLabel(a.category)}
+                    </span>
+                    <span className="font-display font-bold text-white">{a.title}</span>
+                    <span className="text-sm text-text-secondary">{a.description}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* ── Cross-product discovery ── */}
         <div className="mt-20 flex flex-col gap-12">

@@ -44,7 +44,7 @@ workflow builds — nothing at the repository root is compiled or served.
 | Fonts     | Space Grotesk / Inter / JetBrains Mono + Material Symbols |
 | Hosting   | GitHub Pages                                              |
 
-There is no contact-form backend and no cookies. Third-party runtime scripts are limited to
+The only build-time dependency beyond the toolchain is `marked`, which compiles journey Markdown and never reaches the browser. There is no contact-form backend and no cookies. Third-party runtime scripts are limited to
 particles.js (homepage only) and the Cloudflare Web Analytics beacon.
 
 ## Local development
@@ -66,14 +66,16 @@ npm run preview
 
 ## Build pipeline
 
-`npm run build` runs four steps in order:
+`npm run build` runs six steps in order:
 
 | Step           | What it does                                                   |
 | -------------- | -------------------------------------------------------------- |
+| `journey`      | Compiles `content/journey/*.md` → `src/data/journey.generated.js` |
 | `build:client` | Vite client build → `dist/`                                    |
 | `build:ssr`    | Vite SSR build of `entry-server.jsx` → `dist-ssr/` (temporary) |
 | `prerender`    | Renders every route to static HTML, then deletes `dist-ssr/`   |
 | `sitemap`      | Writes `dist/sitemap.xml` from the same route list             |
+| `rss`          | Writes `dist/rss.xml` when at least one article is published   |
 
 Also available: `npm run lint`.
 
@@ -160,6 +162,54 @@ tags, exactly one `<h1>`, and appropriate JSON-LD (`Person`, `WebSite`, `WebPage
 
 `src/seo/jsonld.js` never emits `aggregateRating`, `ratingValue`, `reviewCount` or `offers.price`.
 `SoftwareApplication` is only emitted for products that are actually live.
+
+## Journey — building in public
+
+Entries live in `portfolio-react/content/journey/` as Markdown. See the README in that directory
+for the authoring workflow and the full frontmatter reference.
+
+This section is what turns the site from a portfolio into an ecosystem: an entry names the
+products it is about, which renders real product cards at the end of the entry **and** makes the
+entry appear under "The story behind it" on that product's own page. One line of frontmatter,
+links in both directions.
+
+Scope is build-in-public and product writing — what shipping something taught me, what an
+experiment showed, why a decision went the way it did. **Deep technical reference material belongs
+on CodeDepth**; publishing it in both places splits search authority between two sites competing
+for the same queries.
+
+### How it works
+
+`scripts/build-journey.mjs` compiles the Markdown into `src/data/journey.generated.js` before every
+`dev` and `build`. Compiling at build time rather than parsing in the browser keeps the Markdown
+parser a devDependency and **out of the client bundle** — entries ship as plain HTML that the
+prerenderer emits in full.
+
+The generated file is gitignored. Edit the Markdown, not the output.
+
+The build **fails loudly** on a missing required field, a bad date, an unknown category, a
+duplicate slug, or a `products` slug that does not exist in `products.js`. A broken build beats a
+live page with an empty `<title>` or a product card pointing nowhere.
+
+### Adding an entry requires no code changes
+
+Write the file, push. It appears in the index, its category filter, search, the homepage, the
+sitemap, the RSS feed and on the relevant product pages automatically.
+
+### The section name is one constant
+
+`JOURNEY_PATH` and `JOURNEY_LABEL` in `src/data/journey.js` are the only places the section is
+named. Routes, navigation, canonical URLs, breadcrumbs, the sitemap and the RSS feed all derive
+from them, and `scripts/routes.mjs` reads the path back out of that file.
+
+Note that `/timeline` is labelled **Career** in navigation, because "Journey" now belongs to this
+section. The `/timeline` URL itself is unchanged.
+
+### Nothing appears until something is published
+
+With no published entries the section is hidden from navigation, excluded from the sitemap, absent
+from the homepage, and no `rss.xml` is written. An empty section is thin content and an empty feed
+is worse than no feed.
 
 ## Analytics and observability
 
