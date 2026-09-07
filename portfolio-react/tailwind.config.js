@@ -44,7 +44,10 @@ export default {
         'border-strong': '#31504a',
         'text-primary': '#ffffff',
         'text-secondary': '#9abcb6',
-        'text-muted': '#6f918b',
+        // Verified 4.5:1+ against background-dark, surface and card-dark.
+        // The previous #6f918b measured 4.33:1 on cards, failing AA for the
+        // small meta text it is used for. Do not darken without re-checking.
+        'text-muted': '#799993',
 
         // Status tones for product badges
         status: {

@@ -5,6 +5,7 @@ import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ParticleField from './components/ParticleField';
 import Analytics from './components/Analytics';
+import ErrorBoundary from './components/ErrorBoundary';
 import { redirects, routes } from './routes';
 import './App.css';
 
@@ -65,7 +66,11 @@ export function AppShell({ children }) {
         {pathname === '/' && <ParticleField />}
 
         <Navigation />
-        <main id="main-content">{children}</main>
+        {/* Scoped to the routed content: a broken page keeps the header,
+            footer and navigation, so the visitor always has a way out. */}
+        <main id="main-content">
+          <ErrorBoundary resetKey={pathname}>{children}</ErrorBoundary>
+        </main>
         <Footer />
       </div>
     </MotionConfig>

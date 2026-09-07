@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0f231f" />
+    <!-- Send the full URL to our own origin, only the origin cross-site.
+         X-Content-Type-Options and frame-ancestors need real HTTP headers,
+         which GitHub Pages does not allow us to set. -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <!-- Brand assets. Local files only — never a third-party URL for these. -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
