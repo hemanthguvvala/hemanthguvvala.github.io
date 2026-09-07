@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import SEO from '../components/SEO';
 import ProductIcon from '../components/ProductIcon';
 import StatusBadge from '../components/StatusBadge';
+import ArticleShare from '../components/ArticleShare';
 import NotFound from './NotFound';
 import {
   JOURNEY_LABEL,
@@ -134,6 +135,8 @@ export default function JourneyArticle() {
           className="article-prose mt-10"
           dangerouslySetInnerHTML={{ __html: article.html }}
         />
+
+        <ArticleShare article={article} path={path} />
 
         {/* ── Article → product. The ecosystem link that matters most. ── */}
         {products.length > 0 && (
