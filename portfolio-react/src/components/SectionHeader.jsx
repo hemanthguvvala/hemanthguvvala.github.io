@@ -29,7 +29,7 @@ export default function SectionHeader({
 
       <Heading
         id={id}
-        className="font-display text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl"
+        className="font-display text-3xl font-bold leading-tight tracking-tight text-strong sm:text-4xl lg:text-5xl"
       >
         {title}
       </Heading>

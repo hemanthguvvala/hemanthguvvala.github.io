@@ -54,7 +54,7 @@ export default class ErrorBoundary extends Component {
           <p className="font-mono text-sm uppercase tracking-[0.2em] text-primary">
             Something broke
           </p>
-          <h1 className="mt-4 font-display text-3xl font-bold leading-tight text-white sm:text-4xl">
+          <h1 className="mt-4 font-display text-3xl font-bold leading-tight text-strong sm:text-4xl">
             This page didn&rsquo;t load properly
           </h1>
           <p className="mt-4 leading-relaxed text-text-secondary">
@@ -65,14 +65,14 @@ export default class ErrorBoundary extends Component {
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-background-dark transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-on-primary transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Reload the page
             </button>
             {/* A plain anchor, not a Link: the router is what may have failed. */}
             <a
               href="/"
-              className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/10 px-5 text-sm font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-line/10 px-5 text-sm font-bold text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Go home
             </a>

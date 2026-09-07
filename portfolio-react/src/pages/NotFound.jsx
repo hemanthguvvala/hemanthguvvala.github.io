@@ -26,7 +26,7 @@ export default function NotFound() {
       <div className="mx-auto w-full max-w-3xl px-5 text-center sm:px-6">
         <p className="font-mono text-sm uppercase tracking-[0.2em] text-primary">Error 404</p>
 
-        <h1 className="mt-5 font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
+        <h1 className="mt-5 font-display text-4xl font-bold leading-tight tracking-tight text-strong sm:text-5xl">
           Looks like this page went off the roadmap.
         </h1>
 
@@ -45,7 +45,7 @@ export default function NotFound() {
                 <span className="material-symbols-outlined text-primary" aria-hidden="true">
                   {l.icon}
                 </span>
-                <span className="font-display font-bold text-white">{l.label}</span>
+                <span className="font-display font-bold text-strong">{l.label}</span>
                 <span className="text-xs text-text-muted">{l.detail}</span>
               </Link>
             </li>
@@ -61,7 +61,7 @@ export default function NotFound() {
               <li key={p.slug}>
                 <Link
                   to={`/products/${p.slug}`}
-                  className="inline-flex items-center gap-2.5 rounded-xl border border-border-dark bg-card-dark/70 py-2 pl-2 pr-4 text-sm text-text-secondary transition-colors hover:border-primary/40 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  className="inline-flex items-center gap-2.5 rounded-xl border border-border-dark bg-card-dark/70 py-2 pl-2 pr-4 text-sm text-text-secondary transition-colors hover:border-primary/40 hover:text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
                   <ProductIcon product={p} size={28} />
                   {p.name}

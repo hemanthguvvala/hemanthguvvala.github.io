@@ -24,7 +24,7 @@ export default function CTASection() {
       <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-6">
         <h2
           id="cta-heading"
-          className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+          className="font-display text-3xl font-bold tracking-tight text-strong sm:text-4xl"
         >
           Explore what I&rsquo;m building.
         </h2>
@@ -34,7 +34,7 @@ export default function CTASection() {
         </p>
 
         <div className="flex flex-col flex-wrap justify-center gap-3 sm:flex-row">
-          <Link to="/products" className={`${base} bg-primary text-background-dark hover:bg-primary-light`}>
+          <Link to="/products" className={`${base} bg-primary text-on-primary hover:bg-primary-light`}>
             Explore products
             <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
               layers
@@ -46,7 +46,7 @@ export default function CTASection() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackProduct(EVENTS.websiteClick, codedepth, { from: 'cta' })}
-            className={`${base} border border-white/10 text-white hover:border-primary/50 hover:bg-primary/10`}
+            className={`${base} border border-line/10 text-strong hover:border-primary/50 hover:bg-primary/10`}
           >
             Visit CodeDepth
             <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
@@ -59,7 +59,7 @@ export default function CTASection() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackProduct(EVENTS.websiteClick, swapformat, { from: 'cta' })}
-            className={`${base} border border-white/10 text-white hover:border-primary/50 hover:bg-primary/10`}
+            className={`${base} border border-line/10 text-strong hover:border-primary/50 hover:bg-primary/10`}
           >
             Visit SwapFormat
             <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
@@ -70,7 +70,7 @@ export default function CTASection() {
           <Link
             to="/contact"
             onClick={() => track(EVENTS.contactClick, { from: 'cta' })}
-            className={`${base} border border-white/10 text-white hover:border-white/25`}
+            className={`${base} border border-line/10 text-strong hover:border-line/25`}
           >
             Connect with {person.shortName}
           </Link>

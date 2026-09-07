@@ -72,7 +72,7 @@ export default function JourneyArticle() {
         </nav>
 
         {/* ── Header ── */}
-        <header className="flex flex-col gap-4 border-b border-white/5 pb-8">
+        <header className="flex flex-col gap-4 border-b border-line/5 pb-8">
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-text-muted">
             <Link
               to={`${JOURNEY_PATH}?category=${article.category}`}
@@ -86,7 +86,7 @@ export default function JourneyArticle() {
             <span>{article.readingMinutes} min read</span>
           </p>
 
-          <h1 className="font-display text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+          <h1 className="font-display text-3xl font-bold leading-tight tracking-tight text-strong sm:text-4xl lg:text-5xl">
             {article.title}
           </h1>
 
@@ -122,7 +122,7 @@ export default function JourneyArticle() {
             <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
               Key takeaway
             </p>
-            <p className="mt-2.5 leading-relaxed text-white">{article.keyTakeaway}</p>
+            <p className="mt-2.5 leading-relaxed text-strong">{article.keyTakeaway}</p>
           </aside>
         )}
 
@@ -142,9 +142,9 @@ export default function JourneyArticle() {
         {products.length > 0 && (
           <section
             aria-labelledby="article-products"
-            className="mt-16 border-t border-white/5 pt-10"
+            className="mt-16 border-t border-line/5 pt-10"
           >
-            <h2 id="article-products" className="font-display text-xl font-bold text-white">
+            <h2 id="article-products" className="font-display text-xl font-bold text-strong">
               {products.length === 1 ? 'The product this is about' : 'Products this is about'}
             </h2>
 
@@ -160,7 +160,7 @@ export default function JourneyArticle() {
 
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2.5">
-                        <h3 className="font-display font-bold text-white">{p.name}</h3>
+                        <h3 className="font-display font-bold text-strong">{p.name}</h3>
                         <StatusBadge status={p.status} />
                       </div>
                       <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-text-muted">
@@ -184,7 +184,7 @@ export default function JourneyArticle() {
                               { from: `journey:${article.slug}` },
                             )
                           }
-                          className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-bold text-background-dark transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                          className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-bold text-on-primary transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                         >
                           {p.platform === 'web' ? 'Open' : 'Google Play'}
                           <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
@@ -196,7 +196,7 @@ export default function JourneyArticle() {
                         <Link
                           to={`/products/${p.slug}`}
                           onClick={() => trackProduct(EVENTS.productOpen, p, { from: 'journey' })}
-                          className="inline-flex min-h-[44px] items-center rounded-lg border border-white/10 px-4 text-sm font-medium text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                          className="inline-flex min-h-[44px] items-center rounded-lg border border-line/10 px-4 text-sm font-medium text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                         >
                           Details
                         </Link>
@@ -213,7 +213,7 @@ export default function JourneyArticle() {
         {(previous || next) && (
           <nav
             aria-label="More entries"
-            className="mt-14 grid gap-4 border-t border-white/5 pt-10 sm:grid-cols-2"
+            className="mt-14 grid gap-4 border-t border-line/5 pt-10 sm:grid-cols-2"
           >
             {previous ? (
               <Link
@@ -224,7 +224,7 @@ export default function JourneyArticle() {
                 <span className="font-mono text-[11px] uppercase tracking-wider text-text-muted">
                   ← Newer
                 </span>
-                <span className="font-display font-bold text-white">{previous.title}</span>
+                <span className="font-display font-bold text-strong">{previous.title}</span>
               </Link>
             ) : (
               <span />
@@ -239,7 +239,7 @@ export default function JourneyArticle() {
                 <span className="font-mono text-[11px] uppercase tracking-wider text-text-muted">
                   Older →
                 </span>
-                <span className="font-display font-bold text-white">{next.title}</span>
+                <span className="font-display font-bold text-strong">{next.title}</span>
               </Link>
             )}
           </nav>
@@ -247,8 +247,8 @@ export default function JourneyArticle() {
 
         {/* ── Related reading ── */}
         {related.length > 0 && (
-          <section aria-labelledby="related-reading" className="mt-14 border-t border-white/5 pt-10">
-            <h2 id="related-reading" className="font-display text-xl font-bold text-white">
+          <section aria-labelledby="related-reading" className="mt-14 border-t border-line/5 pt-10">
+            <h2 id="related-reading" className="font-display text-xl font-bold text-strong">
               Related reading
             </h2>
             <ul className="mt-5 flex list-none flex-col gap-3">
@@ -262,7 +262,7 @@ export default function JourneyArticle() {
                     <span className="font-mono text-[11px] uppercase tracking-wider text-primary">
                       {categoryLabel(a.category)}
                     </span>
-                    <span className="font-display font-bold text-white">{a.title}</span>
+                    <span className="font-display font-bold text-strong">{a.title}</span>
                     <span className="text-sm text-text-secondary">{a.description}</span>
                   </Link>
                 </li>
@@ -273,7 +273,7 @@ export default function JourneyArticle() {
 
         {/* ── Back into the ecosystem ── */}
         <section className="mt-14 rounded-2xl border border-border-dark bg-surface/30 p-6 sm:p-7">
-          <h2 className="font-display text-lg font-bold text-white">
+          <h2 className="font-display text-lg font-bold text-strong">
             Want to see what I&rsquo;m building?
           </h2>
           <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">
@@ -282,14 +282,14 @@ export default function JourneyArticle() {
           <div className="mt-5 flex flex-wrap gap-3">
             <Link
               to="/products"
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-background-dark transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-on-primary transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Explore products
             </Link>
             <Link
               to="/services"
               onClick={() => track(EVENTS.workWithMeClick, { from: `journey:${article.slug}` })}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-white/10 px-5 text-sm font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-line/10 px-5 text-sm font-bold text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Work with me
             </Link>

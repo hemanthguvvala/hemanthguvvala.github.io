@@ -66,7 +66,7 @@ export default function Engineering() {
                     {area.icon}
                   </span>
                 </span>
-                <h2 className="font-display text-xl font-bold text-white sm:text-2xl">
+                <h2 className="font-display text-xl font-bold text-strong sm:text-2xl">
                   {area.title}
                 </h2>
                 <p className="max-w-md text-sm leading-relaxed text-text-secondary">
@@ -79,7 +79,7 @@ export default function Engineering() {
                   <li
                     key={tag.label}
                     className={`rounded-md border border-border-dark bg-surface px-3 py-1.5 font-mono text-xs font-medium ${
-                      tag.highlight ? 'text-primary' : 'text-slate-300'
+                      tag.highlight ? 'text-primary' : 'text-text-secondary'
                     }`}
                   >
                     {tag.label}
@@ -121,7 +121,7 @@ export default function Engineering() {
                 {l.icon}
               </span>
               <span>
-                <span className="block font-display font-bold text-white">{l.title}</span>
+                <span className="block font-display font-bold text-strong">{l.title}</span>
                 <span className="block text-xs text-text-muted">{l.detail}</span>
               </span>
             </Link>

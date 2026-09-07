@@ -14,8 +14,8 @@ export default function RelatedProducts({ product, limit = 3 }) {
   if (related.length === 0) return null;
 
   return (
-    <section aria-labelledby="related-heading" className="border-t border-white/5 pt-12">
-      <h2 id="related-heading" className="font-display text-2xl font-bold text-white">
+    <section aria-labelledby="related-heading" className="border-t border-line/5 pt-12">
+      <h2 id="related-heading" className="font-display text-2xl font-bold text-strong">
         You may also like
       </h2>
       <p className="mt-2 text-sm text-text-secondary">
@@ -36,7 +36,7 @@ export default function RelatedProducts({ product, limit = 3 }) {
             <>
               <ProductIcon product={r} size={44} />
               <span className="min-w-0 flex-1">
-                <span className="block truncate font-display font-bold text-white">{r.name}</span>
+                <span className="block truncate font-display font-bold text-strong">{r.name}</span>
                 <span className="mt-0.5 line-clamp-2 block text-xs leading-relaxed text-text-secondary">
                   {r.shortDescription}
                 </span>

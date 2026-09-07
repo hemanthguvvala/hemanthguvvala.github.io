@@ -32,7 +32,7 @@ export default function ProductCard({ product, eager = false, headingLevel = 3 }
         <ProductIcon product={product} size={56} eager={eager} />
 
         <div className="min-w-0 flex-1">
-          <Heading className="font-display text-lg font-bold leading-snug text-white">
+          <Heading className="font-display text-lg font-bold leading-snug text-strong">
             {detailPath ? (
               <Link
                 to={detailPath}
@@ -66,7 +66,7 @@ export default function ProductCard({ product, eager = false, headingLevel = 3 }
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackProduct(EVENTS.websiteClick, product)}
-            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-primary px-3.5 text-sm font-bold text-background-dark transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-primary px-3.5 text-sm font-bold text-on-primary transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Open site
             <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
@@ -81,7 +81,7 @@ export default function ProductCard({ product, eager = false, headingLevel = 3 }
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackProduct(EVENTS.playStoreClick, product)}
-            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-white/10 px-3.5 text-sm font-medium text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-line/10 px-3.5 text-sm font-medium text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
               shop
@@ -92,7 +92,7 @@ export default function ProductCard({ product, eager = false, headingLevel = 3 }
 
         {/* No valid destination: state why instead of inventing a link. */}
         {!product.websiteUrl && !product.playStoreUrl && (
-          <span className="inline-flex min-h-[44px] cursor-not-allowed items-center rounded-lg border border-dashed border-white/10 px-3.5 text-sm text-text-muted">
+          <span className="inline-flex min-h-[44px] cursor-not-allowed items-center rounded-lg border border-dashed border-line/10 px-3.5 text-sm text-text-muted">
             {isArchived ? 'No longer available' : 'Not released yet'}
           </span>
         )}

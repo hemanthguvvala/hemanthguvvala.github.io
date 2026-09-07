@@ -65,7 +65,7 @@ export default function About() {
               title={
                 <>
                   Software engineering is my profession.{' '}
-                  <span className="bg-gradient-to-r from-primary to-emerald-200 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
                     Product building
                   </span>{' '}
                   is how I explore ideas outside it.
@@ -104,14 +104,14 @@ export default function About() {
                 height={480}
                 loading="eager"
                 decoding="async"
-                className="relative aspect-[4/5] w-full rounded-2xl border border-white/10 object-cover shadow-raised"
+                className="relative aspect-[4/5] w-full rounded-2xl border border-line/10 object-cover shadow-raised"
               />
             </div>
           </motion.div>
         </div>
 
         {/* ── What I build ── */}
-        <section aria-labelledby="build-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="build-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader
             id="build-heading"
             eyebrow="What I build"
@@ -124,7 +124,7 @@ export default function About() {
               <span className="material-symbols-outlined text-primary" aria-hidden="true">
                 dns
               </span>
-              <h3 className="font-display text-xl font-bold text-white">Enterprise engineering</h3>
+              <h3 className="font-display text-xl font-bold text-strong">Enterprise engineering</h3>
               <p className="leading-relaxed text-text-secondary">
                 Distributed, event-driven systems in the airline domain — the kind where
                 correctness matters more than novelty and an outage has real consequences.
@@ -144,7 +144,7 @@ export default function About() {
               <span className="material-symbols-outlined text-primary" aria-hidden="true">
                 deployed_code
               </span>
-              <h3 className="font-display text-xl font-bold text-white">Independent products</h3>
+              <h3 className="font-display text-xl font-bold text-strong">Independent products</h3>
               <p className="leading-relaxed text-text-secondary">
                 {liveProducts.length} live products across Android and the web — utilities,
                 productivity tools, games and a developer learning platform. Design, build, launch,
@@ -164,7 +164,7 @@ export default function About() {
         </section>
 
         {/* ── How I think about products ── */}
-        <section aria-labelledby="principles-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="principles-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader
             id="principles-heading"
             eyebrow="How I think about products"
@@ -180,7 +180,7 @@ export default function About() {
                 <span className="material-symbols-outlined text-primary" aria-hidden="true">
                   {p.icon}
                 </span>
-                <h3 className="font-display text-lg font-bold text-white">{p.title}</h3>
+                <h3 className="font-display text-lg font-bold text-strong">{p.title}</h3>
                 <p className="text-sm leading-relaxed text-text-secondary">{p.body}</p>
               </li>
             ))}
@@ -188,7 +188,7 @@ export default function About() {
         </section>
 
         {/* ── Career ── */}
-        <section aria-labelledby="career-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="career-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader
             id="career-heading"
             eyebrow="Career"
@@ -207,7 +207,7 @@ export default function About() {
                 </span>
                 <span className="flex-1">
                   <span className="flex flex-wrap items-center gap-2">
-                    <span className="font-display text-lg font-bold text-white">{role.title}</span>
+                    <span className="font-display text-lg font-bold text-strong">{role.title}</span>
                     {role.isCurrent && (
                       <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary">
                         Current
@@ -225,7 +225,7 @@ export default function About() {
         </section>
 
         {/* ── Education ── */}
-        <section aria-labelledby="education-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="education-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader id="education-heading" eyebrow="Education" title="Studied entirely in Rayachoty" />
 
           <ol className="mt-10 grid list-none gap-4 lg:grid-cols-3">
@@ -238,7 +238,7 @@ export default function About() {
                   {e.icon}
                 </span>
                 <span className="font-mono text-xs text-text-muted">{e.dateRange}</span>
-                <h3 className="font-display font-bold leading-snug text-white">{e.title}</h3>
+                <h3 className="font-display font-bold leading-snug text-strong">{e.title}</h3>
                 <p className="text-sm text-text-secondary">{e.institution}</p>
                 <p className="text-xs text-text-muted">{e.note}</p>
               </li>
@@ -247,7 +247,7 @@ export default function About() {
         </section>
 
         {/* ── Recognition ── */}
-        <section aria-labelledby="recognition-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="recognition-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader
             id="recognition-heading"
             eyebrow="Recognition"
@@ -257,7 +257,7 @@ export default function About() {
           <div className="mt-8">
             <Link
               to="/awards"
-              className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/10 px-5 text-sm font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-line/10 px-5 text-sm font-bold text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               See all recognition
               <span className="material-symbols-outlined text-lg" aria-hidden="true">

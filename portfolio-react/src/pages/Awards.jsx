@@ -56,7 +56,7 @@ function AwardList({ items }) {
             )}
           </div>
 
-          <h3 className="relative font-display text-lg font-bold leading-snug text-white">
+          <h3 className="relative font-display text-lg font-bold leading-snug text-strong">
             {award.title}
           </h3>
 
@@ -129,7 +129,7 @@ export default function Awards() {
         <div className="mt-16 flex flex-wrap gap-4">
           <Link
             to="/timeline"
-            className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/10 px-5 text-sm font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-line/10 px-5 text-sm font-bold text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             See the full journey
             <span className="material-symbols-outlined text-lg" aria-hidden="true">

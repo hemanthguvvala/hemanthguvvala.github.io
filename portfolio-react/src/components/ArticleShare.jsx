@@ -40,15 +40,15 @@ export default function ArticleShare({ article, path }) {
   };
 
   const base =
-    'inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-border-dark bg-card-dark/70 px-4 text-sm font-medium transition-colors hover:border-primary/40 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
+    'inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-border-dark bg-card-dark/70 px-4 text-sm font-medium transition-colors hover:border-primary/40 hover:text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
 
   return (
     <section
       aria-labelledby="share-heading"
-      className="mt-12 flex flex-col gap-4 border-t border-white/5 pt-8 sm:flex-row sm:items-center sm:justify-between"
+      className="mt-12 flex flex-col gap-4 border-t border-line/5 pt-8 sm:flex-row sm:items-center sm:justify-between"
     >
       <div>
-        <h2 id="share-heading" className="font-display font-bold text-white">
+        <h2 id="share-heading" className="font-display font-bold text-strong">
           Found this useful?
         </h2>
         <p className="mt-1 text-sm text-text-secondary">

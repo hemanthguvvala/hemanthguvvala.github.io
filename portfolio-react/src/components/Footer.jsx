@@ -38,12 +38,12 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 border-t border-white/5 bg-background-dark pb-8 pt-16">
+    <footer className="relative z-10 border-t border-line/5 bg-background-dark pb-8 pt-16">
       <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
         {/* Brand block spans 2, then one column per link group (3). */}
         <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
           <div className="col-span-2 flex flex-col gap-4 md:col-span-2">
-            <p className="font-display text-xl font-bold text-white">
+            <p className="font-display text-xl font-bold text-strong">
               Let&rsquo;s build something durable.
             </p>
             <p className="max-w-sm text-sm leading-relaxed text-text-secondary">
@@ -76,7 +76,7 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="my-10 h-px w-full bg-white/5" />
+        <div className="my-10 h-px w-full bg-line/5" />
 
         <div className="flex flex-col items-center justify-between gap-5 text-sm md:flex-row">
           <p className="text-text-muted">

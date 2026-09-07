@@ -17,7 +17,7 @@ export default function ProductIcon({ product, size = 56, eager = false, classNa
         loading={eager ? 'eager' : 'lazy'}
         decoding="async"
         style={dimension}
-        className={`shrink-0 rounded-xl border border-white/10 bg-surface object-cover ${className}`}
+        className={`shrink-0 rounded-xl border border-line/10 bg-surface object-cover ${className}`}
       />
     );
   }

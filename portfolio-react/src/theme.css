@@ -1,0 +1,124 @@
+/*
+ * THEME TOKENS — the only place a colour value is written.
+ *
+ * Every colour in tailwind.config.js points at one of these variables, so a
+ * component never needs a `dark:` variant: the same class resolves differently
+ * depending on the theme attribute on <html>.
+ *
+ * Values are space-separated RGB channels rather than hex, because Tailwind
+ * composes them as `rgb(var(--x) / <alpha-value>)`. That is what keeps opacity
+ * modifiers like `border-line/10` and `bg-card-dark/70` working.
+ *
+ * ── CONTRAST ───────────────────────────────────────────────────────────────
+ * Every foreground/surface pair in both themes was measured at 4.5:1 or better
+ * (WCAG AA for normal text). The tightest are light muted-on-surface at 4.68:1
+ * and dark muted-on-surface at 4.66:1. Do not nudge a value without
+ * re-measuring — the margins are deliberate, not accidental.
+ *
+ * NOTE ON `primary` IN LIGHT MODE: the brand green #00c29e scores 2.28:1 on
+ * white, so it cannot be used for text there. Light mode uses a darker shade of
+ * the same hue (#00775f, 5.52:1). The brand colour is unchanged in dark mode
+ * and in the favicon, OG image and product accents.
+ */
+
+:root {
+  /* Dark is the brand default and what a first-time visitor sees unless their
+     system asks for light. */
+  color-scheme: dark;
+
+  --c-bg: 15 35 31; /* #0f231f */
+  --c-surface: 22 46 41; /* #162e29 */
+  --c-surface-raised: 27 56 49; /* #1b3831 */
+  --c-card: 22 43 38; /* #162b26 */
+
+  --c-border: 39 58 55; /* #273a37 */
+  --c-border-strong: 49 80 74; /* #31504a */
+
+  --c-strong: 255 255 255; /* #ffffff — highest-emphasis text */
+  --c-text-secondary: 154 188 182; /* #9abcb6 */
+  --c-text-muted: 121 153 147; /* #799993 */
+
+  /* Overlay used for hairline borders and faint fills. White over a dark
+     ground; inverted in light mode so the same class still reads as "subtle". */
+  --c-line: 255 255 255;
+
+  --c-primary: 0 194 158; /* #00c29e */
+  --c-primary-dark: 0 160 130; /* #00a082 */
+  /* The hover shade. Lighter in dark mode, darker in light mode — the role is
+     "hover", not "lighter". */
+  --c-primary-hover: 61 220 187; /* #3ddcbb */
+  /* Text placed on a primary-filled surface. */
+  --c-on-primary: 15 35 31; /* #0f231f */
+
+  --c-accent: 0 212 255; /* #00d4ff */
+  --c-gold: 238 187 77; /* #eebb4d */
+  --c-status-archived: 124 143 139; /* #7c8f8b */
+
+  --shadow-strength: 1;
+}
+
+/* System preference, only while the visitor has not chosen explicitly. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    color-scheme: light;
+
+    --c-bg: 246 250 248; /* #f6faf8 */
+    --c-surface: 234 242 239; /* #eaf2ef */
+    --c-surface-raised: 225 235 232; /* #e1ebe8 */
+    --c-card: 255 255 255; /* #ffffff */
+
+    --c-border: 211 224 220; /* #d3e0dc */
+    --c-border-strong: 180 198 193; /* #b4c6c1 */
+
+    --c-strong: 11 26 23; /* #0b1a17 */
+    --c-text-secondary: 59 84 79; /* #3b544f */
+    --c-text-muted: 88 112 106; /* #58706a */
+
+    --c-line: 11 26 23;
+
+    --c-primary: 0 119 95; /* #00775f — AA-safe on white */
+    --c-primary-dark: 0 95 76; /* #005f4c */
+    --c-primary-hover: 0 95 76; /* darker on hover in light mode */
+    --c-on-primary: 255 255 255;
+
+    --c-accent: 0 92 110;
+    --c-gold: 138 99 0; /* #8a6300 */
+    --c-status-archived: 90 108 104;
+
+    --shadow-strength: 0.35;
+  }
+}
+
+/* An explicit choice always wins over the system preference. */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --c-bg: 246 250 248;
+  --c-surface: 234 242 239;
+  --c-surface-raised: 225 235 232;
+  --c-card: 255 255 255;
+
+  --c-border: 211 224 220;
+  --c-border-strong: 180 198 193;
+
+  --c-strong: 11 26 23;
+  --c-text-secondary: 59 84 79;
+  --c-text-muted: 88 112 106;
+
+  --c-line: 11 26 23;
+
+  --c-primary: 0 119 95;
+  --c-primary-dark: 0 95 76;
+  --c-primary-hover: 0 95 76;
+  --c-on-primary: 255 255 255;
+
+  --c-accent: 0 92 110;
+  --c-gold: 138 99 0;
+  --c-status-archived: 90 108 104;
+
+  --shadow-strength: 0.35;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}

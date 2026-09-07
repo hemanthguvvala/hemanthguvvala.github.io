@@ -65,7 +65,7 @@ export default function WebProducts() {
                   <div className="flex items-center gap-4">
                     <ProductIcon product={product} size={64} eager />
                     <div>
-                      <h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
+                      <h2 className="font-display text-2xl font-bold text-strong sm:text-3xl">
                         {product.name}
                       </h2>
                       <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-text-muted">
@@ -93,7 +93,7 @@ export default function WebProducts() {
                       onClick={() =>
                         trackProduct(EVENTS.websiteClick, product, { from: 'web-products' })
                       }
-                      className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl px-6 text-base font-bold text-background-dark transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl px-6 text-base font-bold text-on-primary transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                       style={{ backgroundColor: product.accent }}
                     >
                       Visit {product.name}
@@ -103,7 +103,7 @@ export default function WebProducts() {
                     </a>
                     <Link
                       to={`/products/${product.slug}`}
-                      className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl border border-white/10 px-6 text-base font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl border border-line/10 px-6 text-base font-bold text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       Learn more
                     </Link>

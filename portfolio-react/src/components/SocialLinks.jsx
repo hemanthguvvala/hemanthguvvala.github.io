@@ -26,7 +26,7 @@ export default function SocialLinks({ variant = 'icons', className = '' }) {
                 {s.icon}
               </span>
               <span className="min-w-0">
-                <span className="block text-sm font-bold text-white">{s.label}</span>
+                <span className="block text-sm font-bold text-strong">{s.label}</span>
                 <span className="block truncate text-xs text-text-muted">{s.handle}</span>
               </span>
             </a>
@@ -46,7 +46,7 @@ export default function SocialLinks({ variant = 'icons', className = '' }) {
             onClick={() => track(EVENTS.socialClick, { network: s.id })}
             aria-label={s.label}
             title={s.label}
-            className="flex size-12 items-center justify-center rounded-full border border-white/10 text-text-secondary transition-all hover:border-primary hover:bg-primary/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="flex size-12 items-center justify-center rounded-full border border-line/10 text-text-secondary transition-all hover:border-primary hover:bg-primary/10 hover:text-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <span className="material-symbols-outlined" aria-hidden="true">
               {s.icon}

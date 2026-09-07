@@ -84,10 +84,10 @@ export default function Contact() {
             onClick={() => track(EVENTS.contactClick, { from: 'contact-primary' })}
             className="group flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-2xl bg-primary px-6 py-5 text-center transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
-            <span className="font-mono text-xs uppercase tracking-wider text-background-dark/70">
+            <span className="font-mono text-xs uppercase tracking-wider text-on-primary/70">
               Email me
             </span>
-            <span className="break-all font-display text-lg font-bold text-background-dark sm:text-xl">
+            <span className="break-all font-display text-lg font-bold text-on-primary sm:text-xl">
               {person.email}
             </span>
           </a>
@@ -109,7 +109,7 @@ export default function Contact() {
               download
             </span>
             <span>
-              <span className="block text-sm font-bold text-white">Download resume</span>
+              <span className="block text-sm font-bold text-strong">Download resume</span>
               <span className="block text-xs text-text-muted">PDF</span>
             </span>
           </a>
@@ -122,7 +122,7 @@ export default function Contact() {
               layers
             </span>
             <span>
-              <span className="block text-sm font-bold text-white">See the products</span>
+              <span className="block text-sm font-bold text-strong">See the products</span>
               <span className="block text-xs text-text-muted">Apps and web tools</span>
             </span>
           </Link>

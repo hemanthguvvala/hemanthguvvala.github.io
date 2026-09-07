@@ -1,5 +1,6 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import ThemeToggle from './ThemeToggle';
 import { person } from '../data/profile';
 import { JOURNEY_LABEL, JOURNEY_PATH, hasArticles } from '../data/journey';
 
@@ -44,12 +45,12 @@ export default function Navigation() {
 
   const linkClass = ({ isActive }) =>
     `text-sm font-medium transition-colors rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${
-      isActive ? 'text-white border-b-2 border-primary pb-0.5' : 'text-text-secondary hover:text-primary'
+      isActive ? 'text-strong border-b-2 border-primary pb-0.5' : 'text-text-secondary hover:text-primary'
     }`;
 
   return (
     <nav
-      className="fixed top-0 z-50 w-full border-b border-white/5 bg-background-dark/85 backdrop-blur-md"
+      className="fixed top-0 z-50 w-full border-b border-line/5 bg-background-dark/85 backdrop-blur-md"
       aria-label="Main"
     >
       <div className="mx-auto flex h-20 max-w-content items-center justify-between px-5 sm:px-6 lg:px-10">
@@ -64,7 +65,7 @@ export default function Navigation() {
             </span>
           </span>
           <span className="flex flex-col leading-none">
-            <span className="font-display text-base font-bold tracking-tight text-white">
+            <span className="font-display text-base font-bold tracking-tight text-strong">
               {person.initials}
             </span>
             <span className="mt-0.5 hidden font-mono text-[10px] uppercase tracking-wider text-text-muted sm:block">
@@ -79,10 +80,11 @@ export default function Navigation() {
               {l.label}
             </NavLink>
           ))}
-          <span className="h-6 w-px bg-white/10" aria-hidden="true" />
+          <span className="h-6 w-px bg-line/10" aria-hidden="true" />
+          <ThemeToggle />
           <Link
             to="/contact"
-            className="group inline-flex h-10 items-center justify-center rounded-lg border border-white/10 px-5 text-sm font-bold text-white transition-all hover:border-primary hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="group inline-flex h-10 items-center justify-center rounded-lg border border-line/10 px-5 text-sm font-bold text-strong transition-all hover:border-primary hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Contact
             <span
@@ -94,25 +96,30 @@ export default function Navigation() {
           </Link>
         </div>
 
-        <button
-          ref={toggleRef}
-          type="button"
-          className="-mr-2 flex size-11 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:hidden"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-menu"
-        >
-          <span className="material-symbols-outlined" aria-hidden="true">
-            {mobileOpen ? 'close' : 'menu'}
-          </span>
-        </button>
+        {/* The theme control sits outside the menu so it is reachable on
+            mobile without opening the navigation first. */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            ref={toggleRef}
+            type="button"
+            className="-mr-2 flex size-11 items-center justify-center rounded-lg text-strong transition-colors hover:bg-line/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+          >
+            <span className="material-symbols-outlined" aria-hidden="true">
+              {mobileOpen ? 'close' : 'menu'}
+            </span>
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-white/5 bg-background-dark/98 backdrop-blur-md lg:hidden"
+          className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-line/5 bg-background-dark/98 backdrop-blur-md lg:hidden"
         >
           <ul className="flex list-none flex-col gap-1 px-5 py-4">
             {[{ to: '/', label: 'Home' }, ...links, { to: '/awards', label: 'Awards' }].map((l) => (
@@ -122,7 +129,7 @@ export default function Navigation() {
                   end={l.to === '/'}
                   className={({ isActive }) =>
                     `flex min-h-[48px] items-center rounded-lg px-3 text-base font-medium transition-colors ${
-                      isActive ? 'bg-primary/10 text-primary' : 'text-text-secondary hover:text-white'
+                      isActive ? 'bg-primary/10 text-primary' : 'text-text-secondary hover:text-strong'
                     }`
                   }
                 >
@@ -133,7 +140,7 @@ export default function Navigation() {
             <li className="mt-2">
               <Link
                 to="/contact"
-                className="flex min-h-[48px] items-center justify-center rounded-lg bg-primary px-5 text-base font-bold text-background-dark"
+                className="flex min-h-[48px] items-center justify-center rounded-lg bg-primary px-5 text-base font-bold text-on-primary"
               >
                 Contact
               </Link>

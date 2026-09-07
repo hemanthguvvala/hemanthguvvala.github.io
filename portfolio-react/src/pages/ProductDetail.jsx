@@ -98,7 +98,7 @@ export default function ProductDetail() {
                 </span>
               </div>
 
-              <h1 className="font-display text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+              <h1 className="font-display text-3xl font-bold leading-tight tracking-tight text-strong sm:text-4xl lg:text-5xl">
                 {product.name}
               </h1>
 
@@ -120,7 +120,7 @@ export default function ProductDetail() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackProduct(EVENTS.websiteClick, product, { from: 'detail' })}
-                className={`${cta} bg-primary text-background-dark shadow-glow hover:bg-primary-light`}
+                className={`${cta} bg-primary text-on-primary shadow-glow hover:bg-primary-light`}
               >
                 Open {product.name}
                 <span className="material-symbols-outlined text-lg" aria-hidden="true">
@@ -137,8 +137,8 @@ export default function ProductDetail() {
                 onClick={() => trackProduct(EVENTS.playStoreClick, product, { from: 'detail' })}
                 className={`${cta} ${
                   product.websiteUrl
-                    ? 'border border-white/10 text-white hover:border-primary/50 hover:bg-primary/10'
-                    : 'bg-primary text-background-dark shadow-glow hover:bg-primary-light'
+                    ? 'border border-line/10 text-strong hover:border-primary/50 hover:bg-primary/10'
+                    : 'bg-primary text-on-primary shadow-glow hover:bg-primary-light'
                 }`}
               >
                 <span className="material-symbols-outlined text-lg" aria-hidden="true">
@@ -153,7 +153,7 @@ export default function ProductDetail() {
                 href={product.privacyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${cta} border border-white/10 text-text-secondary hover:text-white`}
+                className={`${cta} border border-line/10 text-text-secondary hover:text-strong`}
               >
                 Privacy policy
               </a>
@@ -166,7 +166,7 @@ export default function ProductDetail() {
           <div className="flex flex-col gap-10 lg:col-span-7">
             {product.longDescription && (
               <section aria-labelledby="overview-heading">
-                <h2 id="overview-heading" className="font-display text-2xl font-bold text-white">
+                <h2 id="overview-heading" className="font-display text-2xl font-bold text-strong">
                   Overview
                 </h2>
                 <p className="mt-4 max-w-prose leading-relaxed text-text-secondary">
@@ -177,7 +177,7 @@ export default function ProductDetail() {
 
             {product.features.length > 0 && (
               <section aria-labelledby="features-heading">
-                <h2 id="features-heading" className="font-display text-2xl font-bold text-white">
+                <h2 id="features-heading" className="font-display text-2xl font-bold text-strong">
                   What it does
                 </h2>
                 <ul className="mt-5 flex list-none flex-col gap-3">
@@ -198,7 +198,7 @@ export default function ProductDetail() {
 
             {product.screenshots.length > 0 && (
               <section aria-labelledby="screens-heading">
-                <h2 id="screens-heading" className="font-display text-2xl font-bold text-white">
+                <h2 id="screens-heading" className="font-display text-2xl font-bold text-strong">
                   Screens
                 </h2>
                 <ul className="mt-5 grid list-none grid-cols-2 gap-4 sm:grid-cols-3">
@@ -211,7 +211,7 @@ export default function ProductDetail() {
                         height={shot.height}
                         loading="lazy"
                         decoding="async"
-                        className="w-full rounded-xl border border-white/10"
+                        className="w-full rounded-xl border border-line/10"
                       />
                     </li>
                   ))}
@@ -242,11 +242,11 @@ export default function ProductDetail() {
                   .map((row) => (
                     <div
                       key={row.term}
-                      className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-3 last:border-0 last:pb-0"
+                      className="flex flex-wrap items-center justify-between gap-3 border-b border-line/5 pb-3 last:border-0 last:pb-0"
                     >
                       <dt className="text-text-muted">{row.term}</dt>
                       <dd
-                        className={`text-right ${row.mono ? 'break-all font-mono text-xs text-text-secondary' : 'font-medium text-white'}`}
+                        className={`text-right ${row.mono ? 'break-all font-mono text-xs text-text-secondary' : 'font-medium text-strong'}`}
                       >
                         {row.badge ? <StatusBadge status={product.status} /> : row.value}
                       </dd>
@@ -280,8 +280,8 @@ export default function ProductDetail() {
 
         {/* ── Product → journey. Only where something has been written. ── */}
         {stories.length > 0 && (
-          <section aria-labelledby="product-stories" className="mt-16 border-t border-white/5 pt-10">
-            <h2 id="product-stories" className="font-display text-2xl font-bold text-white">
+          <section aria-labelledby="product-stories" className="mt-16 border-t border-line/5 pt-10">
+            <h2 id="product-stories" className="font-display text-2xl font-bold text-strong">
               The story behind it
             </h2>
             <p className="mt-2 text-sm text-text-secondary">
@@ -298,7 +298,7 @@ export default function ProductDetail() {
                     <span className="font-mono text-[11px] uppercase tracking-wider text-primary">
                       {categoryLabel(a.category)}
                     </span>
-                    <span className="font-display font-bold text-white">{a.title}</span>
+                    <span className="font-display font-bold text-strong">{a.title}</span>
                     <span className="text-sm text-text-secondary">{a.description}</span>
                   </Link>
                 </li>
@@ -315,7 +315,7 @@ export default function ProductDetail() {
           {product.servicesCta && (
             <aside className="flex flex-col gap-4 rounded-2xl border border-border-dark bg-surface/30 p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-7">
               <div>
-                <h2 className="font-display text-lg font-bold text-white">
+                <h2 className="font-display text-lg font-bold text-strong">
                   Need something similar built?
                 </h2>
                 <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-text-secondary">

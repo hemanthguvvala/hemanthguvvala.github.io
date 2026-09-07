@@ -67,7 +67,7 @@ export default function Home() {
         >
           <motion.p
             variants={rise}
-            className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-surface/80 px-3.5 py-1.5 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 rounded-full border border-line/5 bg-surface/80 px-3.5 py-1.5 backdrop-blur-sm"
           >
             <span className="relative flex size-2">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75" />
@@ -80,7 +80,7 @@ export default function Home() {
 
           <motion.h1
             variants={rise}
-            className="bg-gradient-to-br from-white via-white to-slate-500 bg-clip-text pb-2 font-display text-[2.75rem] font-bold leading-[1.02] tracking-tight text-transparent sm:text-6xl lg:text-7xl"
+            className="bg-gradient-to-br from-strong via-strong to-text-muted bg-clip-text pb-2 font-display text-[2.75rem] font-bold leading-[1.02] tracking-tight text-transparent sm:text-6xl lg:text-7xl"
           >
             {person.tagline}
           </motion.h1>
@@ -90,14 +90,14 @@ export default function Home() {
             className="max-w-2xl text-base leading-relaxed text-text-secondary sm:text-lg"
           >
             I&rsquo;m {person.name} — a {person.jobTitle.toLowerCase()} at{' '}
-            <span className="text-white">{person.company}</span>, where I build event-driven
+            <span className="text-strong">{person.company}</span>, where I build event-driven
             backend systems in Java, Spring Boot and Kafka for global airlines. Outside of that I
             design, build and launch my own products: {androidProducts.filter((p) => p.status === 'live').length}{' '}
             Android apps on Google Play, plus web tools and a developer learning platform.
           </motion.p>
 
           <motion.div variants={rise} className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-            <Link to="/products" className={`${btn} bg-primary text-background-dark shadow-glow hover:bg-primary-light`}>
+            <Link to="/products" className={`${btn} bg-primary text-on-primary shadow-glow hover:bg-primary-light`}>
               Explore products
               <span className="material-symbols-outlined text-lg" aria-hidden="true">
                 layers
@@ -107,7 +107,7 @@ export default function Home() {
               href={person.resumeUrl}
               download
               onClick={() => track(EVENTS.resumeDownload, { from: 'hero' })}
-              className={`${btn} border border-white/10 bg-surface/50 text-white backdrop-blur-md hover:border-primary/50`}
+              className={`${btn} border border-line/10 bg-surface/50 text-strong backdrop-blur-md hover:border-primary/50`}
             >
               View resume
               <span className="material-symbols-outlined text-lg text-text-secondary" aria-hidden="true">
@@ -117,7 +117,7 @@ export default function Home() {
             <Link
               to="/contact"
               onClick={() => track(EVENTS.contactClick, { from: 'hero' })}
-              className={`${btn} border border-white/10 bg-surface/50 text-white backdrop-blur-md hover:border-white/25`}
+              className={`${btn} border border-line/10 bg-surface/50 text-strong backdrop-blur-md hover:border-line/25`}
             >
               Connect
               <span className="material-symbols-outlined text-lg text-text-secondary" aria-hidden="true">
@@ -129,7 +129,7 @@ export default function Home() {
       </section>
 
       {/* ───────────────────── TRUST / CREDIBILITY ───────────────────── */}
-      <section aria-labelledby="credibility-heading" className="border-y border-white/5 bg-surface/20 py-10">
+      <section aria-labelledby="credibility-heading" className="border-y border-line/5 bg-surface/20 py-10">
         <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
           <h2 id="credibility-heading" className="sr-only">
             Professional background
@@ -137,7 +137,7 @@ export default function Home() {
           <ul className="grid list-none grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-5">
             {credibility.map((c) => (
               <li key={c.label} className="flex flex-col gap-1 border-l-2 border-primary/25 pl-4">
-                <span className="text-sm font-bold leading-snug text-white">{c.label}</span>
+                <span className="text-sm font-bold leading-snug text-strong">{c.label}</span>
                 <span className="text-xs text-text-muted">{c.detail}</span>
               </li>
             ))}
@@ -173,7 +173,7 @@ export default function Home() {
       </section>
 
       {/* ───────────────────── STUDIO INTRO ───────────────────── */}
-      <section aria-labelledby="studio-heading" className="border-t border-white/5 py-section">
+      <section aria-labelledby="studio-heading" className="border-t border-line/5 py-section">
         <div className="mx-auto grid max-w-content gap-12 px-5 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8">
           <div className="flex flex-col gap-6">
             <SectionHeader
@@ -213,7 +213,7 @@ export default function Home() {
                 <span className="material-symbols-outlined text-primary" aria-hidden="true">
                   {s.icon}
                 </span>
-                <dd className="font-display text-3xl font-bold text-white">{s.value}</dd>
+                <dd className="font-display text-3xl font-bold text-strong">{s.value}</dd>
                 <dt className="text-xs uppercase tracking-wider text-text-muted">{s.label}</dt>
               </div>
             ))}
@@ -227,7 +227,7 @@ export default function Home() {
         products are the identity, and this is the second thing a visitor
         learns, not the first. Full detail lives on /services.
       */}
-      <section aria-labelledby="services-teaser-heading" className="border-t border-white/5 py-section">
+      <section aria-labelledby="services-teaser-heading" className="border-t border-line/5 py-section">
         <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-8 rounded-3xl border border-border-dark bg-surface/30 p-7 sm:p-10 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
             <div className="max-w-2xl">
@@ -237,7 +237,7 @@ export default function Home() {
               </p>
               <h2
                 id="services-teaser-heading"
-                className="mt-4 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl"
+                className="mt-4 font-display text-2xl font-bold tracking-tight text-strong sm:text-3xl"
               >
                 Need something built?
               </h2>
@@ -251,7 +251,7 @@ export default function Home() {
             <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
               <Link
                 to="/services"
-                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-background-dark transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-on-primary transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
                 Explore services
                 <span className="material-symbols-outlined text-lg" aria-hidden="true">
@@ -261,7 +261,7 @@ export default function Home() {
               <Link
                 to="/contact"
                 onClick={() => track(EVENTS.contactClick, { from: 'home-services-teaser' })}
-                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl border border-white/10 px-5 text-sm font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl border border-line/10 px-5 text-sm font-bold text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
                 Discuss a project
               </Link>
@@ -276,7 +276,7 @@ export default function Home() {
         exactly as it was — an empty "latest writing" strip signals a dead site.
       */}
       {hasArticles && (
-        <section aria-labelledby="journey-heading" className="border-t border-white/5 py-section">
+        <section aria-labelledby="journey-heading" className="border-t border-line/5 py-section">
           <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
             <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <SectionHeader
@@ -308,7 +308,7 @@ export default function Home() {
       )}
 
       {/* ───────────────────── ECOSYSTEM ───────────────────── */}
-      <section aria-labelledby="ecosystem-heading" className="border-t border-white/5 py-section">
+      <section aria-labelledby="ecosystem-heading" className="border-t border-line/5 py-section">
         <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
           <SectionHeader
             id="ecosystem-heading"
@@ -324,7 +324,7 @@ export default function Home() {
                   to={`/products?category=${c.key}`}
                   className="flex h-full flex-col justify-between gap-4 rounded-2xl border border-border-dark bg-card-dark/70 p-5 transition-colors hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
-                  <span className="font-display text-sm font-bold leading-snug text-white">
+                  <span className="font-display text-sm font-bold leading-snug text-strong">
                     {c.label}
                   </span>
                   <span className="font-mono text-xs text-primary">
@@ -338,7 +338,7 @@ export default function Home() {
       </section>
 
       {/* ───────────────────── ENGINEERING ───────────────────── */}
-      <section aria-labelledby="engineering-heading" className="border-t border-white/5 py-section">
+      <section aria-labelledby="engineering-heading" className="border-t border-line/5 py-section">
         <div className="mx-auto grid max-w-content gap-10 px-5 sm:px-6 lg:grid-cols-12 lg:items-center lg:px-8">
           <div className="lg:col-span-7">
             <SectionHeader
@@ -350,7 +350,7 @@ export default function Home() {
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
                 to="/engineering"
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-white/10 px-5 text-sm font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-line/10 px-5 text-sm font-bold text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
                 Engineering &amp; expertise
               </Link>
@@ -380,7 +380,7 @@ export default function Home() {
                 <span className="material-symbols-outlined mb-1 text-primary" aria-hidden="true">
                   {m.icon}
                 </span>
-                <span className="font-bold text-white">{m.title}</span>
+                <span className="font-bold text-strong">{m.title}</span>
                 <span className="text-xs text-text-muted">{m.detail}</span>
               </li>
             ))}
@@ -389,7 +389,7 @@ export default function Home() {
       </section>
 
       {/* ───────────────────── FOUNDER ───────────────────── */}
-      <section aria-labelledby="founder-heading" className="border-t border-white/5 py-section">
+      <section aria-labelledby="founder-heading" className="border-t border-line/5 py-section">
         <div className="mx-auto grid max-w-content items-center gap-10 px-5 sm:px-6 lg:grid-cols-12 lg:gap-14 lg:px-8">
           <div className="lg:col-span-4">
             <div className="relative mx-auto w-full max-w-[260px]">
@@ -404,7 +404,7 @@ export default function Home() {
                 height={325}
                 loading="lazy"
                 decoding="async"
-                className="relative aspect-[4/5] w-full rounded-2xl border border-white/10 object-cover shadow-raised"
+                className="relative aspect-[4/5] w-full rounded-2xl border border-line/10 object-cover shadow-raised"
               />
             </div>
           </div>
@@ -441,7 +441,7 @@ export default function Home() {
       </section>
 
       {/* ───────────────────── BUILD LOOP ───────────────────── */}
-      <section aria-labelledby="loop-heading" className="border-t border-white/5 py-section">
+      <section aria-labelledby="loop-heading" className="border-t border-line/5 py-section">
         <div className="mx-auto max-w-content px-5 sm:px-6 lg:px-8">
           <SectionHeader
             id="loop-heading"
@@ -462,7 +462,7 @@ export default function Home() {
                 <span className="material-symbols-outlined text-primary" aria-hidden="true">
                   {s.icon}
                 </span>
-                <span className="font-display font-bold text-white">{s.step}</span>
+                <span className="font-display font-bold text-strong">{s.step}</span>
                 <span className="text-xs leading-relaxed text-text-muted">{s.detail}</span>
               </li>
             ))}
@@ -494,7 +494,7 @@ export default function Home() {
                   >
                     <ProductIcon product={p} size={36} />
                     <span className="min-w-0">
-                      <span className="block truncate text-sm font-bold text-white">{p.name}</span>
+                      <span className="block truncate text-sm font-bold text-strong">{p.name}</span>
                       <span className="block text-[11px] text-text-muted">
                         {CATEGORIES[p.category]}
                       </span>

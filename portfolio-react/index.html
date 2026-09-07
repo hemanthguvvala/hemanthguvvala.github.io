@@ -9,6 +9,32 @@
          which GitHub Pages does not allow us to set. -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
+    <!--
+      Applies the theme before first paint. This must stay inline and blocking:
+      loading it as a module would run after the prerendered HTML has painted,
+      and a dark-mode visitor would see a white flash on every page load.
+
+      An explicit choice in localStorage wins; otherwise the system preference
+      decides. Nothing is written to the DOM unless a choice exists, so the
+      CSS media query in theme.css remains in charge by default.
+    -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'light' || t === 'dark') {
+            document.documentElement.setAttribute('data-theme', t);
+          } else {
+            t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          }
+          var m = document.querySelector('meta[name="theme-color"]');
+          if (m) m.setAttribute('content', t === 'light' ? '#f6faf8' : '#0f231f');
+        } catch (e) {
+          /* Storage can be unavailable; the CSS default still applies. */
+        }
+      })();
+    </script>
+
     <!-- Brand assets. Local files only — never a third-party URL for these. -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

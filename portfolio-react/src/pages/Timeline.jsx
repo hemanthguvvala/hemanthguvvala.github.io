@@ -80,7 +80,7 @@ export default function Timeline() {
                       </span>
                     )}
                   </div>
-                  <h3 className="mt-2 font-display text-lg font-bold text-white sm:text-xl">
+                  <h3 className="mt-2 font-display text-lg font-bold text-strong sm:text-xl">
                     {role.title}
                   </h3>
                   <p className="mt-0.5 text-sm font-medium text-primary">{role.company}</p>
@@ -115,7 +115,7 @@ export default function Timeline() {
                 </span>
                 <div className="flex-1">
                   <span className="font-mono text-xs text-text-muted">{e.dateRange}</span>
-                  <h3 className="mt-1 font-display font-bold leading-snug text-white">{e.title}</h3>
+                  <h3 className="mt-1 font-display font-bold leading-snug text-strong">{e.title}</h3>
                   <p className="mt-0.5 text-sm text-text-secondary">{e.institution}</p>
                 </div>
                 <span className="shrink-0 rounded-lg border border-border-dark bg-surface px-3 py-1.5 font-mono text-xs text-primary">
@@ -129,7 +129,7 @@ export default function Timeline() {
         <div className="mt-14 flex flex-wrap gap-4">
           <Link
             to="/awards"
-            className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/10 px-5 text-sm font-bold text-white transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-line/10 px-5 text-sm font-bold text-strong transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Awards &amp; recognition
             <span className="material-symbols-outlined text-lg" aria-hidden="true">

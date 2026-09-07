@@ -25,7 +25,7 @@ export default function ArticleCard({ article, headingLevel = 2, from }) {
         <span>{article.readingMinutes} min read</span>
       </p>
 
-      <Heading className="mt-2.5 font-display text-xl font-bold leading-snug text-white">
+      <Heading className="mt-2.5 font-display text-xl font-bold leading-snug text-strong">
         <Link
           to={articlePath(article.slug)}
           onClick={() =>

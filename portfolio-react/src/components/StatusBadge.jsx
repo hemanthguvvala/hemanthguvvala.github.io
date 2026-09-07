@@ -3,7 +3,7 @@ import { STATUS } from '../data/products';
 const TONE = {
   live: 'bg-primary/10 text-primary border-primary/30',
   building: 'bg-gold/10 text-gold border-gold/30',
-  archived: 'bg-white/5 text-status-archived border-white/10',
+  archived: 'bg-line/5 text-status-archived border-line/10',
 };
 
 /**

@@ -61,7 +61,7 @@ export default function Services() {
           <Link
             to="/contact"
             onClick={() => track(EVENTS.contactClick, { from: 'services-hero' })}
-            className={`${btn} bg-primary text-background-dark shadow-glow hover:bg-primary-light`}
+            className={`${btn} bg-primary text-on-primary shadow-glow hover:bg-primary-light`}
           >
             Discuss a project
             <span className="material-symbols-outlined text-lg" aria-hidden="true">
@@ -70,7 +70,7 @@ export default function Services() {
           </Link>
           <Link
             to="/products"
-            className={`${btn} border border-white/10 bg-surface/50 text-white hover:border-primary/50`}
+            className={`${btn} border border-line/10 bg-surface/50 text-strong hover:border-primary/50`}
           >
             See my products
             <span className="material-symbols-outlined text-lg text-text-secondary" aria-hidden="true">
@@ -80,7 +80,7 @@ export default function Services() {
         </div>
 
         {/* ───────────────────── SERVICES GRID ───────────────────── */}
-        <section aria-labelledby="what-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="what-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader
             id="what-heading"
             eyebrow="What I can build"
@@ -115,7 +115,7 @@ export default function Services() {
                     </span>
                   </span>
 
-                  <h3 className="relative font-display text-xl font-bold leading-snug text-white">
+                  <h3 className="relative font-display text-xl font-bold leading-snug text-strong">
                     {service.title}
                   </h3>
 
@@ -141,7 +141,7 @@ export default function Services() {
                   {/* Proof links, only where a shipped product actually
                       demonstrates the service. */}
                   {proof.length > 0 && (
-                    <p className="relative mt-auto flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-white/5 pt-4 text-xs text-text-muted">
+                    <p className="relative mt-auto flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-line/5 pt-4 text-xs text-text-muted">
                       <span>Built:</span>
                       {proof.map((p, i) => (
                         <span key={p.slug}>
@@ -163,7 +163,7 @@ export default function Services() {
         </section>
 
         {/* ───────────────────── WHY WORK WITH ME ───────────────────── */}
-        <section aria-labelledby="why-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="why-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader
             id="why-heading"
             eyebrow="Why work with me"
@@ -180,7 +180,7 @@ export default function Services() {
                 <span className="material-symbols-outlined text-primary" aria-hidden="true">
                   {d.icon}
                 </span>
-                <h3 className="font-display text-lg font-bold text-white">{d.title}</h3>
+                <h3 className="font-display text-lg font-bold text-strong">{d.title}</h3>
                 <p className="text-sm leading-relaxed text-text-secondary">{d.body}</p>
               </li>
             ))}
@@ -188,7 +188,7 @@ export default function Services() {
         </section>
 
         {/* ───────────────── WHAT I CAN HELP YOU BUILD ───────────────── */}
-        <section aria-labelledby="help-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="help-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader
             id="help-heading"
             eyebrow="Engagements"
@@ -206,7 +206,7 @@ export default function Services() {
                   {e.icon}
                 </span>
                 <span>
-                  <span className="block text-sm font-bold text-white">{e.label}</span>
+                  <span className="block text-sm font-bold text-strong">{e.label}</span>
                   <span className="block text-xs text-text-muted">{e.detail}</span>
                 </span>
               </li>
@@ -215,7 +215,7 @@ export default function Services() {
         </section>
 
         {/* ───────────────── BUILT, NOT JUST PROMISED ───────────────── */}
-        <section aria-labelledby="proof-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="proof-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader
             id="proof-heading"
             eyebrow="Proof"
@@ -232,7 +232,7 @@ export default function Services() {
                 >
                   <ProductIcon product={p} size={44} />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate font-display font-bold text-white">{p.name}</span>
+                    <span className="block truncate font-display font-bold text-strong">{p.name}</span>
                     <span className="mt-0.5 line-clamp-2 block text-xs leading-relaxed text-text-secondary">
                       {p.shortDescription}
                     </span>
@@ -261,7 +261,7 @@ export default function Services() {
         </section>
 
         {/* ───────────────────────── PROCESS ───────────────────────── */}
-        <section aria-labelledby="process-heading" className="mt-section border-t border-white/5 pt-section">
+        <section aria-labelledby="process-heading" className="mt-section border-t border-line/5 pt-section">
           <SectionHeader
             id="process-heading"
             eyebrow="How I work"
@@ -281,7 +281,7 @@ export default function Services() {
                 <span className="material-symbols-outlined text-primary" aria-hidden="true">
                   {s.icon}
                 </span>
-                <span className="font-display font-bold text-white">{s.step}</span>
+                <span className="font-display font-bold text-strong">{s.step}</span>
                 <span className="text-xs leading-relaxed text-text-muted">{s.detail}</span>
               </li>
             ))}
@@ -301,7 +301,7 @@ export default function Services() {
           <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-6">
             <h2
               id="services-cta-heading"
-              className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+              className="font-display text-3xl font-bold tracking-tight text-strong sm:text-4xl"
             >
               Have a product or software problem to solve?
             </h2>
@@ -312,7 +312,7 @@ export default function Services() {
             <Link
               to="/contact"
               onClick={() => track(EVENTS.contactClick, { from: 'services-cta' })}
-              className={`${btn} bg-primary text-background-dark hover:bg-primary-light`}
+              className={`${btn} bg-primary text-on-primary hover:bg-primary-light`}
             >
               Let&rsquo;s talk
               <span className="material-symbols-outlined text-lg" aria-hidden="true">
