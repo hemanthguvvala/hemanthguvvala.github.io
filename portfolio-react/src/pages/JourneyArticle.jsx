@@ -26,13 +26,19 @@ export default function JourneyArticle() {
 
   const path = articlePath(article.slug);
   const products = article.products.map(getProduct).filter(Boolean);
+
+  // Long entry titles would push "| Hemanth Kumar Guvvala" past the point
+  // Google truncates. Better to lose the suffix than to have the name cut in
+  // half in the result.
+  const suffixed = `${article.title} | ${person.name}`;
+  const seoTitle = suffixed.length > 70 ? article.title : suffixed;
   const related = relatedArticles(article);
   const { previous, next } = articleNeighbours(article.slug);
 
   return (
     <div className="pb-section-lg pt-32">
       <SEO
-        title={`${article.title} | ${person.name}`}
+        title={seoTitle}
         description={article.description}
         path={path}
         type="article"

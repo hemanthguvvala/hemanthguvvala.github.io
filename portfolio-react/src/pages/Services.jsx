@@ -30,7 +30,7 @@ export default function Services() {
     <div className="pb-section-lg pt-32">
       <SEO
         title={`Software & Product Development Services | ${person.name}`}
-        description="Software and product development services from Hemanth Kumar Guvvala — web applications, Android apps, backend and APIs, MVP development, product engineering and technical consulting."
+        description="Software and product development services from Hemanth Kumar Guvvala — web applications, Android apps, backend and APIs, MVP development and technical consulting."
         path="/services"
         jsonLd={[
           webPageSchema({
