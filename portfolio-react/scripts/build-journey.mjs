@@ -105,6 +105,83 @@ async function knownProductSlugs() {
 
 const isDate = (v) => /^\d{4}-\d{2}-\d{2}$/.test(String(v));
 
+/**
+ * ── HEADING IDS AND THE CONTENTS RAIL ──────────────────────────────────────
+ *
+ * Every heading gets an `id`, and every `##` is collected into a `toc` array
+ * on the article.
+ *
+ * Both are done here rather than in the browser for the same reason the
+ * Markdown is compiled here: a deep link to a section has to work in the
+ * prerendered HTML, and the reading rail has to be in the server-rendered
+ * output or it pops in after hydration and shifts the page. Neither can be a
+ * DOM walk on load.
+ */
+const collected = { toc: [], ids: new Set() };
+
+/**
+ * Heading text without markup or entities — what a slug and a rail label need.
+ *
+ * The entities have to be decoded rather than dropped: marked escapes the
+ * apostrophe in "What's next", and replacing it with a space would label the
+ * rail "What s next".
+ */
+const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", nbsp: ' ' };
+
+const plainText = (html) =>
+  html
+    .replace(/<[^>]*>/g, '')
+    .replace(/&(amp|lt|gt|quot|#39|nbsp);/g, (_, name) => ENTITIES[name])
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/** Slug, made unique within one article so two "What I learned" headings differ. */
+function headingId(text) {
+  const base =
+    text
+      .toLowerCase()
+      // Apostrophes vanish rather than becoming separators: "what's next"
+      // should slug to `whats-next`, not `what-s-next`.
+      .replace(/['’]/g, '')
+      .replace(/[^\p{L}\p{N}]+/gu, '-')
+      .replace(/^-+|-+$/g, '') || 'section';
+
+  let id = base;
+  for (let n = 2; collected.ids.has(id); n += 1) id = `${base}-${n}`;
+  collected.ids.add(id);
+  return id;
+}
+
+marked.use({
+  renderer: {
+    heading(token) {
+      const html = this.parser.parseInline(token.tokens);
+      const text = plainText(html);
+      const id = headingId(text);
+
+      // Only `##` reaches the rail. Listing `###` too would turn a reading aid
+      // into an outline of the whole entry.
+      if (token.depth === 2) collected.toc.push({ id, text });
+
+      return `<h${token.depth} id="${id}">${html}</h${token.depth}>\n`;
+    },
+  },
+});
+
+/**
+ * One article's body → `{ html, toc }`. The collector is module state because
+ * the renderer above has nowhere else to put what it finds; parsing is
+ * synchronous, so resetting immediately before each parse is enough to keep
+ * one article's headings out of another's rail.
+ */
+function compile(body) {
+  collected.toc = [];
+  collected.ids = new Set();
+
+  const html = marked.parse(body, { async: false, gfm: true, breaks: false });
+  return { html, toc: collected.toc };
+}
+
 async function main() {
   await mkdir(dirname(outFile), { recursive: true });
   if (!existsSync(contentDir)) await mkdir(contentDir, { recursive: true });
@@ -169,7 +246,7 @@ async function main() {
       // passing example writing off as a genuine account.
       placeholder: meta.placeholder === true,
       readingMinutes: readingMinutes(body),
-      html: marked.parse(body, { async: false, gfm: true, breaks: false }),
+      ...compile(body),
     });
   }
 

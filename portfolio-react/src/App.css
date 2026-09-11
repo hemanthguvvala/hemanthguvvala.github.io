@@ -158,6 +158,11 @@ section {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    /* The delay has to go too, not just the duration. The article header and
+       the key takeaway are staggered entrances that hold at opacity 0 until
+       their delay elapses, so a delay left in place is a third of a second of
+       invisible text for the one reader who asked for no motion at all. */
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
@@ -303,6 +308,281 @@ section {
 .article-prose th {
   background: rgb(var(--c-surface));
   color: rgb(var(--c-strong));
+}
+
+/*
+ * ── ARTICLE MOTION ─────────────────────────────────────────────────────────
+ *
+ * Everything below is CSS rather than framer-motion for one reason: the
+ * article body is an HTML string, so there are no components to animate. It
+ * also means the header entrance plays with JavaScript blocked.
+ *
+ * The global prefers-reduced-motion block above collapses every duration here
+ * to nothing, which lands each of these on its finished state — visible.
+ */
+
+/*
+ * The header arrives a line at a time. `both` matters: the first frame of the
+ * animation holds until the delay elapses, which is what staggers them without
+ * a keyframe per child.
+ */
+@keyframes article-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.article-enter > * {
+  animation: article-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.article-enter > *:nth-child(1) {
+  animation-delay: 0.04s;
+}
+.article-enter > *:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.article-enter > *:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.article-enter > *:nth-child(n + 4) {
+  animation-delay: 0.28s;
+}
+
+/* The contents rail, arriving after the header it sits beside. */
+@keyframes rail-enter {
+  from {
+    opacity: 0;
+    translate: -10px 0;
+  }
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+.rail-enter {
+  animation: rail-enter 0.5s 0.4s ease-out both;
+}
+
+/*
+ * The key takeaway, which one sheen crosses as it settles. Once, and slowly
+ * enough to read as light rather than as a loading state — the card holds the
+ * single sentence the entry is about, so it should draw the eye exactly one
+ * time and then leave the reader alone.
+ */
+.takeaway {
+  position: relative;
+  overflow: hidden;
+  animation: article-rise 0.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.takeaway::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgb(var(--c-primary) / 0) 35%,
+    rgb(var(--c-primary) / 10%) 50%,
+    rgb(var(--c-primary) / 0) 65%
+  );
+  translate: -130% 0;
+  animation: takeaway-sheen 1.5s 0.95s ease-out both;
+}
+
+@keyframes takeaway-sheen {
+  to {
+    translate: 130% 0;
+  }
+}
+
+/* Two beats, then done. An icon pulsing forever is a notification, not a mark. */
+@keyframes pulse-twice {
+  0%,
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+  50% {
+    opacity: 0.55;
+    scale: 1.14;
+  }
+}
+
+.pulse-twice {
+  animation: pulse-twice 1.5s ease-in-out 0.8s 2;
+}
+
+/*
+ * Body blocks, revealed as they are scrolled to.
+ *
+ * Scoped to [data-reveal='on'], which ProseMotion sets on the client and only
+ * when motion is welcome — so the prerendered HTML and a no-JavaScript reader
+ * get the article with nothing hidden. `will-change` is deliberately absent:
+ * a long entry has fifty of these, and promoting them all to their own layer
+ * costs more than the transition it would smooth.
+ */
+.article-prose[data-reveal='on'] > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.article-prose[data-reveal='on'] > .is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+ * Section headings get a rule that draws itself in. It is the one flourish
+ * that also does a job: it marks where a section starts while scrolling fast.
+ */
+.article-prose h2::before {
+  content: '';
+  display: block;
+  width: 2.25rem;
+  height: 2px;
+  margin-bottom: 0.75rem;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgb(var(--c-primary)), rgb(var(--c-primary) / 0));
+  transform-origin: left;
+}
+
+.article-prose[data-reveal='on'] h2::before {
+  transform: scaleX(0);
+  transition: transform 0.6s 0.12s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.article-prose[data-reveal='on'] h2.is-in::before {
+  transform: scaleX(1);
+}
+
+/* A link to the section, for anyone who wants to point at one paragraph. */
+.article-prose h2,
+.article-prose h3 {
+  position: relative;
+}
+
+.heading-anchor {
+  position: absolute;
+  left: -1.25rem;
+  top: 50%;
+  translate: -4px -50%;
+  opacity: 0;
+  color: rgb(var(--c-primary));
+  font-family: theme('fontFamily.mono');
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition:
+    opacity 0.2s ease,
+    translate 0.2s ease;
+}
+/* Off-canvas below the widest layout, where there is no gutter to sit in. */
+@media (max-width: 1023px) {
+  .heading-anchor {
+    display: none;
+  }
+}
+.article-prose h2:hover .heading-anchor,
+.article-prose h3:hover .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+  translate: 0 -50%;
+}
+
+/*
+ * Code blocks. The wrapper exists so the copy button is not a child of the
+ * horizontally scrolling <pre> — see ProseMotion.
+ */
+.prose-code {
+  position: relative;
+}
+
+.prose-copy {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgb(var(--c-border));
+  border-radius: 0.5rem;
+  background: rgb(var(--c-surface) / 85%);
+  color: rgb(var(--c-text-muted));
+  font-family: theme('fontFamily.mono');
+  font-size: 0.6875rem;
+  line-height: 1;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    scale 0.15s ease;
+}
+.prose-copy .material-symbols-outlined {
+  font-size: 14px;
+}
+
+/* Shown on hover, and always once focused or used — a keyboard reader never
+   triggers the hover that would reveal it. */
+.prose-code:hover .prose-copy,
+.prose-copy:focus-visible,
+.prose-copy.is-copied {
+  opacity: 1;
+}
+.prose-copy:hover {
+  color: rgb(var(--c-strong));
+  border-color: rgb(var(--c-primary) / 50%);
+}
+.prose-copy:active {
+  scale: 0.94;
+}
+.prose-copy.is-copied {
+  color: rgb(var(--c-primary));
+  border-color: rgb(var(--c-primary) / 50%);
+  animation: copy-pop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes copy-pop {
+  40% {
+    scale: 1.08;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+/* The wave at the end of an entry. Three waves, then still — a hand that
+   never stops waving stops reading as a greeting and starts as a distraction. */
+@keyframes wave {
+  0%,
+  60%,
+  100% {
+    rotate: 0deg;
+  }
+  10%,
+  30%,
+  50% {
+    rotate: 14deg;
+  }
+  20%,
+  40% {
+    rotate: -8deg;
+  }
+}
+
+.wave {
+  display: inline-block;
+  transform-origin: 70% 75%;
+  animation: wave 1.8s ease-in-out 0.45s 3;
 }
 
 /*

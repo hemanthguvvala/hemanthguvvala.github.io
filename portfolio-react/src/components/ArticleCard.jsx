@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { articlePath, categoryLabel, formatDate } from '../data/journey';
 import { EVENTS, track } from '../utils/analytics';
 
@@ -16,7 +17,14 @@ export default function ArticleCard({ article, headingLevel = 2, from }) {
   const Heading = `h${headingLevel}`;
 
   return (
-    <article className="group relative flex h-full flex-col rounded-2xl border border-border-dark bg-card-dark/70 p-6 transition-colors focus-within:border-primary/50 hover:border-primary/40 sm:p-7">
+    // The same 3px lift the article page gives its cards, so a card behaves
+    // the same wherever a reader meets one. Reduced motion is handled globally
+    // by <MotionConfig reducedMotion="user">.
+    <motion.article
+      whileHover={{ y: -3 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+      className="group relative flex h-full flex-col rounded-2xl border border-border-dark bg-card-dark/70 p-6 transition-colors focus-within:border-primary/50 hover:border-primary/40 sm:p-7"
+    >
       <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-text-muted">
         <span className="text-primary">{categoryLabel(article.category)}</span>
         <span aria-hidden="true">·</span>
@@ -62,6 +70,6 @@ export default function ArticleCard({ article, headingLevel = 2, from }) {
           ))}
         </ul>
       )}
-    </article>
+    </motion.article>
   );
 }

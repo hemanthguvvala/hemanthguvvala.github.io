@@ -24,12 +24,18 @@ const clientRoutes = routes.map((r) => ({
  * Restores scroll on navigation. Keyed on pathname only — the products page
  * keeps its filter in the query string, and jumping to the top on every filter
  * change would be disorienting.
+ *
+ * A hash is left alone entirely. Journey entries link to their own sections,
+ * so `/journey/entry#what-i-learned` is a link people can be sent; resetting
+ * to the top would land them somewhere they did not ask for. The scroll itself
+ * is done by the page that owns the target, once its content exists — this
+ * route is code-split, so the element is not in the DOM yet when this runs.
  */
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
   return null;
 }
 

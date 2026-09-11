@@ -1,8 +1,13 @@
 import { Link, useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import SEO from '../components/SEO';
 import ProductIcon from '../components/ProductIcon';
 import StatusBadge from '../components/StatusBadge';
 import ArticleShare from '../components/ArticleShare';
+import ArticleEnd from '../components/ArticleEnd';
+import ProseMotion from '../components/ProseMotion';
+import ReadingProgress from '../components/ReadingProgress';
+import { ArticleTocInline, ArticleTocRail } from '../components/ArticleToc';
 import NotFound from './NotFound';
 import {
   JOURNEY_LABEL,
@@ -35,6 +40,17 @@ export default function JourneyArticle() {
   const seoTitle = suffixed.length > 70 ? article.title : suffixed;
   const related = relatedArticles(article);
   const { previous, next } = articleNeighbours(article.slug);
+  // Older entries predate the generated contents list; `?? []` keeps them
+  // rendering rather than requiring every article to be recompiled first.
+  const toc = article.toc ?? [];
+
+  // Hover lift, shared by every card on the page so they all answer the
+  // pointer the same way. A spring, not a duration: it settles rather than
+  // stopping, which is what makes it feel physical at this small a distance.
+  const lift = {
+    whileHover: { y: -3 },
+    transition: { type: 'spring', stiffness: 400, damping: 30 },
+  };
 
   return (
     <div className="pb-section-lg pt-32">
@@ -54,6 +70,9 @@ export default function JourneyArticle() {
         ]}
       />
 
+      <ReadingProgress />
+      <ArticleTocRail toc={toc} />
+
       <div className="mx-auto max-w-3xl px-5 sm:px-6 lg:px-8">
         <nav aria-label="Breadcrumb" className="mb-8">
           <ol className="flex list-none flex-wrap items-center gap-2 font-mono text-xs text-text-muted">
@@ -71,8 +90,9 @@ export default function JourneyArticle() {
           </ol>
         </nav>
 
-        {/* ── Header ── */}
-        <header className="flex flex-col gap-4 border-b border-line/5 pb-8">
+        {/* ── Header. `article-enter` staggers the children in with CSS, so
+              the entrance plays whether or not JavaScript does. ── */}
+        <header className="article-enter flex flex-col gap-4 border-b border-line/5 pb-8">
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-text-muted">
             <Link
               to={`${JOURNEY_PATH}?category=${article.category}`}
@@ -113,28 +133,29 @@ export default function JourneyArticle() {
           )}
         </header>
 
-        {/* ── Key takeaway, surfaced before the body ── */}
+        <ArticleTocInline toc={toc} />
+
+        {/* ── Key takeaway, surfaced before the body ──
+              Animated in CSS, not framer-motion, and that split is deliberate
+              across this page: anything carrying words a reader came for
+              animates with CSS, which finishes on its own with JavaScript
+              blocked. framer-motion drives only what is decorative — the
+              progress bar, hover lifts, the contents marker. */}
         {article.keyTakeaway && (
-          <aside
-            aria-label="Key takeaway"
-            className="mt-10 rounded-2xl border border-primary/25 bg-primary/5 p-6"
-          >
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
+          <aside aria-label="Key takeaway" className="takeaway mt-10 rounded-2xl border border-primary/25 bg-primary/5 p-6">
+            <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-primary">
+              <span className="material-symbols-outlined pulse-twice text-[18px]" aria-hidden="true">
+                lightbulb
+              </span>
               Key takeaway
             </p>
             <p className="mt-2.5 leading-relaxed text-strong">{article.keyTakeaway}</p>
           </aside>
         )}
 
-        {/*
-          Compiled at build time by scripts/build-journey.mjs from Markdown in
-          this repository — first-party content from a trusted source, never
-          user input. That is what makes dangerouslySetInnerHTML acceptable here.
-        */}
-        <article
-          className="article-prose mt-10"
-          dangerouslySetInnerHTML={{ __html: article.html }}
-        />
+        <ProseMotion html={article.html} className="mt-10" />
+
+        <ArticleEnd minutes={article.readingMinutes} />
 
         <ArticleShare article={article} path={path} />
 
@@ -152,9 +173,10 @@ export default function JourneyArticle() {
               {products.map((p) => {
                 const url = p.websiteUrl ?? p.playStoreUrl;
                 return (
-                  <li
+                  <motion.li
                     key={p.slug}
-                    className="flex flex-col gap-4 rounded-2xl border border-border-dark bg-card-dark/70 p-5 sm:flex-row sm:items-center sm:gap-5"
+                    {...lift}
+                    className="flex flex-col gap-4 rounded-2xl border border-border-dark bg-card-dark/70 p-5 transition-colors hover:border-primary/40 sm:flex-row sm:items-center sm:gap-5"
                   >
                     <ProductIcon product={p} size={52} />
 
@@ -202,7 +224,7 @@ export default function JourneyArticle() {
                         </Link>
                       )}
                     </div>
-                  </li>
+                  </motion.li>
                 );
               })}
             </ul>
@@ -216,31 +238,48 @@ export default function JourneyArticle() {
             className="mt-14 grid gap-4 border-t border-line/5 pt-10 sm:grid-cols-2"
           >
             {previous ? (
-              <Link
-                to={articlePath(previous.slug)}
-                onClick={() => track(EVENTS.relatedArticleClick, { direction: 'previous' })}
-                className="flex flex-col gap-1.5 rounded-xl border border-border-dark bg-card-dark/70 p-4 transition-colors hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                <span className="font-mono text-[11px] uppercase tracking-wider text-text-muted">
-                  ← Newer
-                </span>
-                <span className="font-display font-bold text-strong">{previous.title}</span>
-              </Link>
+              <motion.div {...lift}>
+                <Link
+                  to={articlePath(previous.slug)}
+                  onClick={() => track(EVENTS.relatedArticleClick, { direction: 'previous' })}
+                  className="group flex h-full flex-col gap-1.5 rounded-xl border border-border-dark bg-card-dark/70 p-4 transition-colors hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-text-muted">
+                    {/* The arrow leans the way the link goes when pointed at. */}
+                    <span
+                      className="inline-block transition-transform group-hover:-translate-x-1"
+                      aria-hidden="true"
+                    >
+                      ←
+                    </span>{' '}
+                    Newer
+                  </span>
+                  <span className="font-display font-bold text-strong">{previous.title}</span>
+                </Link>
+              </motion.div>
             ) : (
               <span />
             )}
 
             {next && (
-              <Link
-                to={articlePath(next.slug)}
-                onClick={() => track(EVENTS.relatedArticleClick, { direction: 'next' })}
-                className="flex flex-col gap-1.5 rounded-xl border border-border-dark bg-card-dark/70 p-4 text-right transition-colors hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:col-start-2"
-              >
-                <span className="font-mono text-[11px] uppercase tracking-wider text-text-muted">
-                  Older →
-                </span>
-                <span className="font-display font-bold text-strong">{next.title}</span>
-              </Link>
+              <motion.div {...lift} className="sm:col-start-2">
+                <Link
+                  to={articlePath(next.slug)}
+                  onClick={() => track(EVENTS.relatedArticleClick, { direction: 'next' })}
+                  className="group flex h-full flex-col gap-1.5 rounded-xl border border-border-dark bg-card-dark/70 p-4 text-right transition-colors hover:border-primary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-text-muted">
+                    Older{' '}
+                    <span
+                      className="inline-block transition-transform group-hover:translate-x-1"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </span>
+                  <span className="font-display font-bold text-strong">{next.title}</span>
+                </Link>
+              </motion.div>
             )}
           </nav>
         )}
@@ -253,7 +292,7 @@ export default function JourneyArticle() {
             </h2>
             <ul className="mt-5 flex list-none flex-col gap-3">
               {related.map((a) => (
-                <li key={a.slug}>
+                <motion.li key={a.slug} {...lift}>
                   <Link
                     to={articlePath(a.slug)}
                     onClick={() => track(EVENTS.relatedArticleClick, { slug: a.slug })}
@@ -265,7 +304,7 @@ export default function JourneyArticle() {
                     <span className="font-display font-bold text-strong">{a.title}</span>
                     <span className="text-sm text-text-secondary">{a.description}</span>
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
           </section>
