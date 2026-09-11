@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { isPlainClick, jumpToSection } from '../utils/sections';
 
 /**
  * Contents for a journey entry, in two shapes from one source: a fixed rail
@@ -29,8 +30,8 @@ function useActiveSection(toc) {
     const measure = () => {
       frame = 0;
 
-      // Matches the 6rem scroll-margin-top on prose headings, so a heading
-      // jumped to by link is the one the rail highlights.
+      // Just past the 6rem scroll-padding a jumped-to heading lands on, so the
+      // section a reader was sent to is the one the rail highlights.
       const line = 104;
       let current = null;
 
@@ -97,6 +98,13 @@ export function ArticleTocRail({ toc }) {
               )}
               <a
                 href={`#${id}`}
+                onClick={(event) => {
+                  // A modified click is the reader opening this in a tab or
+                  // copying it, which the href already handles.
+                  if (!isPlainClick(event)) return;
+                  event.preventDefault();
+                  jumpToSection(id);
+                }}
                 aria-current={on ? 'true' : undefined}
                 className={`block py-1.5 pl-3 pr-1 text-[13px] leading-snug transition-colors ${
                   on ? 'text-strong' : 'text-text-muted hover:text-text-secondary'
@@ -115,6 +123,9 @@ export function ArticleTocRail({ toc }) {
 /** The same list for narrow screens, where the rail has nowhere to sit. */
 export function ArticleTocInline({ toc }) {
   const [open, setOpen] = useState(false);
+  // The section a click asked for, held until the list has finished
+  // collapsing. Jumping before then measures a layout that is about to move.
+  const [pending, setPending] = useState(null);
   const active = useActiveSection(toc);
 
   if (toc.length < 3) return null;
@@ -140,7 +151,16 @@ export function ArticleTocInline({ toc }) {
         </motion.span>
       </button>
 
-      <AnimatePresence initial={false}>
+      {/* The jump waits for onExitComplete — the list has to be out of the
+          layout before the target's position means anything. */}
+      <AnimatePresence
+        initial={false}
+        onExitComplete={() => {
+          if (!pending) return;
+          jumpToSection(pending);
+          setPending(null);
+        }}
+      >
         {open && (
           <motion.div
             key="toc"
@@ -155,7 +175,12 @@ export function ArticleTocInline({ toc }) {
                 <li key={id}>
                   <a
                     href={`#${id}`}
-                    onClick={() => setOpen(false)}
+                    onClick={(event) => {
+                      if (!isPlainClick(event)) return;
+                      event.preventDefault();
+                      setPending(id);
+                      setOpen(false);
+                    }}
                     aria-current={active === id ? 'true' : undefined}
                     className={`flex gap-3 rounded-lg px-2 py-2 text-sm transition-colors hover:bg-primary/10 ${
                       active === id ? 'text-strong' : 'text-text-secondary'

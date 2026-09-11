@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { alignAndReveal, isPlainClick, jumpToSection } from '../utils/sections';
 
 /**
  * The article body, with the three things a long entry earns: blocks that
@@ -84,34 +85,19 @@ export default function ProseMotion({ html, className = '' }) {
       anchor.className = 'heading-anchor';
       anchor.href = `#${heading.id}`;
       anchor.textContent = '#';
+      // Same jump the contents lists make. Left to the browser, a smooth
+      // scroll fires `hashchange` before it has moved, so the reveal below
+      // would show the viewport being left rather than the one arrived at.
+      anchor.addEventListener('click', (event) => {
+        if (!isPlainClick(event)) return;
+        event.preventDefault();
+        jumpToSection(heading.id);
+      });
       // The heading text already names the section; announcing "#" after it
       // adds nothing a screen reader user wants to hear.
       anchor.setAttribute('aria-hidden', 'true');
       anchor.tabIndex = -1;
       heading.append(anchor);
-    }
-
-    /* ── A section link the reader arrived on ─────────────────────────────
-       The browser tries this before the route's chunk has loaded, so by the
-       time the heading exists the attempt is long over. Done here, where the
-       ids are, and before the reveal below classifies what is on screen —
-       otherwise every block around the target counts as off-screen and the
-       reader lands on a section that then fades in around them. */
-    const target = window.location.hash.slice(1);
-    if (target) {
-      const heading = root.querySelector(`[id="${CSS.escape(decodeURIComponent(target))}"]`);
-      if (heading) {
-        // The jump has to complete before the reveal below measures what is on
-        // screen, so `scroll-behavior: smooth` is suspended for it. Left
-        // smooth, the measurement happens while the page is still at the top,
-        // every block around the target is classified as off-screen, and the
-        // reader arrives on a section that then fades in around them.
-        const html = document.documentElement;
-        const previous = html.style.scrollBehavior;
-        html.style.scrollBehavior = 'auto';
-        heading.scrollIntoView({ block: 'start' });
-        html.style.scrollBehavior = previous;
-      }
     }
 
     /* ── The reveal ──────────────────────────────────────────────────────── */
@@ -140,17 +126,54 @@ export default function ProseMotion({ html, className = '' }) {
     );
     observers.add(io);
 
-    for (const block of root.children) {
-      // Anything already on screen is shown immediately. Animating it would
-      // mean hiding text the reader can see, one frame after they saw it.
-      if (block.getBoundingClientRect().top < window.innerHeight * 0.92) {
-        block.classList.add('is-in');
-      } else {
-        io.observe(block);
+    /**
+     * Show, with no animation at all, everything that is on screen right now.
+     *
+     * Used at setup and again after a jump from the contents list. Two reasons
+     * it is `is-shown` (no transition) rather than `is-in` (transition):
+     * animating a block the reader is already looking at means hiding text one
+     * frame after they saw it; and an unrevealed block sits 18px low, so a
+     * jump cannot align to it while that offset is still transitioning away.
+     */
+    const revealVisible = () => {
+      for (const block of root.children) {
+        // `is-in` is deliberately not skipped: a block the observer has just
+        // started fading in is still 18px low for half a second, and a jump
+        // cannot align to a target that is mid-transition. Adding `is-shown`
+        // snaps it to its resting place.
+        if (block.classList.contains('is-shown')) continue;
+        const { top, bottom } = block.getBoundingClientRect();
+        if (bottom > 0 && top < window.innerHeight * 0.92) {
+          block.classList.add('is-shown');
+          io.unobserve(block);
+        } else if (!block.classList.contains('is-in')) {
+          io.observe(block);
+        }
       }
+    };
+
+    revealVisible();
+    window.addEventListener('prose:reveal-now', revealVisible);
+    // Any jump the browser makes itself: a heading's own `#` link, a
+    // middle-click opened in this tab, Back and Forward between sections.
+    // Those do not go through the contents list, and waiting for the observer
+    // to catch up means landing on a section that is still invisible.
+    window.addEventListener('hashchange', revealVisible);
+
+    /* ── A section link the reader arrived on ─────────────────────────────
+       The browser tries this itself, but it does so before the route's
+       code-split chunk has loaded, so by the time the heading exists the
+       attempt is long over. Done here, where the ids are, and deliberately
+       after the reveal is listening — `alignAndReveal` needs it. */
+    const fragment = window.location.hash.slice(1);
+    if (fragment) {
+      const arrived = root.querySelector(`[id="${CSS.escape(decodeURIComponent(fragment))}"]`);
+      if (arrived) alignAndReveal(arrived);
     }
 
     return () => {
+      window.removeEventListener('prose:reveal-now', revealVisible);
+      window.removeEventListener('hashchange', revealVisible);
       for (const t of timers) clearTimeout(t);
       for (const o of observers) o.disconnect();
     };
