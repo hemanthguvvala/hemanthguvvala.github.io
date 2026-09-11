@@ -17,10 +17,18 @@ export const person = {
   name: 'Hemanth Kumar Guvvala',
   shortName: 'Hemanth',
   initials: 'HKG',
-  jobTitle: 'Lead Product Engineer',
+  /*
+   * The site positions on the role, not on an employer.
+   *
+   * There is deliberately no `company` field here. The employment history is
+   * factual and stays where it belongs — src/data/career.js, rendered on
+   * /timeline — but nothing in the site's own positioning, page descriptions
+   * or structured data names a current employer. Do not add one back: it would
+   * reappear in the JSON-LD on every page, which is where it matters least to
+   * a reader and most to a machine.
+   */
+  jobTitle: 'Software Engineer',
   secondaryTitle: 'Independent Product Builder',
-  company: 'IBS Software',
-  companyUrl: 'https://www.ibsgroup.com/',
   location: 'India',
   email: 'hemanthkumarguvvala@gmail.com',
   resumeUrl: '/Hemanth_Kumar_Guvvala_Resume.pdf',
@@ -82,7 +90,9 @@ export const sameAs = socials.filter((s) => s.id !== 'email').map((s) => s.url);
  * Short, non-inflated credibility markers for the homepage trust strip.
  */
 export const credibility = [
-  { label: 'Lead Product Engineer', detail: 'IBS Software' },
+  // The role and the independent work in one marker, because the two together
+  // are the positioning — neither on its own describes what is on this site.
+  { label: 'Software Engineer', detail: 'Enterprise platforms & own products' },
   { label: 'Java · Spring Boot · Kafka', detail: 'Backend & event-driven systems' },
   { label: 'Product Engineering', detail: 'Airline domain platforms' },
   { label: 'Cloud & DevOps', detail: 'AWS · Docker · CI/CD' },

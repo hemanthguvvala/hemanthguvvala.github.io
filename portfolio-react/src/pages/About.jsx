@@ -33,7 +33,7 @@ export default function About() {
     <div className="pb-section-lg pt-32">
       <SEO
         title={`About ${person.name} | Product Engineer & Builder`}
-        description="Lead Product Engineer at IBS Software building event-driven systems in Java, Spring Boot and Kafka — and an independent product builder shipping Android apps and web products."
+        description="Software engineer building event-driven systems in Java, Spring Boot and Kafka — and an independent product builder shipping Android apps and web products."
         path="/about"
         jsonLd={[
           webPageSchema({
@@ -75,7 +75,7 @@ export default function About() {
 
             <div className="flex max-w-prose flex-col gap-5 leading-relaxed text-text-secondary">
               <p>
-                I&rsquo;m {person.name}, a {person.jobTitle} at {person.company}. I work on
+                I&rsquo;m {person.name}, a {person.jobTitle}. I work on
                 event-driven backend systems — Java, Spring Boot and Apache Kafka — for platforms
                 used by global airlines. So far that has meant 30+ enterprise features delivered to
                 10+ airlines, 980+ production issues resolved at 100% SLA adherence, and a 30%
@@ -252,7 +252,7 @@ export default function About() {
             id="recognition-heading"
             eyebrow="Recognition"
             title="Awards and challenges"
-            description={`${awards.filter((a) => a.kind === 'professional').length} professional awards at IBS Software, including 1st place in the organization-wide Prompt Engineering Challenge 2025.`}
+            description={`${awards.filter((a) => a.kind === 'professional').length} professional awards at work, including 1st place in an organisation-wide Prompt Engineering Challenge 2025.`}
           />
           <div className="mt-8">
             <Link

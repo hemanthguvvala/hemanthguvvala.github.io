@@ -42,8 +42,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title={`${person.name} | Lead Product Engineer & Product Builder`}
-        description="Lead Product Engineer and independent product builder creating useful mobile apps, web products and developer-focused tools."
+        title={`${person.name} | ${person.jobTitle} & Product Builder`}
+        description="Software engineer and independent product builder creating useful mobile apps, web products and developer-focused tools."
         path="/"
         jsonLd={[
           personSchema(),
@@ -89,9 +89,9 @@ export default function Home() {
             variants={rise}
             className="max-w-2xl text-base leading-relaxed text-text-secondary sm:text-lg"
           >
-            I&rsquo;m {person.name} — a {person.jobTitle.toLowerCase()} at{' '}
-            <span className="text-strong">{person.company}</span>, where I build event-driven
-            backend systems in Java, Spring Boot and Kafka for global airlines. Outside of that I
+            I&rsquo;m {person.name} — a {person.jobTitle.toLowerCase()} building{' '}
+            <span className="text-strong">event-driven backend systems</span> in Java, Spring Boot
+            and Kafka for global airline platforms. Outside of that I
             design, build and launch my own products: {androidProducts.filter((p) => p.status === 'live').length}{' '}
             Android apps on Google Play, plus web tools and a developer learning platform.
           </motion.p>
@@ -345,7 +345,7 @@ export default function Home() {
               id="engineering-heading"
               eyebrow="Engineering"
               title="The day job: distributed systems for airlines"
-              description="At IBS Software I work on event-driven backend systems in Java, Spring Boot and Kafka — 30+ enterprise features delivered to 10+ global airlines, and 980+ production issues resolved at 100% SLA adherence."
+              description="I work on event-driven backend systems in Java, Spring Boot and Kafka — 30+ enterprise features delivered to 10+ global airlines, and 980+ production issues resolved at 100% SLA adherence."
             />
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
@@ -416,8 +416,8 @@ export default function Home() {
             </p>
             <p className="max-w-prose leading-relaxed text-text-secondary">
               I grew up in Rayachoty and did my entire education there, from CS Raju High School
-              through a B.Tech in Electronics &amp; Communication at SSITS. I started at Marlabs in
-              January 2022 and was head-hunted by IBS Software — my client at the time — within ten
+              through a B.Tech in Electronics &amp; Communication at SSITS. I started my career in
+              January 2022 and was head-hunted by the client I was working on-site with inside ten
               months. Software engineering is my profession; product building is how I explore
               ideas outside it.
             </p>

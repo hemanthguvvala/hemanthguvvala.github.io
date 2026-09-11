@@ -1,8 +1,13 @@
 # hemanthguvvala.github.io
 
-Personal site of **Hemanth Kumar Guvvala** — Lead Product Engineer at IBS Software and independent
-product builder. It serves three jobs at once: a personal brand page, a directory of the products
-I've launched, and an engineering portfolio.
+Personal site of **Hemanth Kumar Guvvala** — software engineer and independent product builder. It
+serves three jobs at once: a personal brand page, a directory of the products I've launched, and an
+engineering portfolio.
+
+The site positions on the role, not on an employer: no current employer is named in any page
+description, heading or piece of structured data. The employment history is factual and lives in
+`src/data/career.js`, rendered on `/timeline`. See the note on `person` in `src/data/profile.js`
+before adding a `company` field back.
 
 **Live:** <https://hemanthguvvala.github.io/>
 

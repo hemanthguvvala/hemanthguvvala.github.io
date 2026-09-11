@@ -39,7 +39,7 @@ export default function Engineering() {
           as="h1"
           eyebrow="Engineering & expertise"
           title="Backend systems that run quietly"
-          description="I build event-driven backend systems for airline platforms at IBS Software — and ship Android and web products on my own time. These are the areas I actually work in."
+          description="I build event-driven backend systems for airline platforms — and ship Android and web products on my own time. These are the areas I actually work in."
         />
 
         <motion.ul

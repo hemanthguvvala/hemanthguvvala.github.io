@@ -168,7 +168,7 @@ export default function Services() {
             id="why-heading"
             eyebrow="Why work with me"
             title="One person, accountable for the whole thing"
-            description="I am a Lead Product Engineer by day and an independent product builder the rest of the time. Both matter for the work you would be hiring me for."
+            description="I am a software engineer by day and an independent product builder the rest of the time. Both matter for the work you would be hiring me for."
           />
 
           <ul className="mt-10 grid list-none gap-5 md:grid-cols-2 lg:grid-cols-3">

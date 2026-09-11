@@ -18,16 +18,15 @@ export function personSchema() {
     '@type': 'Person',
     '@id': `${SITE_URL}/#person`,
     name: person.name,
-    jobTitle: person.jobTitle,
-    description: `${person.jobTitle} at ${person.company} and an independent product builder shipping Android and web products.`,
+    jobTitle: `${person.jobTitle} & Product Builder`,
+    description: `${person.jobTitle} working on event-driven backend systems in Java, Spring Boot and Kafka, and an independent product builder shipping Android and web products.`,
     url: `${SITE_URL}/`,
     image: person.avatar,
     email: `mailto:${person.email}`,
-    worksFor: {
-      '@type': 'Organization',
-      name: person.company,
-      url: person.companyUrl,
-    },
+    // No `worksFor`. This block is emitted on every page of the site, so an
+    // employer named here is the single most repeated claim on it. The role is
+    // what the site is positioned on; the employment history lives on
+    // /timeline, which is the honest place for it.
     alumniOf: {
       '@type': 'EducationalOrganization',
       name: 'SSITS (Sri Sai Institute of Technology & Science), Rayachoty',
