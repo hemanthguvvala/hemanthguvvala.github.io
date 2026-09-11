@@ -1,262 +1,70 @@
 # hemanthguvvala.github.io
 
-Personal site of **Hemanth Kumar Guvvala** — software engineer and independent product builder. It
-serves three jobs at once: a personal brand page, a directory of the products I've launched, and an
-engineering portfolio.
-
-The site positions on the role, not on an employer: no current employer is named in any page
-description, heading or piece of structured data. The employment history is factual and lives in
-`src/data/career.js`, rendered on `/timeline`. See the note on `person` in `src/data/profile.js`
-before adding a `company` field back.
+Personal site of **Hemanth Kumar Guvvala** — software engineer and independent product builder.
+A brand page, a directory of shipped products, and an engineering portfolio in one.
 
 **Live:** <https://hemanthguvvala.github.io/>
 
----
+React 19 · Vite 7 · Tailwind 3 · react-router 7 · framer-motion 12, prerendered to static HTML and
+served by GitHub Pages. No backend, no cookies, no contact form.
 
-## Repository layout
-
-The application lives in **`portfolio-react/`**. That is the only directory the deployment
-workflow builds — nothing at the repository root is compiled or served.
-
-```text
-.
-├── .github/workflows/deploy.yml   # build + deploy to GitHub Pages on push to master
-├── portfolio-react/               # ← the application
-│   ├── public/                    # copied verbatim into dist/
-│   ├── scripts/                   # build-time prerender + sitemap generation
-│   └── src/
-│       ├── components/            # reusable UI
-│       ├── data/                  # single source of truth (products, profile, career)
-│       ├── pages/                 # one file per route
-│       ├── seo/                   # head model + JSON-LD builders
-│       ├── utils/                 # analytics scaffold
-│       ├── App.jsx                # layout + client routes
-│       ├── entry-server.jsx       # build-time render entry (prerender only)
-│       ├── main.jsx               # browser entry
-│       └── routes.js              # the shared route table
-└── README.md
-```
-
-## Stack
-
-| Concern   | Choice                                                    |
-| --------- | --------------------------------------------------------- |
-| Framework | React 19                                                  |
-| Build     | Vite 7                                                    |
-| Styling   | Tailwind CSS 3 (tokens in `tailwind.config.js`)           |
-| Routing   | react-router-dom 7                                        |
-| Motion    | framer-motion 12                                          |
-| Fonts     | Space Grotesk / Inter / JetBrains Mono + Material Symbols |
-| Hosting   | GitHub Pages                                              |
-
-The only build-time dependency beyond the toolchain is `marked`, which compiles journey Markdown and never reaches the browser. There is no contact-form backend and no cookies. Third-party runtime scripts are limited to
-particles.js (homepage only) and the Cloudflare Web Analytics beacon.
-
-## Local development
+## Running it
 
 ```bash
-cd portfolio-react
+cd portfolio-react       # the only directory the deploy workflow builds
 npm install
-npm run dev        # http://localhost:5173
+npm run dev              # http://localhost:5173 — SPA only, no prerender
+npm run build && npm run preview   # what actually ships
+npm run lint
 ```
 
-Note that `npm run dev` serves the SPA **without** prerendering. Deep links work in dev because
-Vite's dev server rewrites unknown paths to `index.html`. To exercise what actually ships, build
-and preview:
+`npm run build` runs in order: `journey` (compile Markdown) → `build:client` → `build:ssr` →
+`prerender` → `sitemap` → `rss`.
 
-```bash
-npm run build
-npm run preview
-```
+## Rules that matter
 
-## Build pipeline
+Each has its full reasoning in a comment at the top of the file named. Break one and the damage is
+quiet, not loud.
 
-`npm run build` runs six steps in order:
+- **Every route is prerendered to real HTML, twice** — `x.html` *and* `x/index.html`, because
+  GitHub Pages resolves extensionless URLs either way. — `scripts/prerender.mjs`
+- **`entry-server.jsx` resolves routes eagerly on purpose.** Reusing the browser's `React.lazy`
+  tree makes the prerender emit a loading spinner as the page. — `src/entry-server.jsx`
+- **Never invent product data** — no downloads, ratings or revenue without a citable source. `null`
+  hides a field; a placeholder lies. — `src/data/products.js`
+- **Journey entries are Markdown only.** The generated file is gitignored, and bad frontmatter
+  fails the build deliberately. — `content/journey/README.md`
+- **The legal documents must describe the site that actually exists.** Change the code first,
+  `legal.js` second, in the same commit. — `src/data/legal.js`
+- **The AI-use refusal lives in five files.** Change one, change all five: `LICENSE`,
+  `src/pages/Terms.jsx`, `public/robots.txt`, `public/ai.txt`,
+  `public/.well-known/tdmrep.json`. — `LICENSE`
+- **No current employer is named** in any description, heading or piece of structured data.
+  Employment history belongs on `/timeline`. — `src/data/profile.js`
 
-| Step           | What it does                                                      |
-| -------------- | ----------------------------------------------------------------- |
-| `journey`      | Compiles `content/journey/*.md` → `src/data/journey.generated.js` |
-| `build:client` | Vite client build → `dist/`                                       |
-| `build:ssr`    | Vite SSR build of `entry-server.jsx` → `dist-ssr/` (temporary)    |
-| `prerender`    | Renders every route to static HTML, then deletes `dist-ssr/`      |
-| `sitemap`      | Writes `dist/sitemap.xml` from the same route list                |
-| `rss`          | Writes `dist/rss.xml` when at least one article is published      |
+## Adding things
 
-Also available: `npm run lint`.
+**A page:** component in `src/pages/` → entry in `src/routes.js` → entry in `STATIC_ROUTES`
+(`scripts/routes.mjs`) if it should be indexed → a `<SEO>` element, without which the prerender
+fails the build.
 
-## ⚠️ GitHub Pages routing — read this before changing routing
+**A product:** one entry in `src/data/products.js` (`name`, `slug`, `shortDescription`, `category`,
+`platform`, `status` minimum) and a 192×192 icon at `public/assets/products/<slug>.png`. Set
+`hasDetailPage: true` only with a real `longDescription` and `features`.
 
-GitHub Pages has **no server-side routing**. It serves static files and nothing else.
+**A journey entry:** one Markdown file in `content/journey/`. No code changes — the index, filters,
+search, homepage, sitemap, RSS feed and the named product's page all pick it up.
 
-This site previously shipped one `index.html` plus a `404.html` that bounced deep links back to
-`/?p=<path>` using JavaScript. Browsers coped, but **every deep route answered crawlers with HTTP
-404** — including six of the seven URLs listed in `sitemap.xml`.
+## Analytics
 
-The current approach removes the need for server routing entirely: **`scripts/prerender.mjs`
-renders every known route to a real HTML file at build time.** `/products` is a genuine file that
-returns HTTP 200 with its content already in the markup, before any JavaScript runs.
+Cloudflare Web Analytics, cookieless and consent-free. Set the repository variable
+`CF_BEACON_TOKEN` (Settings → Secrets and variables → Actions → Variables) to activate it; with no
+token the beacon does not load and the build still passes. Its beacon counts route changes itself —
+do not add page-view tracking on top.
 
-Two details that are easy to break:
-
-1. **Each route is written twice** — `dist/products.html` *and* `dist/products/index.html`.
-   GitHub Pages resolves extensionless URLs differently depending on whether a matching file or
-   directory exists; writing both guarantees a 200 either way. Both copies carry the same
-   canonical URL, so there is no duplicate-content risk.
-
-2. **`entry-server.jsx` resolves routes eagerly, on purpose.** The browser build wraps pages in
-   `React.lazy`. If the prerenderer reused that tree, every route would suspend and React would
-   emit the loading spinner as the visible markup, appending the real content after the footer
-   inside a hidden element for client script to swap in — which defeats the point. Do not
-   "simplify" it back to the lazy tree without re-checking the output.
-
-`404.html` is still generated and is still the correct response for genuinely unknown URLs, but it
-now renders the branded 404 page and carries `noindex`.
-
-## Product data architecture
-
-**`src/data/products.js` is the single source of truth.** Nothing about a product is hardcoded in
-JSX. One entry drives the homepage, the directory, the detail page, the sitemap and the JSON-LD.
-
-Rules enforced by convention in that file:
-
-- **Never invent data.** No downloads, ratings, review counts, revenue or user numbers unless
-  they come from a real, citable source. Use `null` for anything unknown — the UI hides null
-  fields rather than rendering placeholders.
-- **`playStoreUrl` must be a real, individual listing.** Every URL in the file was verified to
-  return HTTP 200. An unpublished app gets `null` and its CTA renders disabled; it must never be
-  pointed at the generic developer page to look live.
-- **`hasDetailPage: true` requires real content** — a `longDescription` and `features`. Thin pages
-  hurt SEO more than they help.
-- **`monetizationType` describes what is live today**, not what is planned. Values come from the
-  `MONETIZATION` map (`free`, `ads`, `freemium`, `premium`, `subscription`, `affiliate`, `none`);
-  leave it `null` when you are not sure and the detail page hides the row. The field exists so
-  monetisation can be switched on per product later without a redesign.
-- A product with nothing publishable written about it yet carries
-  `shortDescription: 'Details coming soon.'` rather than invented marketing copy.
-
-### Adding a product
-
-1. Add an entry to `src/data/products.js` with at minimum `name`, `slug`, `shortDescription`,
-   `category`, `platform`, `status`.
-2. Drop a 192×192 icon at `public/assets/products/<slug>.png` and set `icon`. Without one, the
-   card falls back to a tinted monogram — which is fine.
-3. If you have a real `longDescription` and `features`, set `hasDetailPage: true`. The route,
-   sitemap entry and prerendered page appear automatically.
-4. Add curated `related` slugs for cross-product discovery.
-
-Statuses are `live`, `in-development`, `coming-soon` and `archived`. Archived products stay
-visible — history is not hidden — but never look downloadable.
-
-### Adding a route
-
-1. Add the page component to `src/pages/`.
-2. Add an entry to **`src/routes.js`** (shared by the browser and the prerenderer).
-3. If it should be indexed, add it to `STATIC_ROUTES` in **`scripts/routes.mjs`**.
-4. Add a `<SEO>` element to the page. The prerender **fails the build** if a route renders
-   without SEO metadata, which is deliberate.
-
-## SEO
-
-Per-route metadata comes from one `<SEO>` component (`src/components/SEO.jsx`). The browser path
-and the prerender path consume the same `buildHead()` output, so the static HTML and the SPA
-cannot disagree.
-
-Every indexable route has a unique `<title>`, description, canonical URL, Open Graph and Twitter
-tags, exactly one `<h1>`, and appropriate JSON-LD (`Person`, `WebSite`, `WebPage`, `ItemList`,
-`SoftwareApplication`, `BreadcrumbList`).
-
-`src/seo/jsonld.js` never emits `aggregateRating`, `ratingValue`, `reviewCount` or `offers.price`.
-`SoftwareApplication` is only emitted for products that are actually live.
-
-## Journey — building in public
-
-Entries live in `portfolio-react/content/journey/` as Markdown. See the README in that directory
-for the authoring workflow and the full frontmatter reference.
-
-This section is what turns the site from a portfolio into an ecosystem: an entry names the
-products it is about, which renders real product cards at the end of the entry **and** makes the
-entry appear under "The story behind it" on that product's own page. One line of frontmatter,
-links in both directions.
-
-Scope is build-in-public and product writing — what shipping something taught me, what an
-experiment showed, why a decision went the way it did. **Deep technical reference material belongs
-on CodeDepth**; publishing it in both places splits search authority between two sites competing
-for the same queries.
-
-### How it works
-
-`scripts/build-journey.mjs` compiles the Markdown into `src/data/journey.generated.js` before every
-`dev` and `build`. Compiling at build time rather than parsing in the browser keeps the Markdown
-parser a devDependency and **out of the client bundle** — entries ship as plain HTML that the
-prerenderer emits in full.
-
-The generated file is gitignored. Edit the Markdown, not the output.
-
-The build **fails loudly** on a missing required field, a bad date, an unknown category, a
-duplicate slug, or a `products` slug that does not exist in `products.js`. A broken build beats a
-live page with an empty `<title>` or a product card pointing nowhere.
-
-### Adding an entry requires no code changes
-
-Write the file, push. It appears in the index, its category filter, search, the homepage, the
-sitemap, the RSS feed and on the relevant product pages automatically.
-
-### The section name is one constant
-
-`JOURNEY_PATH` and `JOURNEY_LABEL` in `src/data/journey.js` are the only places the section is
-named. Routes, navigation, canonical URLs, breadcrumbs, the sitemap and the RSS feed all derive
-from them, and `scripts/routes.mjs` reads the path back out of that file.
-
-Note that `/timeline` is labelled **Career** in navigation, because "Journey" now belongs to this
-section. The `/timeline` URL itself is unchanged.
-
-### Nothing appears until something is published
-
-With no published entries the section is hidden from navigation, excluded from the sitemap, absent
-from the homepage, and no `rss.xml` is written. An empty section is thin content and an empty feed
-is worse than no feed.
-
-## Analytics and observability
-
-**Cloudflare Web Analytics** measures page views and Core Web Vitals. It is cookieless, does not
-fingerprint visitors and stores no personal data, so the site needs no consent banner. Its beacon
-hooks the History API, so client-side route changes are counted automatically — do not add manual
-page-view tracking on top of it or you will double count.
-
-### Activating it
-
-Set a repository variable named `CF_BEACON_TOKEN` (Settings → Secrets and variables → Actions →
-Variables) to the token from the Cloudflare Web Analytics dashboard. `deploy.yml` passes it to the
-build as `VITE_CF_BEACON_TOKEN`.
-
-The token is not a secret — beacon tokens are visible in the page source of every site that uses
-one — but keeping it out of the repo means a fork does not report into this site's dashboard.
-**With no token set, the beacon does not load and the build still passes.**
-
-### Custom events are captured but not yet delivered
-
-`src/utils/analytics.js` instruments the conversion events that matter — Play Store clicks, contact
-clicks, resume downloads, outbound product visits — and `src/utils/observability.js` captures
-uncaught errors and unhandled rejections as `client_error`.
-
-Cloudflare's free beacon has **no custom-events API** on a domain it does not proxy, and
-`hemanthguvvala.github.io` cannot be proxied. So those events are shaped and then dropped. This is
-deliberate rather than broken: the call sites are correct, so the day a sink exists everything
-starts reporting with no further changes. Register one at startup:
-
-```js
-import { setSink } from './utils/analytics';
-setSink((name, payload) => myProvider.track(name, payload));
-```
-
-Anything with a custom-event API works — Plausible, Umami, GoatCounter, or a serverless function.
-
-Core Web Vitals are deliberately **not** measured in application code; Cloudflare already collects
-them from the real navigation timeline, and a second PerformanceObserver would only duplicate that
-with worse data.
-
-Both layers honour Do Not Track, and error reports are capped at five per page load and stripped of
-query strings before leaving the browser.
+Conversion events are instrumented in `src/utils/analytics.js` but go nowhere: the free beacon has
+no custom-events API for a domain it cannot proxy. The call sites are correct, so registering a sink
+(`setSink`) is all that is needed the day one exists.
 
 ## Files that must keep working
 
@@ -265,39 +73,18 @@ query strings before leaving the browser.
 | `public/app-ads.txt`                 | AdMob verification. Publisher ID must stay `pub-9460933302095977`. |
 | `public/google3a15862b0f820187.html` | Google Search Console verification. Must return 200.               |
 | `public/robots.txt`                  | Must keep `/assets/` crawlable for rendering-based indexing.       |
-| `public/ai.txt`                      | The AI-usage refusal. Mirrored at `public/.well-known/ai.txt`.     |
-| `public/.well-known/tdmrep.json`     | TDM Reservation Protocol. Must stay valid JSON and return 200.     |
+| `public/ai.txt`                      | The AI-use refusal. Mirrored at `public/.well-known/ai.txt`.       |
+| `public/.well-known/tdmrep.json`     | TDM Reservation Protocol. Must stay valid JSON.                    |
 
-## Licence and ownership
+## Licence
 
-**This is not open source.** Copyright © 2024–2026 Hemanth Kumar Guvvala, all rights reserved —
-see [LICENSE](LICENSE). The repository is public so the work can be read and inspected; reading it
-grants no right to use it, and the absence of an open-source licence is deliberate.
-
-Use of this code or content to train, fine-tune, ground or evaluate any machine-learning model is
-expressly refused. That refusal is stated in five places, and they must be changed together:
-
-| Where                            | What it is                                            |
-| -------------------------------- | ----------------------------------------------------- |
-| `LICENSE`                        | The licence for the repository                        |
-| `src/pages/Terms.jsx`            | The prose terms, published at `/terms`                |
-| `public/robots.txt`              | Per-crawler refusal for known AI agents               |
-| `public/ai.txt`                  | The ai.txt convention, mirrored under `/.well-known/` |
-| `public/.well-known/tdmrep.json` | W3C TDM Reservation Protocol                          |
-
-Plus `tdm-reservation` / `tdm-policy` meta tags in `index.html`, and `noai, noimageai` appended to
-every page's robots value in `src/seo/head.js`.
-
-The facts both legal documents rely on live in `src/data/legal.js`. **If analytics, fonts, hosting
-or browser storage change, that file and the affected document change in the same commit** — a
-policy describing a site you do not run is a public statement you can be held to.
-
-Security posture, reporting and the known limits of a static host are in [SECURITY.md](SECURITY.md).
+**Not open source.** Copyright © 2024–2026 Hemanth Kumar Guvvala, all rights reserved — see
+[LICENSE](LICENSE). The repository is public so the work can be read; reading it grants no right to
+use it. Use as AI training data is expressly refused. Security posture and reporting:
+[SECURITY.md](SECURITY.md).
 
 ## Deployment
 
-Push to `master`. `.github/workflows/deploy.yml` runs `npm ci` and `npm run build` inside
-`portfolio-react/`, then publishes `portfolio-react/dist` via `actions/deploy-pages`.
-
-The `main` and `gh-pages` branches hold older versions of the site and are not used by the current
-deployment.
+Push to `master`. `.github/workflows/deploy.yml` builds `portfolio-react/` and publishes its `dist`
+via `actions/deploy-pages`. The `main` and `gh-pages` branches are old versions and are not
+deployed.
