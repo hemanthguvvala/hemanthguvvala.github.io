@@ -25,6 +25,7 @@
  * redirecting, and it carries `noindex`.
  */
 
+import { createHash } from 'node:crypto';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -73,12 +74,94 @@ function renderHead(head) {
   return tags.join('\n    ');
 }
 
+/**
+ * ── CONTENT SECURITY POLICY ────────────────────────────────────────────────
+ *
+ * Built here rather than written into index.html for one reason: the policy
+ * has to pin the inline theme script by hash, and a hash typed into a file
+ * goes stale the moment the script it protects is edited — silently, with the
+ * only symptom being a white flash for dark-mode visitors. Hashing the built
+ * output means the two can never disagree.
+ *
+ * It ships as a `<meta http-equiv>` because GitHub Pages cannot set response
+ * headers. That has one real consequence: `frame-ancestors` is ignored in a
+ * meta policy, so it is not included here and this site can be framed. With
+ * no authenticated action anywhere on it there is nothing to clickjack —
+ * SECURITY.md records that as an accepted limit rather than an oversight.
+ *
+ * `'unsafe-inline'` in style-src is not laziness either. framer-motion
+ * animates by writing inline style attributes, so a policy without it would
+ * stop every animation on the site.
+ */
+const CSP_SOURCES = {
+  // Cloudflare Web Analytics: the beacon, and where it reports to.
+  script: ["'self'", 'https://static.cloudflareinsights.com'],
+  connect: ["'self'", 'https://cloudflareinsights.com', 'https://static.cloudflareinsights.com'],
+  // Google Fonts: the stylesheet comes from one host, the font files another.
+  style: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+  font: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+  img: ["'self'", 'data:'],
+};
+
+/** Every inline <script> in the template, hashed the way CSP hashes them. */
+function inlineScriptHashes(html) {
+  const hashes = [];
+
+  for (const match of html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    const [, attributes, body] = match;
+
+    // A `type` other than a JavaScript one is data, not code — JSON-LD is the
+    // case here — and CSP does not govern it.
+    if (/\btype\s*=\s*["']?(?!module|text\/javascript|application\/javascript)/i.test(attributes)) {
+      continue;
+    }
+    if (!body.trim()) continue;
+
+    hashes.push(`'sha256-${createHash('sha256').update(body, 'utf8').digest('base64')}'`);
+  }
+
+  if (hashes.length === 0) {
+    throw new Error(
+      'No inline script found to hash for the CSP. If the theme script in ' +
+        'index.html was removed, drop the hash from the policy deliberately ' +
+        'rather than shipping one that matches nothing.',
+    );
+  }
+
+  return hashes;
+}
+
+function cspMeta(template) {
+  const policy = [
+    "default-src 'self'",
+    `script-src ${[...CSP_SOURCES.script, ...inlineScriptHashes(template)].join(' ')}`,
+    `style-src ${CSP_SOURCES.style.join(' ')}`,
+    `font-src ${CSP_SOURCES.font.join(' ')}`,
+    `img-src ${CSP_SOURCES.img.join(' ')}`,
+    `connect-src ${CSP_SOURCES.connect.join(' ')}`,
+    "object-src 'none'",
+    "base-uri 'self'",
+    // There is no form on this site, and a policy that says so turns an
+    // injected form into a dead end.
+    "form-action 'none'",
+    'upgrade-insecure-requests',
+  ].join('; ');
+
+  return `<meta http-equiv="Content-Security-Policy" content="${policy}" />`;
+}
+
 async function main() {
   const template = await readFile(join(distDir, 'index.html'), 'utf8');
 
   if (!template.includes('<!--app-head-->') || !template.includes('<!--app-html-->')) {
     throw new Error('dist/index.html is missing the <!--app-head--> / <!--app-html--> markers.');
   }
+
+  if (!template.includes('<!--app-csp-->')) {
+    throw new Error('dist/index.html is missing the <!--app-csp--> marker.');
+  }
+
+  const csp = cspMeta(template);
 
   const { render } = await import(pathToFileURL(ssrEntry).href);
   const { indexable, prerender, redirects } = await allRoutes();
@@ -93,6 +176,7 @@ async function main() {
     }
 
     const page = template
+      .replace('<!--app-csp-->', csp)
       .replace('<!--app-head-->', renderHead(head))
       .replace('<!--app-html-->', html);
 

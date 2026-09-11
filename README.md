@@ -68,14 +68,14 @@ npm run preview
 
 `npm run build` runs six steps in order:
 
-| Step           | What it does                                                   |
-| -------------- | -------------------------------------------------------------- |
+| Step           | What it does                                                      |
+| -------------- | ----------------------------------------------------------------- |
 | `journey`      | Compiles `content/journey/*.md` → `src/data/journey.generated.js` |
-| `build:client` | Vite client build → `dist/`                                    |
-| `build:ssr`    | Vite SSR build of `entry-server.jsx` → `dist-ssr/` (temporary) |
-| `prerender`    | Renders every route to static HTML, then deletes `dist-ssr/`   |
-| `sitemap`      | Writes `dist/sitemap.xml` from the same route list             |
-| `rss`          | Writes `dist/rss.xml` when at least one article is published   |
+| `build:client` | Vite client build → `dist/`                                       |
+| `build:ssr`    | Vite SSR build of `entry-server.jsx` → `dist-ssr/` (temporary)    |
+| `prerender`    | Renders every route to static HTML, then deletes `dist-ssr/`      |
+| `sitemap`      | Writes `dist/sitemap.xml` from the same route list                |
+| `rss`          | Writes `dist/rss.xml` when at least one article is published      |
 
 Also available: `npm run lint`.
 
@@ -260,6 +260,34 @@ query strings before leaving the browser.
 | `public/app-ads.txt`                 | AdMob verification. Publisher ID must stay `pub-9460933302095977`. |
 | `public/google3a15862b0f820187.html` | Google Search Console verification. Must return 200.               |
 | `public/robots.txt`                  | Must keep `/assets/` crawlable for rendering-based indexing.       |
+| `public/ai.txt`                      | The AI-usage refusal. Mirrored at `public/.well-known/ai.txt`.     |
+| `public/.well-known/tdmrep.json`     | TDM Reservation Protocol. Must stay valid JSON and return 200.     |
+
+## Licence and ownership
+
+**This is not open source.** Copyright © 2024–2026 Hemanth Kumar Guvvala, all rights reserved —
+see [LICENSE](LICENSE). The repository is public so the work can be read and inspected; reading it
+grants no right to use it, and the absence of an open-source licence is deliberate.
+
+Use of this code or content to train, fine-tune, ground or evaluate any machine-learning model is
+expressly refused. That refusal is stated in five places, and they must be changed together:
+
+| Where                            | What it is                                            |
+| -------------------------------- | ----------------------------------------------------- |
+| `LICENSE`                        | The licence for the repository                        |
+| `src/pages/Terms.jsx`            | The prose terms, published at `/terms`                |
+| `public/robots.txt`              | Per-crawler refusal for known AI agents               |
+| `public/ai.txt`                  | The ai.txt convention, mirrored under `/.well-known/` |
+| `public/.well-known/tdmrep.json` | W3C TDM Reservation Protocol                          |
+
+Plus `tdm-reservation` / `tdm-policy` meta tags in `index.html`, and `noai, noimageai` appended to
+every page's robots value in `src/seo/head.js`.
+
+The facts both legal documents rely on live in `src/data/legal.js`. **If analytics, fonts, hosting
+or browser storage change, that file and the affected document change in the same commit** — a
+policy describing a site you do not run is a public statement you can be held to.
+
+Security posture, reporting and the known limits of a static host are in [SECURITY.md](SECURITY.md).
 
 ## Deployment
 

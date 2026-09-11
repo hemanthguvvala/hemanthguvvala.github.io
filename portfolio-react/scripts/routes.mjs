@@ -28,6 +28,10 @@ export const STATIC_ROUTES = [
   { path: '/timeline', priority: '0.6', changefreq: 'yearly' },
   { path: '/awards', priority: '0.6', changefreq: 'yearly' },
   { path: '/contact', priority: '0.7', changefreq: 'yearly' },
+  // Low priority on purpose: these must be indexable so a visitor can be
+  // shown to have had notice of them, but they are not what the site is for.
+  { path: '/privacy', priority: '0.3', changefreq: 'yearly' },
+  { path: '/terms', priority: '0.3', changefreq: 'yearly' },
 ];
 
 /**

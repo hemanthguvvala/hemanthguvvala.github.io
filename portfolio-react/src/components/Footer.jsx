@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import SocialLinks from './SocialLinks';
 import { person, studio } from '../data/profile';
+import { legal } from '../data/legal';
 import { PLAY_DEVELOPER_URL } from '../data/products';
 import { JOURNEY_LABEL, JOURNEY_PATH, hasArticles } from '../data/journey';
 import { EVENTS, track } from '../utils/analytics';
@@ -79,8 +80,11 @@ export default function Footer() {
         <div className="my-10 h-px w-full bg-line/5" />
 
         <div className="flex flex-col items-center justify-between gap-5 text-sm md:flex-row">
-          <p className="text-text-muted">
-            © {year} {person.name}. {studio.attribution}.
+          {/* The copyright line says what it means: all rights reserved, with
+              the terms one click away on every page of the site. */}
+          <p className="text-center text-text-muted md:text-left">
+            © {legal.copyrightFrom}&ndash;{year} {person.name}. All rights reserved.{' '}
+            {studio.attribution}.
           </p>
           <ul className="flex list-none flex-wrap items-center justify-center gap-6">
             <li>
@@ -90,6 +94,16 @@ export default function Footer() {
                 className="text-text-muted transition-colors hover:text-primary"
               >
                 Contact
+              </Link>
+            </li>
+            <li>
+              <Link to="/privacy" className="text-text-muted transition-colors hover:text-primary">
+                Privacy
+              </Link>
+            </li>
+            <li>
+              <Link to="/terms" className="text-text-muted transition-colors hover:text-primary">
+                Terms
               </Link>
             </li>
             <li>

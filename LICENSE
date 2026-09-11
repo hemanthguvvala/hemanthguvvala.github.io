@@ -1,0 +1,126 @@
+PROPRIETARY SOFTWARE LICENCE — ALL RIGHTS RESERVED
+
+Copyright (c) 2024-2026 Hemanth Kumar Guvvala. All rights reserved.
+
+This repository contains the source code, content, design and written work of
+the personal website of Hemanth Kumar Guvvala, published at
+https://hemanthguvvala.github.io/
+
+THIS IS NOT OPEN SOURCE SOFTWARE.
+
+The absence of an open-source licence in this repository is deliberate. This
+code is published so that the work can be read and inspected — by people
+considering hiring the author, and by anyone curious how it is built. Being
+able to read it grants no right to use it.
+
+
+1. NO LICENCE IS GRANTED
+
+No right or licence is granted to any person to use, copy, modify, merge,
+publish, distribute, sublicense, sell, host, deploy or create derivative works
+from any part of this repository, in whole or in part, in any medium, except as
+expressly permitted in writing by the copyright holder.
+
+Rights not expressly granted here are reserved. Nothing is granted by
+implication, estoppel, acquiescence or the passage of time.
+
+
+2. WHAT IS COVERED
+
+All of it, including but not limited to:
+
+  - the application source code, configuration and build scripts;
+  - the written content, including every journey entry, product description
+    and page of copy, and the findings and measurements reported in them;
+  - the visual design: layout, component structure, typography, colour system
+    and interaction behaviour;
+  - the original images, icons and brand assets;
+  - the structure and organisation of the content itself.
+
+Third-party dependencies, fonts and icon sets referenced by this project
+remain the property of their respective owners and are governed by their own
+licences. This licence covers the author's work only.
+
+
+3. ARTIFICIAL INTELLIGENCE AND DATA MINING — EXPRESSLY REFUSED
+
+Permission is expressly REFUSED to use any part of this repository, or of the
+website it produces, for:
+
+  - training, pre-training, fine-tuning, distilling or aligning any
+    machine-learning model, generative AI system or large language model;
+  - grounding, retrieval-augmented generation, embedding generation, or
+    inclusion in any index or vector store used to answer prompts;
+  - inclusion in any dataset, corpus or benchmark, whether published,
+    distributed, sold or kept internally;
+  - text and data mining of any kind;
+  - automated bulk collection, scraping or mirroring.
+
+This is an express reservation of rights for the purposes of Article 4(3) of
+Directive (EU) 2019/790 and any equivalent provision in any other
+jurisdiction. It is declared in machine-readable form at /robots.txt, /ai.txt
+and /.well-known/tdmrep.json of the published website, and in the terms of use
+at https://hemanthguvvala.github.io/terms
+
+No terms of service, licence or agreement between you and any third party —
+including any AI provider, dataset vendor, search engine or archive service —
+can grant rights in this work that the copyright holder has not granted.
+Submitting this material to such a service is itself a use governed by this
+licence.
+
+
+4. WHAT YOU MAY DO WITHOUT ASKING
+
+  - Read the code, and learn from it.
+  - Quote a short extract for the purpose of criticism, review, teaching or
+    discussion, with attribution and a link to the source.
+  - Link to any page of the published website.
+  - Report a bug, a security issue or a factual error to the author.
+
+Learning an idea from this code and writing your own implementation of that
+idea is fine and always was. Copying the expression — the code, the text, the
+design — is not.
+
+
+5. ASKING IS FREE
+
+Licences for reuse are available and enquiries are answered. If you want to
+use something here, ask first:
+
+    hkggroups@gmail.com
+
+A permission given for one use is not a permission for another.
+
+
+6. ENFORCEMENT
+
+Unauthorised use of this work infringes copyright and may cause harm that
+damages alone cannot repair. The copyright holder may seek injunctive relief,
+damages, an account of profits, delivery-up or destruction of infringing
+material, and costs, and may invoice unauthorised commercial use at his
+then-current commercial rates, without prejudice to any other remedy.
+
+Authorship and dates are evidenced by the commit history of this repository
+and by the publication dates on the website. Copyright subsists automatically
+under the Copyright Act, 1957 (India) and, internationally, under the Berne
+Convention; no registration or notice is required for these rights to exist.
+
+
+7. NO WARRANTY
+
+THE SOFTWARE AND CONTENT ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO
+EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN IT.
+
+
+8. GOVERNING LAW
+
+This licence is governed by the laws of India, and any dispute arising out of
+it is subject to the courts of competent jurisdiction in India.
+
+
+Hemanth Kumar Guvvala
+hkggroups@gmail.com

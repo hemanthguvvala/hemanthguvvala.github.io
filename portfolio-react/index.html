@@ -1,4 +1,19 @@
 <!doctype html>
+<!--
+  Copyright (c) 2024-2026 Hemanth Kumar Guvvala. All rights reserved.
+
+  This page, its source code and its design are not licensed for reuse. They
+  are readable because a website must be delivered to be shown; readable is not
+  licensed. https://hemanthguvvala.github.io/terms
+
+  Use of this content for training, fine-tuning, grounding, retrieval or
+  evaluation of any machine-learning model, generative AI system or large
+  language model is expressly refused, as is text and data mining of any kind.
+  Declared machine-readably at /robots.txt, /ai.txt and
+  /.well-known/tdmrep.json.
+
+  Licences are available. Ask: hkggroups@gmail.com
+-->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,6 +23,27 @@
          X-Content-Type-Options and frame-ancestors need real HTTP headers,
          which GitHub Pages does not allow us to set. -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!--
+      Content Security Policy, injected by scripts/prerender.mjs so that the
+      hash pinning the inline theme script below is always computed from the
+      script that actually shipped. Never hardcode it here.
+    -->
+    <!--app-csp-->
+
+    <!--
+      Ownership, in the places machines look for it. The prose version, the one
+      that would be read out in a dispute, is at /terms.
+
+      `tdm-reservation` is the W3C TDM Reservation Protocol. The `noai` tokens
+      live in src/seo/head.js instead, appended to each page's own robots
+      value, so a page never carries two robots tags. `author` and `robots`
+      are emitted per route by the same module — do not add them here.
+    -->
+    <meta name="copyright" content="© 2024-2026 Hemanth Kumar Guvvala. All rights reserved." />
+    <meta name="tdm-reservation" content="1" />
+    <meta name="tdm-policy" content="https://hemanthguvvala.github.io/terms" />
+    <link rel="license" href="https://hemanthguvvala.github.io/terms" />
 
     <!--
       Applies the theme before first paint. This must stay inline and blocking:

@@ -1,8 +1,145 @@
 # https://hemanthguvvala.github.io/
+#
+# Copyright (c) Hemanth Kumar Guvvala. All rights reserved.
+# Terms of use: https://hemanthguvvala.github.io/terms
+#
+# Search engines are welcome. AI training crawlers are not, and are refused
+# individually below rather than by a blanket rule, because a blanket rule is
+# easy to argue was not aimed at anyone in particular.
+#
+# This file is a REQUEST. It is obeyed by well-behaved crawlers and ignored by
+# the rest. Its job here is to put every operator on express notice that the
+# use is refused — see /terms and /.well-known/tdmrep.json.
+
 User-agent: *
 Allow: /
 
 # CSS, JS and images must stay crawlable for rendering-based indexing.
 Allow: /assets/
+
+# ───────────────────────── AI AND DATA-MINING CRAWLERS ─────────────────────
+# Refused: training, fine-tuning, grounding, retrieval and dataset collection.
+
+# OpenAI
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+# Anthropic
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Claude-User
+Disallow: /
+
+User-agent: Claude-SearchBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+# Google — model training only. Googlebot itself is allowed above, so search
+# indexing is unaffected by this line.
+User-agent: Google-Extended
+Disallow: /
+
+# Apple — Applebot itself stays allowed for Siri and Spotlight.
+User-agent: Applebot-Extended
+Disallow: /
+
+# Meta
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: meta-externalfetcher
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Perplexity-User
+Disallow: /
+
+# Common Crawl — the corpus most training sets are built from
+User-agent: CCBot
+Disallow: /
+
+# ByteDance
+User-agent: Bytespider
+Disallow: /
+
+User-agent: TikTokSpider
+Disallow: /
+
+# Amazon
+User-agent: Amazonbot
+Disallow: /
+
+# Others that collect for training or resale
+User-agent: Diffbot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+User-agent: omgilibot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: cohere-training-data-crawler
+Disallow: /
+
+User-agent: AI2Bot
+Disallow: /
+
+User-agent: Ai2Bot-Dolma
+Disallow: /
+
+User-agent: Timpibot
+Disallow: /
+
+User-agent: Webzio-Extended
+Disallow: /
+
+User-agent: PanguBot
+Disallow: /
+
+User-agent: Kangaroo Bot
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: SemrushBot-OCOB
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: MistralAI-User
+Disallow: /
+
+User-agent: ProRataInc
+Disallow: /
 
 Sitemap: https://hemanthguvvala.github.io/sitemap.xml

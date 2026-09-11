@@ -1,0 +1,32 @@
+# Keeps the two things that can introduce someone else's code up to date:
+# npm packages and the GitHub Actions used by the deploy workflow.
+#
+# Weekly rather than daily, and grouped, because a portfolio does not need a
+# pull request per patch bump — it needs one review a week that is worth doing.
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /portfolio-react
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # Security fixes arrive on their own so they are never buried in a batch
+      # of routine bumps.
+      production-dependencies:
+        applies-to: version-updates
+        dependency-type: production
+      development-dependencies:
+        applies-to: version-updates
+        dependency-type: development
+    commit-message:
+      prefix: 'deps'
+      prefix-development: 'deps(dev)'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: 'ci'

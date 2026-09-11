@@ -27,6 +27,8 @@ export const routes = [
   { path: '/timeline', load: () => import('./pages/Timeline') },
   { path: '/awards', load: () => import('./pages/Awards') },
   { path: '/contact', load: () => import('./pages/Contact') },
+  { path: '/privacy', load: () => import('./pages/Privacy') },
+  { path: '/terms', load: () => import('./pages/Terms') },
   { path: '*', load: () => import('./pages/NotFound') },
 ];
 

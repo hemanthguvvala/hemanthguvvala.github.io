@@ -28,6 +28,21 @@ export function canonicalUrl(path = '/') {
 }
 
 /**
+ * Refusal of AI use, appended to whatever indexing directive a page carries.
+ *
+ * Kept here, in the one place a page's robots value is assembled, so there is
+ * exactly one `robots` meta per page. Declaring these in index.html instead
+ * would emit a second tag whose interaction with the first is left to each
+ * crawler to decide — combining them here removes the question.
+ *
+ * These tokens are a convention, not a standard, and a crawler that has
+ * decided not to care will ignore them. Their job is to make the refusal
+ * unambiguous and discoverable on every page, alongside /robots.txt, /ai.txt,
+ * /.well-known/tdmrep.json and the terms of use.
+ */
+const AI_REFUSAL = 'noai, noimageai';
+
+/**
  * Normalises SEO props into the complete set of tags a page needs.
  * @returns {{title:string, description:string, canonical:string, image:string,
  *   type:string, robots:string, jsonLd:object[]}}
@@ -47,7 +62,7 @@ export function buildHead({
     canonical: canonicalUrl(path),
     image: absoluteUrl(image),
     type,
-    robots,
+    robots: `${robots}, ${AI_REFUSAL}`,
     jsonLd: Array.isArray(jsonLd) ? jsonLd.filter(Boolean) : [jsonLd].filter(Boolean),
   };
 }

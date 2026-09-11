@@ -1,0 +1,40 @@
+# ai.txt — declared usage policy for automated and AI systems
+# https://hemanthguvvala.github.io/ai.txt
+#
+# Owner:    Hemanth Kumar Guvvala
+# Contact:  hkggroups@gmail.com
+# Terms:    https://hemanthguvvala.github.io/terms
+# Updated:  2026-09-12
+
+# Everything published on this site — the writing, the source code, the design,
+# the images and the measurements reported in it — is copyright Hemanth Kumar
+# Guvvala. All rights reserved. No licence is granted by publication.
+
+# The following uses are REFUSED for all content on this host, in whole or in
+# part, commercial or non-commercial:
+
+Disallow: training
+Disallow: fine-tuning
+Disallow: pre-training
+Disallow: grounding
+Disallow: retrieval-augmented-generation
+Disallow: embedding-generation
+Disallow: dataset-collection
+Disallow: dataset-redistribution
+Disallow: text-and-data-mining
+Disallow: ai-summarisation-as-substitute
+Disallow: synthetic-data-generation
+Disallow: model-evaluation
+
+# Permitted, and only this:
+#   Indexing by a search engine for the purpose of linking human readers here,
+#   subject to /robots.txt.
+
+Allow: search-indexing
+
+# Rights are expressly reserved for the purposes of Article 4(3) of Directive
+# (EU) 2019/790 and any equivalent provision elsewhere. The same reservation is
+# stated in /robots.txt, /.well-known/tdmrep.json and in the terms of use.
+
+# Licensing enquiries are welcome and are answered. Ask before you use it:
+# hkggroups@gmail.com
